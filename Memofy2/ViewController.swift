@@ -7,8 +7,26 @@
 
 import UIKit
 
-class Task
+class Task: NSObject, NSCoding
 {
+    func encode(with coder: NSCoder) {
+        coder.encode(name, forKey: "name")
+        coder.encode(status, forKey: "status")
+        
+    }
+    
+    required convenience init?(coder: NSCoder) {
+        guard let name = coder.decodeObject(forKey: "name") as? String,
+              let status = coder.decodeObject(forKey: "status") as? String
+            else { return nil }
+
+            self.init(
+                name: name,
+                status: status
+                //published: coder.decodeInteger(forKey: "published") //untuk Int
+            )
+    }
+    
     var name: String
     var status: String
     init(name: String, status: String)
@@ -21,6 +39,8 @@ class Task
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
     var tasks: [Task] = []
+    var memos: [Task] = []
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,17 +49,36 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let newTask = Task(name: name, status: status)
             tasks.append(newTask)
         }
-
-        addTask(name: "makan", status: "in progress")
-        addTask(name: "makan", status: "in progress")
-        addTask(name: "makan", status: "completed")
         
+//        let dict = ["Name": "Paul", "Country": "UK"]
+//        defaults.set(dict, forKey: "SavedDict")
+        
+        let savedArray = defaults.data(forKey: "SavedDict")
+        //print(defaults.object(forKey: "SavedDict") as Any )
+        print("PRINT SAVED", savedArray)
+        
+        let somedata = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(savedArray!)
+        print("INI SOME DATA", somedata)
+        memos = somedata as! [Task]
+        addTask(name: "makan", status: "in progress") // 0 tasks [{name: "makan", status: "in progress"}]
+        addTask(name: "minum", status: "in progress") // 1 tasks [{name: "makan", status: "in progress"}, {name: "minum", status: "in progress"}]
+        addTask(name: "tidur", status: "completed") // 2
+        
+        print("TASK SEBELUM DI ARCHIVE", tasks)
+        let data = try! NSKeyedArchiver.archivedData(withRootObject: tasks, requiringSecureCoding: false)
+        
+        print("INI DATA JADI BYTE", data)
+        
+        //defaults.set(data, forKey: "SavedDict")
+        
+        print("ALL USER DEFAULT", UserDefaults.standard.dictionaryRepresentation())
+        
+        //defaults.set(tasks, forKey: "")
         let nib = UINib(nibName: "MemoTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "MemoTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
     }
-
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tasks.count
@@ -47,8 +86,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemoTableViewCell", for: indexPath) as! MemoTableViewCell
-                cell.nameLabel.text = tasks[indexPath.row].name
-                cell.dateLabel.text = tasks[indexPath.row].status
+                cell.nameLabel.text = memos[indexPath.row].name + " memo"
+                cell.dateLabel.text = memos[indexPath.row].status
                 return cell
     }
     
