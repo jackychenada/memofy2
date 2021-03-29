@@ -50,27 +50,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             tasks.append(newTask)
         }
         
-//        let dict = ["Name": "Paul", "Country": "UK"]
-//        defaults.set(dict, forKey: "SavedDict")
+        //GETTER - USER DEFAULTS
+        let tempArchiveItems = defaults.data(forKey: "SavedDict")
+        print("tempArchiveItems ", tempArchiveItems as Any)
         
-        let savedArray = defaults.data(forKey: "SavedDict")
-        //print(defaults.object(forKey: "SavedDict") as Any )
-        print("PRINT SAVED", savedArray)
-        
-        let somedata = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(savedArray!)
-        print("INI SOME DATA", somedata)
-        memos = somedata as! [Task]
-        addTask(name: "makan", status: "in progress") // 0 tasks [{name: "makan", status: "in progress"}]
-        addTask(name: "minum", status: "in progress") // 1 tasks [{name: "makan", status: "in progress"}, {name: "minum", status: "in progress"}]
-        addTask(name: "tidur", status: "completed") // 2
+        memos = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Task]
+        print("INI MEMOS", memos as Any)
+//        addTask(name: "makan", status: "in progress")
+//        addTask(name: "minum", status: "in progress")
+//        addTask(name: "tidur", status: "completed")
         
         print("TASK SEBELUM DI ARCHIVE", tasks)
-        let data = try! NSKeyedArchiver.archivedData(withRootObject: tasks, requiringSecureCoding: false)
         
-        print("INI DATA JADI BYTE", data)
+        //SETTER - USER DEFAULTS
+//        let preStoreTasks = try! NSKeyedArchiver.archivedData(withRootObject: tasks, requiringSecureCoding: false)
+//        print("INI DATA JADI BYTE", preStoreTasks)
+        //defaults.set(preStoreTasks, forKey: "SavedDict")
         
-        //defaults.set(data, forKey: "SavedDict")
-        
+        //print(defaults.object(forKey: "SavedDict") as Any )
         print("ALL USER DEFAULT", UserDefaults.standard.dictionaryRepresentation())
         
         //defaults.set(tasks, forKey: "")
@@ -81,12 +78,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks.count
+        return memos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemoTableViewCell", for: indexPath) as! MemoTableViewCell
                 cell.nameLabel.text = memos[indexPath.row].name + " memo"
+                cell.nameLabel.textColor = .red
                 cell.dateLabel.text = memos[indexPath.row].status
                 return cell
     }
