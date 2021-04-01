@@ -44,7 +44,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // sometest
+        // sometest test
         func addTask(name: String, status: String){
             let newTask = Task(name: name, status: status)
             tasks.append(newTask)
