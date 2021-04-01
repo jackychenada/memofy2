@@ -50,12 +50,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             tasks.append(newTask)
         }
         
+        func addMemo(name: String, status: String){
+            let newTask = Task(name: name, status: status)
+            memos.append(newTask)
+        }
+        
         //GETTER - USER DEFAULTS
         let tempArchiveItems = defaults.data(forKey: "SavedDict")
         print("tempArchiveItems ", tempArchiveItems as Any)
         
         memos = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Task]
         print("INI MEMOS", memos as Any)
+        addMemo(name: "programmer", status: "in progress")
+        
 //        addTask(name: "makan", status: "in progress")
 //        addTask(name: "minum", status: "in progress")
 //        addTask(name: "tidur", status: "completed")
