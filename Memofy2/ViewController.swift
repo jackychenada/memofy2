@@ -27,6 +27,8 @@ class Task: NSObject, NSCoding
             )
     }
     
+    //Tassja
+    
     var name: String
     var status: String
     init(name: String, status: String)
