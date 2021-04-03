@@ -17,6 +17,8 @@
 		857F320A260A25AB001271B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 857F3208260A25AB001271B7 /* LaunchScreen.storyboard */; };
 		857F3215260A25AB001271B7 /* Memofy2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857F3214260A25AB001271B7 /* Memofy2Tests.swift */; };
 		857F3220260A25AB001271B7 /* Memofy2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857F321F260A25AB001271B7 /* Memofy2UITests.swift */; };
+		85B17B3F2618446000E16F8E /* TaskCompletedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B17B3D2618446000E16F8E /* TaskCompletedTableViewCell.swift */; };
+		85B17B402618446000E16F8E /* TaskCompletedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85B17B3E2618446000E16F8E /* TaskCompletedTableViewCell.xib */; };
 		85E20065260DA032004B09FB /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E20063260DA032004B09FB /* DetailTableViewCell.swift */; };
 		85E20066260DA032004B09FB /* DetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85E20064260DA032004B09FB /* DetailTableViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -55,6 +57,8 @@
 		857F321B260A25AB001271B7 /* Memofy2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Memofy2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		857F321F260A25AB001271B7 /* Memofy2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memofy2UITests.swift; sourceTree = "<group>"; };
 		857F3221260A25AB001271B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85B17B3D2618446000E16F8E /* TaskCompletedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletedTableViewCell.swift; sourceTree = "<group>"; };
+		85B17B3E2618446000E16F8E /* TaskCompletedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskCompletedTableViewCell.xib; sourceTree = "<group>"; };
 		85E20063260DA032004B09FB /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		85E20064260DA032004B09FB /* DetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -118,6 +122,8 @@
 				852B592D260C34B500C0D986 /* MemoTableViewCell.xib */,
 				85E20063260DA032004B09FB /* DetailTableViewCell.swift */,
 				85E20064260DA032004B09FB /* DetailTableViewCell.xib */,
+				85B17B3D2618446000E16F8E /* TaskCompletedTableViewCell.swift */,
+				85B17B3E2618446000E16F8E /* TaskCompletedTableViewCell.xib */,
 			);
 			path = Memofy2;
 			sourceTree = "<group>";
@@ -245,6 +251,7 @@
 			files = (
 				857F320A260A25AB001271B7 /* LaunchScreen.storyboard in Resources */,
 				85E20066260DA032004B09FB /* DetailTableViewCell.xib in Resources */,
+				85B17B402618446000E16F8E /* TaskCompletedTableViewCell.xib in Resources */,
 				857F3207260A25AB001271B7 /* Assets.xcassets in Resources */,
 				857F3205260A25AB001271B7 /* Main.storyboard in Resources */,
 				852B592F260C34B500C0D986 /* MemoTableViewCell.xib in Resources */,
@@ -276,6 +283,7 @@
 				857F31FE260A25AB001271B7 /* AppDelegate.swift in Sources */,
 				857F3200260A25AB001271B7 /* SceneDelegate.swift in Sources */,
 				85E20065260DA032004B09FB /* DetailTableViewCell.swift in Sources */,
+				85B17B3F2618446000E16F8E /* TaskCompletedTableViewCell.swift in Sources */,
 				852B592E260C34B500C0D986 /* MemoTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
