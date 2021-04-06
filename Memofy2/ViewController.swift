@@ -72,6 +72,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         memos = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Task]
         print("INI MEMOS", memos as Any)
         addMemo(name: "programmer", status: "in progress")
+        addMemo(name: "design", status: "in progress")
         
         for memo in memos {
             if memo.status == "in progress" {

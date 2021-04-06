@@ -17,6 +17,7 @@
 		857F320A260A25AB001271B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 857F3208260A25AB001271B7 /* LaunchScreen.storyboard */; };
 		857F3215260A25AB001271B7 /* Memofy2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857F3214260A25AB001271B7 /* Memofy2Tests.swift */; };
 		857F3220260A25AB001271B7 /* Memofy2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857F321F260A25AB001271B7 /* Memofy2UITests.swift */; };
+		85834FAB261C9D9300401C6A /* StudyTimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85834FAA261C9D9300401C6A /* StudyTimeController.swift */; };
 		85B17B3F2618446000E16F8E /* TaskCompletedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B17B3D2618446000E16F8E /* TaskCompletedTableViewCell.swift */; };
 		85B17B402618446000E16F8E /* TaskCompletedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85B17B3E2618446000E16F8E /* TaskCompletedTableViewCell.xib */; };
 		85E20065260DA032004B09FB /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E20063260DA032004B09FB /* DetailTableViewCell.swift */; };
@@ -57,6 +58,7 @@
 		857F321B260A25AB001271B7 /* Memofy2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Memofy2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		857F321F260A25AB001271B7 /* Memofy2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memofy2UITests.swift; sourceTree = "<group>"; };
 		857F3221260A25AB001271B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85834FAA261C9D9300401C6A /* StudyTimeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyTimeController.swift; sourceTree = "<group>"; };
 		85B17B3D2618446000E16F8E /* TaskCompletedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletedTableViewCell.swift; sourceTree = "<group>"; };
 		85B17B3E2618446000E16F8E /* TaskCompletedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskCompletedTableViewCell.xib; sourceTree = "<group>"; };
 		85E20063260DA032004B09FB /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				85E20064260DA032004B09FB /* DetailTableViewCell.xib */,
 				85B17B3D2618446000E16F8E /* TaskCompletedTableViewCell.swift */,
 				85B17B3E2618446000E16F8E /* TaskCompletedTableViewCell.xib */,
+				85834FAA261C9D9300401C6A /* StudyTimeController.swift */,
 			);
 			path = Memofy2;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 			files = (
 				857F3202260A25AB001271B7 /* ViewController.swift in Sources */,
 				857F31FE260A25AB001271B7 /* AppDelegate.swift in Sources */,
+				85834FAB261C9D9300401C6A /* StudyTimeController.swift in Sources */,
 				857F3200260A25AB001271B7 /* SceneDelegate.swift in Sources */,
 				85E20065260DA032004B09FB /* DetailTableViewCell.swift in Sources */,
 				85B17B3F2618446000E16F8E /* TaskCompletedTableViewCell.swift in Sources */,
