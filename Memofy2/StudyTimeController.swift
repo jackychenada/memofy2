@@ -53,6 +53,9 @@ class StudyTimeController: UIViewController {
             playButton.setTitle("START", for: .normal)
         }
         else{
+            if count == 0 {
+                return
+            }
             isCountTimer = true
             playButton.setTitle("PAUSE", for: .normal)
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
