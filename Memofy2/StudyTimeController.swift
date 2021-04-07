@@ -21,22 +21,28 @@ class StudyTimeController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         playButton.setTitle("START", for: .normal)
+        stopButton.isHidden = true
+        stopButton.setTitle("Done Study", for: .normal)
         timerLabel.text = setTimerTextLabel()
     }
     
     @IBAction func stopButtonTap(_ sender: Any){
-        let alert = UIAlertController(title: "done?", message: "yakin bro?", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: { (_) in
+        let alert = UIAlertController(title: "Complete Study?", message: "if you click done, your study will be completed", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.destructive, handler: { (_) in
             print("cancel")
         }))
-        alert.addAction(UIAlertAction(title: "yes", style: UIAlertAction.Style.destructive, handler: { (_) in
+        alert.addAction(UIAlertAction(title: "DONE", style: UIAlertAction.Style.default, handler: { (_) in
             self.count = 0
             self.timer.invalidate()
+            self.isCountTimer = false
+            self.playButton.setTitle("START", for: .normal)
+            self.timerLabel.text = self.setTimerTextLabel()
         }))
         self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func playButtonTap(_ sender: Any){
+        stopButton.isHidden = false
         if(isCountTimer){
             isCountTimer = false
             timer.invalidate()
