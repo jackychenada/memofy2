@@ -15,7 +15,7 @@ class StudyTimeController: UIViewController {
     @IBOutlet weak var stopButton: UIButton!
     
     var timer:Timer = Timer()
-    var count:Int = 3602
+    var count:Int = 10
     var isCountTimer:Bool = false
     
     override func viewDidLoad() {
@@ -26,17 +26,21 @@ class StudyTimeController: UIViewController {
         timerLabel.text = setTimerTextLabel()
     }
     
+    func doStopProcedure() {
+        self.count = 0
+        self.timer.invalidate()
+        self.isCountTimer = false
+        self.playButton.setTitle("START", for: .normal)
+        self.timerLabel.text = self.setTimerTextLabel()
+    }
+    
     @IBAction func stopButtonTap(_ sender: Any){
         let alert = UIAlertController(title: "Complete Study?", message: "if you click done, your study will be completed", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.destructive, handler: { (_) in
             print("cancel")
         }))
         alert.addAction(UIAlertAction(title: "DONE", style: UIAlertAction.Style.default, handler: { (_) in
-            self.count = 0
-            self.timer.invalidate()
-            self.isCountTimer = false
-            self.playButton.setTitle("START", for: .normal)
-            self.timerLabel.text = self.setTimerTextLabel()
+            self.doStopProcedure()
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -58,6 +62,9 @@ class StudyTimeController: UIViewController {
     @objc func timerCounter() -> Void{
         count = count - 1
         timerLabel.text = setTimerTextLabel()
+        if count == 0 {
+            doStopProcedure()
+        }
     }
     
     func setTimerTextLabel() -> String {
