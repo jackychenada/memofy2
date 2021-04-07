@@ -9,29 +9,32 @@ import UIKit
 
 class StudyTimeController: UIViewController {
     
-      @IBOutlet weak var timerLabel: UILabel!
-      @IBOutlet weak var playButton: UIButton!
-//
+    @IBOutlet weak var timerLabel: UILabel!
+    
+    @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     
-    var timer:Timer = Timer()
-    var count:Int = 10
+    @IBOutlet weak var breakLabel: UILabel!
+    
+    var timerTimer:Timer = Timer()
+    var timerBreak: Timer = Timer()
+    var countTimer:Int = 10
+    var countBreak: Int = 5
+    
     var isCountTimer:Bool = false
+    var isCountBreak:Bool = false
+    var isTimer: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         playButton.setTitle("START", for: .normal)
-        stopButton.isHidden = true
         stopButton.setTitle("Done Study", for: .normal)
-        timerLabel.text = setTimerTextLabel()
-    }
-    
-    func doStopProcedure() {
-        self.count = 0
-        self.timer.invalidate()
-        self.isCountTimer = false
-        self.playButton.setTitle("START", for: .normal)
-        self.timerLabel.text = self.setTimerTextLabel()
+        
+        stopButton.isHidden = true
+        timerLabel.text = setTimerTextLabel(dataSeconds: countTimer)
+        
+        breakLabel.isHidden = true
+        
     }
     
     @IBAction func stopButtonTap(_ sender: Any){
@@ -40,40 +43,93 @@ class StudyTimeController: UIViewController {
             print("cancel")
         }))
         alert.addAction(UIAlertAction(title: "DONE", style: UIAlertAction.Style.default, handler: { (_) in
-            self.doStopProcedure()
+            self.stopTimer()
+            self.stopBreak()
         }))
         self.present(alert, animated: true, completion: nil)
+    }
+    func startTimer(){
+        self.isTimer = true
+        self.timerLabel.isHidden = false
+        self.playButton.setTitle("PAUSE", for: .normal)
+        self.timerTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
+    }
+    
+    func pauseTimer(){
+        self.timerLabel.isHidden = true
+        self.timerTimer.invalidate()
+        self.playButton.setTitle("START", for: .normal)
+    }
+    
+    func stopTimer() {
+        self.countTimer = 0
+        self.timerTimer.invalidate()
+        self.isCountTimer = false
+        self.playButton.setTitle("START", for: .normal)
+        self.timerLabel.text = self.setTimerTextLabel(dataSeconds: self.countTimer)
+    }
+
+    
+    func startBreak(){
+        self.isTimer = false
+        self.breakLabel.text = self.setTimerTextLabel(dataSeconds: self.countBreak)
+        self.breakLabel.isHidden = false
+        if(countBreak > 0) {
+            timerBreak = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(breakCounter), userInfo: nil, repeats: true)
+        }
+       
+    }
+    
+    func pauseBreak(){
+        self.breakLabel.isHidden = true
+        self.timerBreak.invalidate()
+    }
+    
+    func stopBreak() {
+        self.countBreak = 0
+        self.timerBreak.invalidate()
+        self.isCountBreak = false
+        self.breakLabel.text = self.setTimerTextLabel(dataSeconds: self.countBreak)
     }
     
     @IBAction func playButtonTap(_ sender: Any){
         stopButton.isHidden = false
         if(isCountTimer){
             isCountTimer = false
-            timer.invalidate()
-            playButton.setTitle("START", for: .normal)
+            pauseTimer()
+            startBreak()
         }
         else{
-            if count == 0 {
+            if countTimer == 0 {
                 return
             }
+            
             isCountTimer = true
-            playButton.setTitle("PAUSE", for: .normal)
-            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
+            pauseBreak()
+            startTimer()
         }
     }
 
     @objc func timerCounter() -> Void{
-        count = count - 1
-        timerLabel.text = setTimerTextLabel()
-        if count == 0 {
-            doStopProcedure()
+        countTimer = countTimer - 1
+        timerLabel.text = setTimerTextLabel(dataSeconds: countTimer)
+        if countTimer == 0 {
+            stopTimer()
         }
     }
     
-    func setTimerTextLabel() -> String {
-        let hours = count / 3600
-        let minutes = (count % 3600)/60
-        let seconds = (count % 3600) % 60
+    @objc func breakCounter() -> Void{
+        countBreak = countBreak - 1
+        breakLabel.text = setTimerTextLabel(dataSeconds: countBreak)
+        if countBreak == 0 {
+            stopBreak()
+        }
+    }
+    
+    func setTimerTextLabel(dataSeconds: Int) -> String {
+        let hours = dataSeconds / 3600
+        let minutes = (dataSeconds % 3600)/60
+        let seconds = (dataSeconds % 3600) % 60
         let timeString = createTimeString(hours: hours, minutes: minutes, seconds: seconds)
         return timeString
     }
@@ -83,7 +139,11 @@ class StudyTimeController: UIViewController {
         let hourString = String(format: "%02d", hours)
         let minuteString = String(format: "%02d", minutes)
         let secondString = String(format: "%02d", seconds)
-        timeString = hourString + " : " + minuteString + " : " + secondString
+        if isTimer {
+            timeString = hourString + " : " + minuteString + " : " + secondString
+        }else{
+            timeString = minuteString + " : " + secondString
+        }
         return timeString
     }
 }
