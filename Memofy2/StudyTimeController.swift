@@ -10,16 +10,15 @@ import UIKit
 class StudyTimeController: UIViewController {
     
     @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var breakLabel: UILabel!
     
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     
-    @IBOutlet weak var breakLabel: UILabel!
-    
     var timerTimer:Timer = Timer()
     var timerBreak: Timer = Timer()
-    var countTimer:Int = 10
-    var countBreak: Int = 5
+    var countTimer:Int = 3602
+    var countBreak: Int = 10
     
     var isCountTimer:Bool = false
     var isCountBreak:Bool = false
@@ -39,12 +38,13 @@ class StudyTimeController: UIViewController {
     
     @IBAction func stopButtonTap(_ sender: Any){
         let alert = UIAlertController(title: "Complete Study?", message: "if you click done, your study will be completed", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.destructive, handler: { (_) in
-            print("cancel")
-        }))
-        alert.addAction(UIAlertAction(title: "DONE", style: UIAlertAction.Style.default, handler: { (_) in
+        
+        alert.addAction(UIAlertAction(title: "Done", style: UIAlertAction.Style.default, handler: { (_) in
             self.stopTimer()
             self.stopBreak()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.destructive, handler: { (_) in
+            print("cancel")
         }))
         self.present(alert, animated: true, completion: nil)
     }
