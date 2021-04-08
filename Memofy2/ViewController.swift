@@ -71,6 +71,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         memos = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Task]
         print("INI MEMOS", memos as Any)
+        print("memos index 0", memos[0].name)
         addMemo(name: "programmer", status: "in progress")
         addMemo(name: "design", status: "in progress")
         
@@ -108,6 +109,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.rowHeight = UITableView.automaticDimension
         
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("indexpath", indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
