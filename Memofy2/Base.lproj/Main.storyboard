@@ -30,6 +30,9 @@
                                 <rect key="frame" x="321" y="34" width="61" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add Plan"/>
+                                <connections>
+                                    <segue destination="JDf-iw-ADb" kind="presentation" id="Dvm-CQ-rif"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -50,6 +53,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="0.0" y="70.379146919431278"/>
+        </scene>
+        <!--UINavigationController-OBE-Pj-6pz-->
+        <scene sceneID="26I-RL-J22">
+            <objects>
+                <viewControllerPlaceholder storyboardName="AddPlanTableView" referencedIdentifier="UINavigationController-OBE-Pj-6pz" id="JDf-iw-ADb" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MG3-Ya-5BX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="622" y="-17"/>
         </scene>
         <!--Study Time Controller-->
         <scene sceneID="NFi-nB-DBE">
