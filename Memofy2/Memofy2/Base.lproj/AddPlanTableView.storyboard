@@ -79,7 +79,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Z4R-Hv-pT3" kind="show" id="t5Z-BX-wGv"/>
+                                            <segue destination="Z4R-Hv-pT3" kind="show" identifier="showRepeat" id="t5Z-BX-wGv"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="fBs-wx-3hh" detailTextLabel="hjk-bi-k1Z" rowHeight="66" style="IBUITableViewCellStyleValue1" id="aB8-qZ-vQF">
@@ -488,7 +488,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ahB-0e-goJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3929" y="642"/>
+            <point key="canvasLocation" x="3835" y="645"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wli-S5-40m">

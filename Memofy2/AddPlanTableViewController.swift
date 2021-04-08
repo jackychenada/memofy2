@@ -10,12 +10,9 @@ import UIKit
 
 
 
-class AddPlanTableViewController: UITableViewController {
+class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
      
     var plans : [Plan] = []
-    var isHiddenStartDate =  true
-    var isHiddenEndDate = true
-    var isHiddenTimeReminder = true
     
     let dateFormatter = DateFormatter()
     let defaults = UserDefaults.standard
@@ -39,34 +36,62 @@ class AddPlanTableViewController: UITableViewController {
     @IBOutlet weak var studyDurationLabel: UILabel!
     @IBOutlet weak var breakDurationLabel: UILabel!
     
-    @IBAction func addData(_ sender: Any) {
-        print("before", plans)
-        
-        //Ini Buat Tambah Data
-        self.addPlan(name: studyPlanTextField.text!, status: studyNotesTextView.text!)
-        
-        //Setter use default
-        
-        //
-        let preStoreTasks = try! NSKeyedArchiver.archivedData(withRootObject: plans, requiringSecureCoding: false)
-        
-        
-        print("INI DATA JADI BYTE", preStoreTasks)
-        
-        //MASUKKIN KE USER DEFAULT
-        defaults.set(preStoreTasks, forKey: "Plans")
-
-        //Untuk nge cek persatuan
-        print("Satu-satu", defaults.object(forKey: "Plans") as Any )
-        
-        //Cek keseluruhan
-        print("ALL USER DEFAULT", UserDefaults.standard.dictionaryRepresentation())
-        
-        print(studyPlanTextField.text);
-        print(studyNotesTextView.text);
-        print("addData plans : ", plans)
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
     
+    func addPlan(name: String, status: String){
+        let newPlan = Plan(name: name, status: status)
+        plans.append(newPlan)
+    }
+    
+    func userDidEnterInformation(info: String) {
+            print(info)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "showRepeat" {
+                let secondViewController = segue.destination as! RepeatTableViewController
+                secondViewController.delegate = self
+            }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        startsDatePicker.date = NSDate() as Date
+        endsDatePicker.date = NSDate() as Date
+        
+        
+        dateFormatter.dateStyle = DateFormatter.Style.long
+        
+        startsDateLabel.text = dateFormatter.string(from: startsDatePicker.date)
+        endsDateLabel.text = dateFormatter.string(from: endsDatePicker.date)
+        
+        startsDatePicker.isHidden = true
+        endsDatePicker.isHidden = true
+        //timeReminderPicker.isHidden = true
+        
+        studyDurationPicker.isHidden = true
+        breakDurationPicker.isHidden = true
+        
+        //USER DEFAULT GETTER
+        
+        //Mencari user default dengan key plans
+        let tempArchiveItems = defaults.data(forKey: "Plans")
+        
+        //cek tempArchiveItemsnya ada default dengan key plans atau tidak
+        print("tempArchiveItems ", tempArchiveItems as Any)
+
+        
+        if tempArchiveItems != nil {
+            
+            //Kalo tidak kosong, bisa kebuka default dengan key plans dan datanya
+            plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
+            print("Check Plans : ", plans)
+        }
+        
+    }
     
     @IBAction func startsDP(_ sender: Any) {
         dateFormatter.dateStyle = DateFormatter.Style.long
@@ -118,50 +143,32 @@ class AddPlanTableViewController: UITableViewController {
         }
     }
     
-    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
-        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
-    }
-    
-    func addPlan(name: String, status: String){
-        let newPlan = Plan(name: name, status: status)
-        plans.append(newPlan)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    @IBAction func addData(_ sender: Any) {
+        print("before", plans)
         
-        startsDatePicker.date = NSDate() as Date
-        endsDatePicker.date = NSDate() as Date
+        //Ini Buat Tambah Data
+        self.addPlan(name: studyPlanTextField.text!, status: studyNotesTextView.text!)
+        
+        //Setter use default
+        
+        //
+        let preStoreTasks = try! NSKeyedArchiver.archivedData(withRootObject: plans, requiringSecureCoding: false)
         
         
-        dateFormatter.dateStyle = DateFormatter.Style.long
+        print("INI DATA JADI BYTE", preStoreTasks)
         
-        startsDateLabel.text = dateFormatter.string(from: startsDatePicker.date)
-        endsDateLabel.text = dateFormatter.string(from: endsDatePicker.date)
-        
-        startsDatePicker.isHidden = true
-        endsDatePicker.isHidden = true
-        //timeReminderPicker.isHidden = true
-        
-        studyDurationPicker.isHidden = true
-        breakDurationPicker.isHidden = true
-        
-        //USER DEFAULT GETTER
-        
-        //Mencari user default dengan key plans
-        let tempArchiveItems = defaults.data(forKey: "Plans")
-        
-        //cek tempArchiveItemsnya ada default dengan key plans atau tidak
-        print("tempArchiveItems ", tempArchiveItems as Any)
+        //MASUKKIN KE USER DEFAULT
+        defaults.set(preStoreTasks, forKey: "Plans")
 
+        //Untuk nge cek persatuan
+        print("Satu-satu", defaults.object(forKey: "Plans") as Any )
         
-        if tempArchiveItems != nil {
-            
-            //Kalo tidak kosong, bisa kebuka default dengan key plans dan datanya
-            plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
-            print("Check Plans : ", plans)
-        }
+        //Cek keseluruhan
+        print("ALL USER DEFAULT", UserDefaults.standard.dictionaryRepresentation())
         
+        print(studyPlanTextField.text);
+        print(studyNotesTextView.text);
+        print("addData plans : ", plans)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

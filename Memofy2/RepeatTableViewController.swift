@@ -7,18 +7,45 @@
 
 import UIKit
 
+protocol DataEnteredDelegate: AnyObject {
+    func userDidEnterInformation(info: String)
+}
+
 class RepeatTableViewController: UITableViewController {
 
+    weak var delegate: DataEnteredDelegate? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
     }
     
+
+    //    override func didMove(toParent parent: UIViewController?) {
+//        super.didMove(toParent: parent)
+//
+//        if parent == nil {
+//            delegate?.userDidEnterInformation(info: "Test")
+//
+//                    // Go back to the previous view controller
+//            _ = self.navigationController?.popViewController(animated: true)
+//            debugPrint("Back Button pressed.")
+//        }
+//    }
+    
     @IBOutlet var myTableView: UITableView!
     
     //var lastSelection: NSIndexPath!
     
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        if self.isMovingFromParent {
+            print("Test")
+            delegate?.userDidEnterInformation(info: "GUA MAU XX")
+        }
+    }
+
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //self.myTableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
