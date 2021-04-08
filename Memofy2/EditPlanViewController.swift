@@ -7,9 +7,14 @@
 
 import UIKit
 
-class EditPlanViewController: UITableViewController {
+class EditPlanViewController: UITableViewController, repeatDataDeligate {
+    
     
     var dateFormatterr = DateFormatter()
+    
+    let plan = "Programming"
+    let note = "Swift Playground"
+    let status = "Completed"
     
     @IBOutlet weak var saveBarButton: UIBarButtonItem!
     
@@ -36,8 +41,15 @@ class EditPlanViewController: UITableViewController {
     @IBOutlet weak var breakDurationTimePicker: UIDatePicker!
 
     
+    @IBOutlet weak var startStudyButton: UIButton!
+    
+    var choosenRepeat: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Ngambil data dari repeat
+        timeReminderTimeLabel.text = choosenRepeat
         
         //Set default date di add
         dateStartsDatePicker.date = NSDate() as Date
@@ -49,9 +61,20 @@ class EditPlanViewController: UITableViewController {
         
         dateEndsLabel.text = dateFormatterr.string(from: dateEndsDatePicker.date)
         
+        if (status == "Completed") {
+            startStudyButton.backgroundColor = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
+            startStudyButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
+        } else if (status == "To Do") {
+            startStudyButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            startStudyButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
+        }
     }
     
-
+    @IBAction func saveStudyPlanButton(_ sender: Any) {
+    }
+    @IBAction func deletePlanButton(_ sender: Any) {
+    }
+    
     @IBAction func cancelButtonPressed(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -69,6 +92,11 @@ class EditPlanViewController: UITableViewController {
         dateStartsLabel.text = dateFormatterr.string(from: dateStartsDatePicker.date)
     }
     
+    @IBAction func timeReminderTPicker(_ sender: Any) {
+        dateFormatterr.dateFormat="HH:mm"
+        timeReminderTimeLabel.text = dateFormatterr.string(from: timeReminderTimePicker.date)
+    }
+    
     @IBAction func endDatesDPicker(_ sender: Any) {
         dateFormatterr.dateStyle = DateFormatter.Style.long
         dateEndsLabel.text = dateFormatterr.string(from: dateEndsDatePicker.date)
@@ -76,31 +104,33 @@ class EditPlanViewController: UITableViewController {
     
     
     @IBAction func studyDurationTPicker(_ sender: Any) {
-        let duration : Int = Int (studyDurationTimePicker.countDownDuration)
-        if duration < 3600 {
-            let (_, m, _) = secondsToHourMinutesToSeconds (seconds: duration)
-            studyDurationLabel.text = "\(m) minutes"
-        }
+        lableDuration(label: studyDurationLabel, duration: Int(studyDurationTimePicker.countDownDuration))
     }
     
     @IBAction func breakDurationTPicker(_ sender: Any) {
-        let duration : Int = Int (breakDurationTimePicker.countDownDuration)
-        if duration < 3600 {
-            let (_, m, _) = secondsToHourMinutesToSeconds (seconds: duration)
-            breakDurationLabel.text = "\(m) minutes"
-        }
+        lableDuration(label: breakDurationLabel, duration: Int(breakDurationTimePicker.countDownDuration))
     }
-    
     
     func secondsToHourMinutesToSeconds (seconds: Int) -> (Int, Int, Int) {
         return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
     
+    func lableDuration (label: UILabel, duration: Int) {
+        if duration < 3600 {
+            let (_, m, _) = secondsToHourMinutesToSeconds (seconds: duration)
+            label.text = "\(m) minutes"
+        }
+        else {
+            let (h, m, _) = secondsToHourMinutesToSeconds (seconds: duration)
+            label.text = "\(h) hours \(m) minutes"
+        }
+    }
+    
     func hiddenViewDatePicker(fieldName: String){
-        dateStartsDatePicker.isHidden = fieldName == "dateStarts" ? false : true
-        dateEndsDatePicker.isHidden = fieldName == "dateEnds" ? false : true
-        studyDurationTimePicker.isHidden = fieldName == "studyDuration" ? false : true
-        breakDurationTimePicker.isHidden = fieldName == "breakDuration" ?  false : true
+        dateStartsDatePicker.isHidden = fieldName == "dateStarts" ? !dateStartsDatePicker.isHidden : true
+        dateEndsDatePicker.isHidden = fieldName == "dateEnds" ? !dateEndsDatePicker.isHidden : true
+        studyDurationTimePicker.isHidden = fieldName == "studyDuration" ? !studyDurationTimePicker.isHidden : true
+        breakDurationTimePicker.isHidden = fieldName == "breakDuration" ?  !breakDurationTimePicker.isHidden : true
     }
     
     func animationPicker (iP : IndexPath){
@@ -109,6 +139,19 @@ class EditPlanViewController: UITableViewController {
         self.tableView.deselectRow(at: iP, animated: true)
         self.tableView.endUpdates()
         })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showRepeat" {
+            let destination = segue.destination as! repeatDetails
+            destination.delegate = self
+            destination.sendRepeatDetails = "Permisi Kucing"
+            
+        }
+    }
+    
+    func receiveRepeatDetails(info: String) {
+        print(info)
     }
     
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
