@@ -7,25 +7,40 @@
 
 import UIKit
 
-class Task: NSObject, NSCoding
-{
-    func encode(with coder: NSCoder) {
-        coder.encode(name, forKey: "name")
-        coder.encode(status, forKey: "status")
-        
-    }
-    
-    required convenience init?(coder: NSCoder) {
-        guard let name = coder.decodeObject(forKey: "name") as? String,
-              let status = coder.decodeObject(forKey: "status") as? String
-            else { return nil }
+//class Task: NSObject, NSCoding
+//{
+//    func encode(with coder: NSCoder) {
+//        coder.encode(name, forKey: "name")
+//        coder.encode(status, forKey: "status")
+//
+//    }
+//
+//    required convenience init?(coder: NSCoder) {
+//        guard let name = coder.decodeObject(forKey: "name") as? String,
+//              let status = coder.decodeObject(forKey: "status") as? String
+//            else { return nil }
+//
+//            self.init(
+//                name: name,
+//                status: status
+//                //published: coder.decodeInteger(forKey: "published") //untuk Int
+//            )
+//    }
+//
+//    var name: String
+//    var status: String
+//    init(name: String, status: String)
+//    {
+//        self.name = name
+//        self.status = status
+//    }
+//}
 
-            self.init(
-                name: name,
-                status: status
-                //published: coder.decodeInteger(forKey: "published") //untuk Int
-            )
-    }
+class ViewController: UIViewController {
+//    @IBOutlet var tableView: UITableView!
+//    var tasks: [Task] = []
+//    var memos: [Task] = []
+//    let defaults = UserDefaults.standard
     
     //Tassja
     
