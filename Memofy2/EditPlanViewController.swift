@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EditPlanViewController: UITableViewController, repeatDataDeligate {
+class EditPlanViewController: UITableViewController {
     
     
     var dateFormatterr = DateFormatter()
@@ -143,9 +143,9 @@ class EditPlanViewController: UITableViewController, repeatDataDeligate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showRepeat" {
-            let destination = segue.destination as! repeatDetails
-            destination.delegate = self
-            destination.sendRepeatDetails = "Permisi Kucing"
+//            let destination = segue.destination as! repeatDetails
+//            destination.delegate = self
+//            destination.sendRepeatDetails = "Permisi Kucing"
             
         }
     }

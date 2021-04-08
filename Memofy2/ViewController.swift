@@ -7,40 +7,25 @@
 
 import UIKit
 
-//class Task: NSObject, NSCoding
-//{
-//    func encode(with coder: NSCoder) {
-//        coder.encode(name, forKey: "name")
-//        coder.encode(status, forKey: "status")
-//
-//    }
-//
-//    required convenience init?(coder: NSCoder) {
-//        guard let name = coder.decodeObject(forKey: "name") as? String,
-//              let status = coder.decodeObject(forKey: "status") as? String
-//            else { return nil }
-//
-//            self.init(
-//                name: name,
-//                status: status
-//                //published: coder.decodeInteger(forKey: "published") //untuk Int
-//            )
-//    }
-//
-//    var name: String
-//    var status: String
-//    init(name: String, status: String)
-//    {
-//        self.name = name
-//        self.status = status
-//    }
-//}
+class Task: NSObject, NSCoding
+{
+    func encode(with coder: NSCoder) {
+        coder.encode(name, forKey: "name")
+        coder.encode(status, forKey: "status")
+        
+    }
+    
+    required convenience init?(coder: NSCoder) {
+        guard let name = coder.decodeObject(forKey: "name") as? String,
+              let status = coder.decodeObject(forKey: "status") as? String
+            else { return nil }
 
-class ViewController: UIViewController {
-//    @IBOutlet var tableView: UITableView!
-//    var tasks: [Task] = []
-//    var memos: [Task] = []
-//    let defaults = UserDefaults.standard
+            self.init(
+                name: name,
+                status: status
+                //published: coder.decodeInteger(forKey: "published") //untuk Int
+            )
+    }
     
     //Tassja
     
@@ -68,7 +53,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = #colorLiteral(red: 0.9529411765, green: 0.9490196078, blue: 0.9725490196, alpha: 1)
+        view.backgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         // sometest test
         func addTask(name: String, status: String){
             let newTask = Task(name: name, status: status)
@@ -160,7 +145,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 30))
-        headerView.backgroundColor = #colorLiteral(red: 0.9529411765, green: 0.9490196078, blue: 0.9725490196, alpha: 1)
+        headerView.backgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 30))
         label.text = sections[section]
         headerView.addSubview(label)
@@ -177,7 +162,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                 let data = tempData
                 cell.nameLabel.text = data.name + " memo"
-                cell.nameLabel.textColor = #colorLiteral(red: 0, green: 0.3607843137, blue: 0.7254901961, alpha: 1)
+                cell.nameLabel.textColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
                 cell.dateLabel.text = data.status
                 return cell
     }

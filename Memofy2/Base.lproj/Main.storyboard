@@ -34,6 +34,14 @@
                                     <segue destination="JDf-iw-ADb" kind="presentation" id="Dvm-CQ-rif"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gC7-eh-nJp">
+                                <rect key="frame" x="245" y="34" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Edit"/>
+                                <connections>
+                                    <segue destination="0O9-hq-ycb" kind="presentation" id="VIz-3W-PYG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -46,10 +54,21 @@
                             <constraint firstItem="VNM-Xs-Hb7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="yPR-Fe-odr"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="VNM-Xs-Hb7" id="fVi-Rn-2Tz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="0.0" y="70.379146919431278"/>
+        </scene>
+        <!--EditNavigation-->
+        <scene sceneID="y6R-Dd-025">
+            <objects>
+                <viewControllerPlaceholder storyboardName="EditPlanTable" referencedIdentifier="EditNavigation" id="0O9-hq-ycb" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vYJ-oW-FvH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="523" y="-168"/>
         </scene>
         <!--UINavigationController-OBE-Pj-6pz-->
         <scene sceneID="26I-RL-J22">
@@ -115,9 +134,6 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

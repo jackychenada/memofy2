@@ -541,7 +541,7 @@
         <!--Navigation Controller-->
         <scene sceneID="FUX-r4-eCg">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JeZ-4s-bLE" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="EditNavigation" automaticallyAdjustsScrollViewInsets="NO" id="JeZ-4s-bLE" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="XuX-up-Wyo">
                         <rect key="frame" x="0.0" y="44" width="390" height="44"/>
