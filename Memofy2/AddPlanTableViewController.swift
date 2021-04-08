@@ -8,9 +8,7 @@
 import UIKit
 
 
-
-
-class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
+class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
      
     var plans : [Plan] = []
     
@@ -79,8 +77,8 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
     }
     
     @IBAction func switchOn(_ sender: Any) {
-       hiddenViewDatePicker(fieldName: "timeReminder")
-        print("reminder is enabled", switchReminder.isOn)
+//       hiddenViewDatePicker(fieldName: "timeReminder")
+//        print("reminder is enabled", switchReminder.isOn)
     }
     
     @IBAction func reminderDP(_ sender: Any) {
@@ -89,25 +87,11 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
     }
     
     @IBAction func studyDurationDP(_ sender: Any) {
-        let duration : Int = Int(studyDurationPicker.countDownDuration)
-        if duration < 3600 {
-            let (_, m, _) = secondsToHoursMinutesSeconds(seconds: duration)
-            studyDurationLabel.text = "\(m) minutes"
-        } else {
-            let (h, m, _) = secondsToHoursMinutesSeconds(seconds: duration)
-            studyDurationLabel.text = "\(h) hours \(m) minutes"
-        }
+        labelDuration(label: studyDurationLabel, duration: Int(studyDurationPicker.countDownDuration))
     }
     
     @IBAction func breakDurationDP(_ sender: Any) {
-        let duration : Int = Int(breakDurationPicker.countDownDuration)
-        if duration < 3600 {
-            let (_, m, _) = secondsToHoursMinutesSeconds(seconds: duration)
-            breakDurationLabel.text = "\(m) minutes"
-        } else {
-            let (h, m, _) = secondsToHoursMinutesSeconds(seconds: duration)
-            breakDurationLabel.text = "\(h) hours \(m) minutes"
-        }
+        labelDuration(label: breakDurationLabel, duration: Int(breakDurationPicker.countDownDuration))
     }
     
     @IBAction func cancelButton(_ sender: UIBarButtonItem) {
@@ -151,6 +135,16 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
         return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
     
+    func labelDuration (label : UILabel, duration : Int) {
+        if duration < 3600 {
+            let (_, m, _) = secondsToHoursMinutesSeconds(seconds: duration)
+            label.text = "\(m) minutes"
+        } else {
+            let (h, m, _) = secondsToHoursMinutesSeconds(seconds: duration)
+            label.text = "\(h) hours \(m) minutes"
+        }
+    }
+    
     func addPlan(name: String, status: String){
         let newPlan = Plan(name: name, status: status)
         plans.append(newPlan)
@@ -159,9 +153,8 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
     func hiddenViewDatePicker(fieldName : String){
         startsDatePicker.isHidden = fieldName == "startsDate" ? false : true
         endsDatePicker.isHidden = fieldName == "endsDate" ? false : true
-    
-        timeReminderPicker.isHidden = !switchReminder.isOn
-        print("cek hidden view", switchReminder.isOn)
+//        timeReminderPicker.isHidden = !switchReminder.isOn
+//        print("cek hidden view", switchReminder.isOn)
         studyDurationPicker.isHidden = fieldName == "studyDuration" ? false : true
         breakDurationPicker.isHidden = fieldName == "breakDuration" ? false : true
     }
@@ -178,19 +171,20 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
             if segue.identifier == "showRepeat" {
                 let secondViewController = segue.destination as! RepeatTableViewController
                 secondViewController.delegate = self
+                secondViewController.sendRepeatData = "Gua kembung"
             }
     }
     
-    func userDidEnterInformation(info: String) {
-            print(info)
+    func receivedRepeatData(info: String) {
+        print(info)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 1 && indexPath.row == 2 {
-            let height:CGFloat = startsDatePicker.isHidden ? 0.0 : 280.0
+            let height:CGFloat = startsDatePicker.isHidden ? 0.0 : 290.0
                return height
         } else if indexPath.section == 1 && indexPath.row == 4 {
-            let height:CGFloat = endsDatePicker.isHidden ? 0.0 : 280.0
+            let height:CGFloat = endsDatePicker.isHidden ? 0.0 : 290.0
                return height
         } else if indexPath.section ==  1 && indexPath.row == 6 {
             let height:CGFloat = timeReminderPicker.isHidden ? 0.0 : 55.0

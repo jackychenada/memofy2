@@ -7,31 +7,25 @@
 
 import UIKit
 
-protocol DataEnteredDelegate: AnyObject {
-    func userDidEnterInformation(info: String)
+protocol RepeatDataDelegate: AnyObject {
+    func receivedRepeatData(info: String)
 }
 
 class RepeatTableViewController: UITableViewController {
 
-    weak var delegate: DataEnteredDelegate? = nil
+    weak var delegate: RepeatDataDelegate? = nil
+    
+    var sendRepeatData = ""
+    
+    var days = Set<Int>()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(sendRepeatData)
 
     }
     
-
-    //    override func didMove(toParent parent: UIViewController?) {
-//        super.didMove(toParent: parent)
-//
-//        if parent == nil {
-//            delegate?.userDidEnterInformation(info: "Test")
-//
-//                    // Go back to the previous view controller
-//            _ = self.navigationController?.popViewController(animated: true)
-//            debugPrint("Back Button pressed.")
-//        }
-//    }
     
     @IBOutlet var myTableView: UITableView!
     
@@ -41,8 +35,9 @@ class RepeatTableViewController: UITableViewController {
         super.viewWillDisappear(animated)
 
         if self.isMovingFromParent {
-            print("Test")
-            delegate?.userDidEnterInformation(info: "GUA MAU XX")
+            let myArray = Array(days).sorted()
+            //print(myArray.sorted())
+            delegate?.receivedRepeatData(info: "GUA MAU XX")
         }
     }
 
@@ -51,9 +46,12 @@ class RepeatTableViewController: UITableViewController {
         //self.myTableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         if myTableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
             self.myTableView.cellForRow(at: indexPath)?.accessoryType = .none
+            days.remove(indexPath.row)
         } else {
             self.myTableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+            days.insert(indexPath.row)
         }
+        print("Days ", days)
         self.myTableView.deselectRow(at: indexPath, animated: true)
     }
     
