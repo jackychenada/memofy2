@@ -36,26 +36,6 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
     @IBOutlet weak var studyDurationLabel: UILabel!
     @IBOutlet weak var breakDurationLabel: UILabel!
     
-    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
-        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
-    }
-    
-    func addPlan(name: String, status: String){
-        let newPlan = Plan(name: name, status: status)
-        plans.append(newPlan)
-    }
-    
-    func userDidEnterInformation(info: String) {
-            print(info)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            if segue.identifier == "showRepeat" {
-                let secondViewController = segue.destination as! RepeatTableViewController
-                secondViewController.delegate = self
-            }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -190,6 +170,26 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
         }
 //           return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
         return 66.0
+    }
+    
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    }
+    
+    func addPlan(name: String, status: String){
+        let newPlan = Plan(name: name, status: status)
+        plans.append(newPlan)
+    }
+    
+    func userDidEnterInformation(info: String) {
+            print(info)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "showRepeat" {
+                let secondViewController = segue.destination as! RepeatTableViewController
+                secondViewController.delegate = self
+            }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
