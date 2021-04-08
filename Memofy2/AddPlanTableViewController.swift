@@ -156,19 +156,22 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
         plans.append(newPlan)
     }
     
-    func userDidEnterInformation(info: String) {
-            print(info)
-    }
-    
     func hiddenViewDatePicker(fieldName : String){
         startsDatePicker.isHidden = fieldName == "startsDate" ? false : true
         endsDatePicker.isHidden = fieldName == "endsDate" ? false : true
     
         timeReminderPicker.isHidden = !switchReminder.isOn
         print("cek hidden view", switchReminder.isOn)
-        switchReminder
         studyDurationPicker.isHidden = fieldName == "studyDuration" ? false : true
         breakDurationPicker.isHidden = fieldName == "breakDuration" ? false : true
+    }
+    
+    func animateDatePickerView(iP : IndexPath){
+        UIView.animate(withDuration:0.3, animations: { () -> Void in
+            self.tableView.beginUpdates()
+            self.tableView.deselectRow(at: iP, animated: true)
+            self.tableView.endUpdates()
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -176,6 +179,10 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
                 let secondViewController = segue.destination as! RepeatTableViewController
                 secondViewController.delegate = self
             }
+    }
+    
+    func userDidEnterInformation(info: String) {
+            print(info)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -208,40 +215,23 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
         if startsIndexPath as IndexPath == indexPath {
 
             hiddenViewDatePicker(fieldName: "startsDate")
+            animateDatePickerView(iP: indexPath)
 
-            UIView.animate(withDuration:0.3, animations: { () -> Void in
-                self.tableView.beginUpdates()
-                self.tableView.deselectRow(at: indexPath, animated: true)
-                self.tableView.endUpdates()
-            })
         } else if endsIndexPath as IndexPath == indexPath {
             
             hiddenViewDatePicker(fieldName: "endsDate")
-            
-            UIView.animate(withDuration:0.3, animations: { () -> Void in
-                self.tableView.beginUpdates()
-                self.tableView.deselectRow(at: indexPath, animated: true)
-                self.tableView.endUpdates()
-            })
+            animateDatePickerView(iP: indexPath)
             
         } else if studyIndexPath as IndexPath == indexPath {
             
             hiddenViewDatePicker(fieldName: "studyDuration")
+            animateDatePickerView(iP: indexPath)
             
-            UIView.animate(withDuration:0.3, animations: { () -> Void in
-                self.tableView.beginUpdates()
-                self.tableView.deselectRow(at: indexPath, animated: true)
-                self.tableView.endUpdates()
-            })
         } else if breakIndexPath as IndexPath == indexPath {
             
             hiddenViewDatePicker(fieldName: "breakDuration")
+            animateDatePickerView(iP: indexPath)
             
-            UIView.animate(withDuration:0.3, animations: { () -> Void in
-                self.tableView.beginUpdates()
-                self.tableView.deselectRow(at: indexPath, animated: true)
-                self.tableView.endUpdates()
-            })
         }
         
         
