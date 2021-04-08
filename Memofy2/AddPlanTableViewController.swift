@@ -11,6 +11,7 @@ import UIKit
 class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
      
     var plans : [Plan] = []
+    var days : [Int] = []
     
     let dateFormatter = DateFormatter()
     let defaults = UserDefaults.standard
@@ -49,16 +50,14 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         hiddenViewDatePicker(fieldName: "init")
         
         //USER DEFAULT GETTER
-        
         //Mencari user default dengan key plans
         let tempArchiveItems = defaults.data(forKey: "Plans")
-        
+
         //cek tempArchiveItemsnya ada default dengan key plans atau tidak
         print("tempArchiveItems ", tempArchiveItems as Any)
 
-        
-        if tempArchiveItems != nil {
-            
+        if (tempArchiveItems != nil) {
+
             //Kalo tidak kosong, bisa kebuka default dengan key plans dan datanya
             plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
             print("Check Plans : ", plans)
@@ -146,8 +145,8 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     }
     
     func addPlan(name: String, status: String){
-        let newPlan = Plan(name: name, status: status)
-        plans.append(newPlan)
+        //let newPlan = Plan(name: name, status: status)
+        //plans.append(newPlan)
     }
     
     func hiddenViewDatePicker(fieldName : String){
@@ -168,15 +167,16 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            if segue.identifier == "showRepeat" {
-                let secondViewController = segue.destination as! RepeatTableViewController
-                secondViewController.delegate = self
-                secondViewController.sendRepeatData = "Gua kembung"
-            }
+        if segue.identifier == "showRepeat" {
+            let secondViewController = segue.destination as! RepeatTableViewController
+            secondViewController.delegate = self
+            secondViewController.sendRepeatData = days
+        }
     }
     
-    func receivedRepeatData(info: String) {
-        print(info)
+    func receivedRepeatData(day: [Int]) {
+        days = day
+        print(day)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

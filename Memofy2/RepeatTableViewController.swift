@@ -8,21 +8,21 @@
 import UIKit
 
 protocol RepeatDataDelegate: AnyObject {
-    func receivedRepeatData(info: String)
+    func receivedRepeatData(day: [Int])
 }
 
 class RepeatTableViewController: UITableViewController {
 
     weak var delegate: RepeatDataDelegate? = nil
     
-    var sendRepeatData = ""
+    var sendRepeatData : [Int] = []
     
     var days = Set<Int>()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(sendRepeatData)
+        print("Array", sendRepeatData)
 
     }
     
@@ -36,8 +36,7 @@ class RepeatTableViewController: UITableViewController {
 
         if self.isMovingFromParent {
             let myArray = Array(days).sorted()
-            //print(myArray.sorted())
-            delegate?.receivedRepeatData(info: "GUA MAU XX")
+            delegate?.receivedRepeatData(day: myArray)
         }
     }
 
@@ -51,7 +50,7 @@ class RepeatTableViewController: UITableViewController {
             self.myTableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
             days.insert(indexPath.row)
         }
-        print("Days ", days)
+        //print("Days ", days)
         self.myTableView.deselectRow(at: indexPath, animated: true)
     }
     
