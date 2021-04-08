@@ -19,6 +19,12 @@
 		857F3220260A25AB001271B7 /* Memofy2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857F321F260A25AB001271B7 /* Memofy2UITests.swift */; };
 		85E20065260DA032004B09FB /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E20063260DA032004B09FB /* DetailTableViewCell.swift */; };
 		85E20066260DA032004B09FB /* DetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85E20064260DA032004B09FB /* DetailTableViewCell.xib */; };
+		F91CA0E0261706FE00701329 /* AddPlanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91CA0DF261706FE00701329 /* AddPlanController.swift */; };
+		F921ABFB261C2F8A00E83213 /* PlanModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F921ABFA261C2F8900E83213 /* PlanModel.swift */; };
+		F9BC97CE261AEC44001AD387 /* AddPlan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9BC97CD261AEC44001AD387 /* AddPlan.storyboard */; };
+		F9BC97D8261B7034001AD387 /* AddPlanTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BC97D7261B7034001AD387 /* AddPlanTableViewController.swift */; };
+		F9BC97DE261B7077001AD387 /* AddPlanTableView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9BC97DC261B7077001AD387 /* AddPlanTableView.storyboard */; };
+		F9C54184261E1ABF008A2E03 /* RepeatTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C54183261E1ABF008A2E03 /* RepeatTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +63,12 @@
 		857F3221260A25AB001271B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85E20063260DA032004B09FB /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		85E20064260DA032004B09FB /* DetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailTableViewCell.xib; sourceTree = "<group>"; };
+		F91CA0DF261706FE00701329 /* AddPlanController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlanController.swift; sourceTree = "<group>"; };
+		F921ABFA261C2F8900E83213 /* PlanModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanModel.swift; sourceTree = "<group>"; };
+		F9BC97CD261AEC44001AD387 /* AddPlan.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddPlan.storyboard; sourceTree = "<group>"; };
+		F9BC97D7261B7034001AD387 /* AddPlanTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlanTableViewController.swift; sourceTree = "<group>"; };
+		F9BC97DD261B7077001AD387 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Memofy2/Base.lproj/AddPlanTableView.storyboard; sourceTree = "<group>"; };
+		F9C54183261E1ABF008A2E03 /* RepeatTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,10 +119,16 @@
 		857F31FC260A25AB001271B7 /* Memofy2 */ = {
 			isa = PBXGroup;
 			children = (
+				F9BC97DC261B7077001AD387 /* AddPlanTableView.storyboard */,
+				F9C54183261E1ABF008A2E03 /* RepeatTableViewController.swift */,
+				F9BC97D7261B7034001AD387 /* AddPlanTableViewController.swift */,
+				F9BC97CD261AEC44001AD387 /* AddPlan.storyboard */,
+				F921ABFA261C2F8900E83213 /* PlanModel.swift */,
 				857F31FD260A25AB001271B7 /* AppDelegate.swift */,
 				857F31FF260A25AB001271B7 /* SceneDelegate.swift */,
 				857F3201260A25AB001271B7 /* ViewController.swift */,
 				857F3203260A25AB001271B7 /* Main.storyboard */,
+				F91CA0DF261706FE00701329 /* AddPlanController.swift */,
 				857F3206260A25AB001271B7 /* Assets.xcassets */,
 				857F3208260A25AB001271B7 /* LaunchScreen.storyboard */,
 				857F320B260A25AB001271B7 /* Info.plist */,
@@ -243,7 +261,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9BC97DE261B7077001AD387 /* AddPlanTableView.storyboard in Resources */,
 				857F320A260A25AB001271B7 /* LaunchScreen.storyboard in Resources */,
+				F9BC97CE261AEC44001AD387 /* AddPlan.storyboard in Resources */,
 				85E20066260DA032004B09FB /* DetailTableViewCell.xib in Resources */,
 				857F3207260A25AB001271B7 /* Assets.xcassets in Resources */,
 				857F3205260A25AB001271B7 /* Main.storyboard in Resources */,
@@ -273,9 +293,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				857F3202260A25AB001271B7 /* ViewController.swift in Sources */,
+				F9BC97D8261B7034001AD387 /* AddPlanTableViewController.swift in Sources */,
 				857F31FE260A25AB001271B7 /* AppDelegate.swift in Sources */,
+				F91CA0E0261706FE00701329 /* AddPlanController.swift in Sources */,
 				857F3200260A25AB001271B7 /* SceneDelegate.swift in Sources */,
 				85E20065260DA032004B09FB /* DetailTableViewCell.swift in Sources */,
+				F9C54184261E1ABF008A2E03 /* RepeatTableViewController.swift in Sources */,
+				F921ABFB261C2F8A00E83213 /* PlanModel.swift in Sources */,
 				852B592E260C34B500C0D986 /* MemoTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -326,6 +350,14 @@
 				857F3209260A25AB001271B7 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		F9BC97DC261B7077001AD387 /* AddPlanTableView.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F9BC97DD261B7077001AD387 /* Base */,
+			);
+			name = AddPlanTableView.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
