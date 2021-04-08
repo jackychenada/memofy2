@@ -151,12 +151,12 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     }
     
     func hiddenViewDatePicker(fieldName : String){
-        startsDatePicker.isHidden = fieldName == "startsDate" ? false : true
-        endsDatePicker.isHidden = fieldName == "endsDate" ? false : true
+        startsDatePicker.isHidden = fieldName == "startsDate" ? !startsDatePicker.isHidden : true
+        endsDatePicker.isHidden = fieldName == "endsDate" ? !endsDatePicker.isHidden : true
 //        timeReminderPicker.isHidden = !switchReminder.isOn
 //        print("cek hidden view", switchReminder.isOn)
-        studyDurationPicker.isHidden = fieldName == "studyDuration" ? false : true
-        breakDurationPicker.isHidden = fieldName == "breakDuration" ? false : true
+        studyDurationPicker.isHidden = fieldName == "studyDuration" ? !studyDurationPicker.isHidden : true
+        breakDurationPicker.isHidden = fieldName == "breakDuration" ? !breakDurationPicker.isHidden : true
     }
     
     func animateDatePickerView(iP : IndexPath){
