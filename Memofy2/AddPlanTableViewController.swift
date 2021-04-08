@@ -39,21 +39,16 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //SET DEFAULT DATE DI ADD
         startsDatePicker.date = NSDate() as Date
         endsDatePicker.date = NSDate() as Date
-        
         
         dateFormatter.dateStyle = DateFormatter.Style.long
         
         startsDateLabel.text = dateFormatter.string(from: startsDatePicker.date)
         endsDateLabel.text = dateFormatter.string(from: endsDatePicker.date)
         
-        startsDatePicker.isHidden = true
-        endsDatePicker.isHidden = true
-        //timeReminderPicker.isHidden = true
-        
-        studyDurationPicker.isHidden = true
-        breakDurationPicker.isHidden = true
+        hiddenViewDatePicker(fieldName: "init")
         
         //USER DEFAULT GETTER
         
@@ -84,7 +79,8 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
     }
     
     @IBAction func switchOn(_ sender: Any) {
-       
+       hiddenViewDatePicker(fieldName: "timeReminder")
+        print("reminder is enabled", switchReminder.isOn)
     }
     
     @IBAction func reminderDP(_ sender: Any) {
@@ -151,6 +147,37 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
         print("addData plans : ", plans)
     }
     
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    }
+    
+    func addPlan(name: String, status: String){
+        let newPlan = Plan(name: name, status: status)
+        plans.append(newPlan)
+    }
+    
+    func userDidEnterInformation(info: String) {
+            print(info)
+    }
+    
+    func hiddenViewDatePicker(fieldName : String){
+        startsDatePicker.isHidden = fieldName == "startsDate" ? false : true
+        endsDatePicker.isHidden = fieldName == "endsDate" ? false : true
+    
+        timeReminderPicker.isHidden = !switchReminder.isOn
+        print("cek hidden view", switchReminder.isOn)
+        switchReminder
+        studyDurationPicker.isHidden = fieldName == "studyDuration" ? false : true
+        breakDurationPicker.isHidden = fieldName == "breakDuration" ? false : true
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "showRepeat" {
+                let secondViewController = segue.destination as! RepeatTableViewController
+                secondViewController.delegate = self
+            }
+    }
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 1 && indexPath.row == 2 {
             let height:CGFloat = startsDatePicker.isHidden ? 0.0 : 280.0
@@ -172,26 +199,6 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
         return 66.0
     }
     
-    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
-        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
-    }
-    
-    func addPlan(name: String, status: String){
-        let newPlan = Plan(name: name, status: status)
-        plans.append(newPlan)
-    }
-    
-    func userDidEnterInformation(info: String) {
-            print(info)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            if segue.identifier == "showRepeat" {
-                let secondViewController = segue.destination as! RepeatTableViewController
-                secondViewController.delegate = self
-            }
-    }
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let startsIndexPath = NSIndexPath(row: 1, section: 1)
         let endsIndexPath = NSIndexPath(row: 3, section: 1)
@@ -200,10 +207,7 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
         
         if startsIndexPath as IndexPath == indexPath {
 
-            startsDatePicker.isHidden = !startsDatePicker.isHidden
-            endsDatePicker.isHidden = true
-            studyDurationPicker.isHidden = true
-            breakDurationPicker.isHidden = true
+            hiddenViewDatePicker(fieldName: "startsDate")
 
             UIView.animate(withDuration:0.3, animations: { () -> Void in
                 self.tableView.beginUpdates()
@@ -212,10 +216,7 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
             })
         } else if endsIndexPath as IndexPath == indexPath {
             
-            startsDatePicker.isHidden = true
-            endsDatePicker.isHidden = !endsDatePicker.isHidden
-            studyDurationPicker.isHidden = true
-            breakDurationPicker.isHidden = true
+            hiddenViewDatePicker(fieldName: "endsDate")
             
             UIView.animate(withDuration:0.3, animations: { () -> Void in
                 self.tableView.beginUpdates()
@@ -225,10 +226,7 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
             
         } else if studyIndexPath as IndexPath == indexPath {
             
-            startsDatePicker.isHidden = true
-            endsDatePicker.isHidden = true
-            studyDurationPicker.isHidden = !studyDurationPicker.isHidden
-            breakDurationPicker.isHidden = true
+            hiddenViewDatePicker(fieldName: "studyDuration")
             
             UIView.animate(withDuration:0.3, animations: { () -> Void in
                 self.tableView.beginUpdates()
@@ -237,10 +235,7 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
             })
         } else if breakIndexPath as IndexPath == indexPath {
             
-            startsDatePicker.isHidden = true
-            endsDatePicker.isHidden = true
-            studyDurationPicker.isHidden = true
-            breakDurationPicker.isHidden = !breakDurationPicker.isHidden
+            hiddenViewDatePicker(fieldName: "breakDuration")
             
             UIView.animate(withDuration:0.3, animations: { () -> Void in
                 self.tableView.beginUpdates()
@@ -251,22 +246,5 @@ class AddPlanTableViewController: UITableViewController, DataEnteredDelegate {
         
         
     }
-    
-//    func addTask(name: String, status: String){
-//        let newTask = Task(name: name, status: status)
-//        tasks.append(newTask)
-//    }
-    
-    
-
-
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 3
-//    }
-//
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        // #warning Incomplete implementation, return the number of rows
-//    }
 
 }
