@@ -19,6 +19,8 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     @IBOutlet weak var studyPlanTextField: UITextField!
     @IBOutlet weak var studyNotesTextView: UITextView!
     
+    @IBOutlet weak var repeatLabel: UILabel!
+    
     @IBOutlet weak var startsDatePicker: UIDatePicker!
     @IBOutlet weak var endsDatePicker: UIDatePicker!
     @IBOutlet weak var timeReminderPicker: UIDatePicker!
@@ -48,6 +50,9 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         endsDateLabel.text = dateFormatter.string(from: endsDatePicker.date)
         
         hiddenViewDatePicker(fieldName: "init")
+        
+        studyDurationPicker.countDownDuration = 3600
+        breakDurationPicker.countDownDuration = 600
         
         //USER DEFAULT GETTER
         //Mencari user default dengan key plans
@@ -80,8 +85,7 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     }
     
     @IBAction func switchOn(_ sender: Any) {
-//       hiddenViewDatePicker(fieldName: "timeReminder")
-//        print("reminder is enabled", switchReminder.isOn)
+        print("switch nyala atau tidak", switchReminder.isOn)
     }
     
     @IBAction func reminderDP(_ sender: Any) {
@@ -101,10 +105,17 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+            let mainViewController = self.presentingViewController as? ViewController
+            super.dismiss(animated: flag) {
+                mainViewController?.viewWillAppear(true)
+        }
+    }
+    
     @IBAction func addData(_ sender: Any) {
         print("before", plans)
         
-        let test : [Int] = [1,2]
+        //let test : [Int] = [1,2]
         //Ini Buat Tambah Data
 //        self.addPlan(
 //            index: plans.count,
@@ -124,27 +135,14 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
                 status: "inprogress",
                 studyPlan: studyPlanTextField.text ?? "test",
                 studyNotes: studyNotesTextView.text,
-                frequency: test,
+                frequency: days,
                 startsDate: startsDatePicker.date,
                 endsDate: endsDatePicker.date,
                 timeReminder: timeReminderPicker.date,
                 switchReminder: switchReminder.isOn,
                 studyDuration: Int(studyDurationPicker.countDownDuration),
                 breakDuration: Int(breakDurationPicker.countDownDuration)))
-        
-//        print("Cek data array plans", plans[0].index)
-//        print("Cek data array plans", plans[0].studyPlan)
-//        print("Cek data array plans", plans[0].studyNotes)
-//        print("Cek data array plans", plans[0].frequency)
-//        print("Cek data array plans", plans[0].startsDate)
-//        print("Cek data array plans", plans[0].endsDate)
-//        print("Cek data array plans", plans[0].timeReminder)
-//        print("Cek data array plans", plans[0].switchReminder)
-//        print("Cek data array plans", plans[0].studyDuration)
-//        print("Cek data array plans", plans[0].breakDuration)
-        //Setter use default
-        
-        //
+
         let preStoreTasks = try! NSKeyedArchiver.archivedData(withRootObject: plans, requiringSecureCoding: false)
         
         
@@ -176,16 +174,9 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         }
     }
     
-//    func addPlan(index: Int, studyPlan: String, studyNotes:String, frequency: [Int], startsDate: Date, endsDate: Date, timeReminder: Date, switchReminder: Bool, studyDuration: Int, breakDuration: Int){
-//        let newPlan = Plan(index: index, studyPlan: studyPlan, studyNotes:studyNotes, frequency: frequency, startsDate: startsDate, endsDate: endsDate, timeReminder: timeReminder, switchReminder: switchReminder, studyDuration: studyDuration, breakDuration: breakDuration)
-//        plans.append(newPlan)
-//    }
-    
     func hiddenViewDatePicker(fieldName : String){
         startsDatePicker.isHidden = fieldName == "startsDate" ? !startsDatePicker.isHidden : true
         endsDatePicker.isHidden = fieldName == "endsDate" ? !endsDatePicker.isHidden : true
-//        timeReminderPicker.isHidden = !switchReminder.isOn
-//        print("cek hidden view", switchReminder.isOn)
         studyDurationPicker.isHidden = fieldName == "studyDuration" ? !studyDurationPicker.isHidden : true
         breakDurationPicker.isHidden = fieldName == "breakDuration" ? !breakDurationPicker.isHidden : true
     }
@@ -207,8 +198,37 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     }
     
     func receivedRepeatData(day: [Int]) {
-        days = day
-        print(day)
+        if !day.isEmpty {
+            days = day
+            print("Jumlah", day.count)
+            if day.count == 1{
+                var labelRepeat = ""
+                switch day[0] {
+                case 0 :
+                    labelRepeat = "Every Monday"
+                case 1 :
+                    labelRepeat = "Every Tuesday"
+                case 2 :
+                    labelRepeat = "Every Wednesday"
+                case 3 :
+                    labelRepeat = "Every Thursday"
+                case 4 :
+                    labelRepeat = "Every Friday"
+                case 5 :
+                    labelRepeat = "Every Saturday"
+                case 6 :
+                    labelRepeat = "Every Sunday"
+                default:
+                    break
+                }
+                repeatLabel.text = labelRepeat
+            } else {
+                repeatLabel.text = "Multiple"
+            }
+        } else {
+            repeatLabel.text = "Never"
+        }
+        
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
