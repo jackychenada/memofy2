@@ -64,7 +64,7 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
             //Kalo tidak kosong, bisa kebuka default dengan key plans dan datanya
             plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
             print("Check Plans : ", plans)
-            print("Mo cek array index", plans[0].breakDuration)
+            print("Mo cek array index", plans[0].status)
         }
         
     }
@@ -121,6 +121,7 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         plans.append(
             Plan(
                 index: plans.count,
+                status: "inprogress",
                 studyPlan: studyPlanTextField.text ?? "test",
                 studyNotes: studyNotesTextView.text,
                 frequency: test,

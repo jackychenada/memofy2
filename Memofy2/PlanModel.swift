@@ -13,6 +13,7 @@ class Plan: NSObject, NSCoding
     //Set Key Value
     func encode(with coder: NSCoder) {
         coder.encode(index, forKey: "index")
+        coder.encode(status, forKey: "status")
         coder.encode(studyPlan, forKey: "studyPlan")
         coder.encode(studyNotes, forKey: "studyNotes")
         coder.encode(frequency, forKey: "frequency")
@@ -39,17 +40,19 @@ class Plan: NSObject, NSCoding
         
         //Pastikan data tidak kosong
 //        guard let index = coder.decodeObject(forKey: "index") as? Int,
-              guard let studyPlan = coder.decodeObject(forKey: "studyPlan") as? String,
+        guard let status = coder.decodeObject(forKey: "status") as? String,
+                    let studyPlan = coder.decodeObject(forKey: "studyPlan") as? String,
                     let studyNotes = coder.decodeObject(forKey: "studyNotes") as? String,
-                  let frequency = coder.decodeObject(forKey: "frequency") as? [Int],
-                  let startsDate = coder.decodeObject(forKey: "startsDate") as? Date,
-                  let endsDate = coder.decodeObject(forKey: "endsDate") as? Date,
-                  let timeReminder = coder.decodeObject(forKey: "timeReminder") as? Date
+                    let frequency = coder.decodeObject(forKey: "frequency") as? [Int],
+                    let startsDate = coder.decodeObject(forKey: "startsDate") as? Date,
+                    let endsDate = coder.decodeObject(forKey: "endsDate") as? Date,
+                    let timeReminder = coder.decodeObject(forKey: "timeReminder") as? Date
             else { return nil }
 
             //convert data jadi strings
             self.init(
                 index: coder.decodeInteger(forKey: "index"),
+                status: status,
                 studyPlan: studyPlan,
                 studyNotes: studyNotes,
                 frequency: frequency,
@@ -64,6 +67,7 @@ class Plan: NSObject, NSCoding
     }
     
     var index: Int
+    var status: String
     var studyPlan: String
     var studyNotes: String
     var frequency: [Int]
@@ -88,9 +92,10 @@ class Plan: NSObject, NSCoding
 //        self.breakDuration = breakDuration
 //    }
     
-    init(index: Int, studyPlan: String, studyNotes: String, frequency: [Int], startsDate: Date, endsDate: Date, timeReminder: Date, switchReminder: Bool, studyDuration: Int, breakDuration: Int)
+    init(index: Int, status: String, studyPlan: String, studyNotes: String, frequency: [Int], startsDate: Date, endsDate: Date, timeReminder: Date, switchReminder: Bool, studyDuration: Int, breakDuration: Int)
     {
         self.index = index
+        self.status = status
         self.studyPlan = studyPlan
         self.studyNotes = studyNotes
         self.frequency = frequency
