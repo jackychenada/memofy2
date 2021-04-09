@@ -145,7 +145,7 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         plans.append(
             Plan(
                 index: plans.count,
-                status: "inprogress",
+                status: "in progress",
                 studyPlan: studyPlanTextField.text ?? "test",
                 studyNotes: studyNotesTextView.text,
                 frequency: days,
@@ -182,6 +182,8 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         print("ALL USER DEFAULT", UserDefaults.standard.dictionaryRepresentation())
         
         print("addData plans : ", plans)
+        
+        self.dismiss(animated: true, completion: nil)
     }
     
     func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
