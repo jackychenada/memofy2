@@ -23,7 +23,7 @@ class RepeatTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         days = Set(sendRepeatData)
-        //print("Array yang keterima", sendRepeatData)
+        print("Array yang keterima", sendRepeatData)
         
     }
     
@@ -47,6 +47,7 @@ class RepeatTableViewController: UITableViewController {
         if myTableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
             self.myTableView.cellForRow(at: indexPath)?.accessoryType = .none
             days.remove(indexPath.row)
+            print("yg di remove", days)
         } else {
             self.myTableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
             days.insert(indexPath.row)

@@ -222,8 +222,8 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     }
     
     func receivedRepeatData(day: [Int]) {
+        days = day
         if !day.isEmpty {
-            days = day
             print("Jumlah", day.count)
             if day.count == 1{
                 var labelRepeat = ""
@@ -250,6 +250,7 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
                 repeatLabel.text = "Multiple"
             }
         } else {
+            print("Array Kosong", day)
             repeatLabel.text = "Never"
         }
         
