@@ -7,99 +7,22 @@
 
 import UIKit
 
-class Task: NSObject, NSCoding
-{
-    func encode(with coder: NSCoder) {
-        coder.encode(name, forKey: "name")
-        coder.encode(status, forKey: "status")
-        
-    }
-    
-    required convenience init?(coder: NSCoder) {
-        guard let name = coder.decodeObject(forKey: "name") as? String,
-              let status = coder.decodeObject(forKey: "status") as? String
-            else { return nil }
-
-            self.init(
-                name: name,
-                status: status
-                //published: coder.decodeInteger(forKey: "published") //untuk Int
-            )
-    }
-    
-    //Tassja
-    
-    var name: String
-    var status: String
-    init(name: String, status: String)
-    {
-        self.name = name
-        self.status = status
-    }
-}
-
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
     
     let sections = ["To Do", "Completed"]
     let defaults = UserDefaults.standard
+    let dateFormatter = DateFormatter()
     
-    var tasks: [Task] = [] //FEED
-    var memos: [Task] = [] //TEMP ARCHIVER
+    var plans: [Plan] = [] //TEMP ARCHIVER
     
-    var todoPlans: [Task] = []
-    var completedPlans: [Task] = []
+    var todoPlans: [Plan] = []
+    var completedPlans: [Plan] = []
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        // sometest test
-        func addTask(name: String, status: String){
-            let newTask = Task(name: name, status: status)
-            tasks.append(newTask)
-        }
-        
-        func addMemo(name: String, status: String){
-            let newTask = Task(name: name, status: status)
-            memos.append(newTask)
-        }
-        
-        //GETTER - USER DEFAULTS
-        let tempArchiveItems = defaults.data(forKey: "SavedDict")
-        print("tempArchiveItems ", tempArchiveItems as Any)
-        
-        memos = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Task]
-        print("INI MEMOS", memos as Any)
-        print("memos index 0", memos[0].name)
-        addMemo(name: "programmer", status: "in progress")
-        addMemo(name: "design", status: "in progress")
-        
-        for memo in memos {
-            if memo.status == "in progress" {
-                todoPlans.append(memo)
-            }
-            else if memo.status == "completed" {
-                completedPlans.append(memo)
-            }
-        }
-        print("TODO PLANS:", todoPlans)
-        print("completed PLANS:", completedPlans)
-//        addTask(name: "makan", status: "in progress")
-//        addTask(name: "minum", status: "in progress")
-//        addTask(name: "tidur", status: "completed")
-        
-        print("TASK SEBELUM DI ARCHIVE", tasks)
-        
-        //SETTER - USER DEFAULTS
-//        let preStoreTasks = try! NSKeyedArchiver.archivedData(withRootObject: tasks, requiringSecureCoding: false)
-//        print("INI DATA JADI BYTE", preStoreTasks)
-        //defaults.set(preStoreTasks, forKey: "SavedDict")
-        
-        //print(defaults.object(forKey: "SavedDict") as Any )
-        print("ALL USER DEFAULT", UserDefaults.standard.dictionaryRepresentation())
-        
-        //defaults.set(tasks, forKey: "")
         let nib = UINib(nibName: "MemoTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "MemoTableViewCell")
         tableView.delegate = self
@@ -107,22 +30,71 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         tableView.estimatedRowHeight = 30
         tableView.rowHeight = UITableView.automaticDimension
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        print("ollaaaa tassja")
+        setupView()
+    }
+    
+    func clearArr() {
+        todoPlans = []
+        completedPlans = []
+    }
+    
+    func setupView(){
+        print("olla ollll")
+        //GETTER - USER DEFAULTS
+        //UserDefaults.standard.removeObject(forKey: "Plans")
+        clearArr()
+        let tempArchiveItems = defaults.data(forKey: "Plans")
+        print("tempArchiveItems ", tempArchiveItems as Any)
         
-        
+        if(tempArchiveItems != nil){
+            plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
+            print("INI MEMOS", plans as Any)
+            //addMemo(name: "programmer", status: "in progress")
+            //addMemo(name: "design", status: "in progress")
+            for plan in plans {
+                print("plans index 0", plans[0].status)
+                print("ini plan", plan)
+                if plan.status == "in progress" {
+                    todoPlans.append(plan)
+                }
+                else if plan.status == "completed" {
+                    completedPlans.append(plan)
+                }
+            }
+            print("TODO PLANS:", todoPlans)
+            print("completed PLANS:", completedPlans)
+            tableView.reloadData()
+            //print("ALL USER DEFAULT", UserDefaults.standard.dictionaryRepresentation())
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("indexpath", indexPath)
+        if(sections.count == 2) {
+            //to do
+            if(indexPath[0] == 0) {
+                print("todo plans index", todoPlans[indexPath[1]].index)
+            }
+            //completed
+            else if(indexPath[1] == 1) {
+                print("completed plans index", completedPlans[indexPath[1]].index)
+            }
+        }
+        else{
+            
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         //self.tableView.estimatedRowHeight = 120
         return UITableView.automaticDimension
     }
-//
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30.0
     }
@@ -145,32 +117,33 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 30))
-        headerView.backgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        headerView.backgroundColor =  #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 30))
         label.text = sections[section]
         headerView.addSubview(label)
         return headerView
     }
     
+    func formatDateToString(date: Date) -> String {
+        dateFormatter.dateFormat = "MMM dd - hh:mm a"
+        return dateFormatter.string(from: date)
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemoTableViewCell", for: indexPath) as! MemoTableViewCell
-                var tempData:Task
+                var tempData:Plan
                 if(indexPath.section == 0){
                     tempData = todoPlans[indexPath.row]
                 }else{
                     tempData = completedPlans[indexPath.row]
                 }
                 let data = tempData
-                cell.nameLabel.text = data.name + " memo"
-                cell.nameLabel.textColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-                cell.dateLabel.text = data.status
+                cell.nameLabel.text = data.studyPlan
+                cell.nameLabel.textColor =  #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+                print("index", data.index)
+                cell.dateLabel.text = formatDateToString(date: data.startsDate)
                 return cell
     }
-    
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        self.tableView.rowHeight = UITableView.automaticDimension
-//        self.tableView.estimatedRowHeight = UITableView.automaticDimension
-//    }
     
     
 }
