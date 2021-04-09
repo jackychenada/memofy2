@@ -43,11 +43,19 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         //SET DEFAULT DATE DI ADD
         startsDatePicker.date = NSDate() as Date
         endsDatePicker.date = NSDate() as Date
+        timeReminderPicker.date = NSDate() as Date
         
         dateFormatter.dateStyle = DateFormatter.Style.long
         
         startsDateLabel.text = dateFormatter.string(from: startsDatePicker.date)
         endsDateLabel.text = dateFormatter.string(from: endsDatePicker.date)
+        
+        dateFormatter.dateFormat="HH:mm"
+        reminderLabel.text = dateFormatter.string(from: timeReminderPicker.date)
+        
+        
+//        timeReminderPicker.isHidden = true
+//        switchReminder.isOn = false
         
         hiddenViewDatePicker(fieldName: "init")
         
@@ -85,7 +93,11 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     }
     
     @IBAction func switchOn(_ sender: Any) {
-        print("switch nyala atau tidak", switchReminder.isOn)
+//        timeReminderPicker.isHidden = !timeReminderPicker.isHidden
+//        print("switch :", switchReminder.isOn)
+//        print("time reminder :", timeReminderPicker.isHidden)
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
     
     @IBAction func reminderDP(_ sender: Any) {
@@ -129,6 +141,7 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
 //            studyDuration: Int(studyDurationPicker.countDownDuration),
 //            breakDuration: Int(breakDurationPicker.countDownDuration))
         
+        
         plans.append(
             Plan(
                 index: plans.count,
@@ -143,6 +156,17 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
                 studyDuration: Int(studyDurationPicker.countDownDuration),
                 breakDuration: Int(breakDurationPicker.countDownDuration)))
 
+        print("Cek data array plans", plans[0].index)
+        print("cek data array plans", plans[0].status)
+       print("Cek data array plans", plans[0].studyPlan)
+       print("Cek data array plans", plans[0].studyNotes)
+       print("Cek data array plans", plans[0].frequency)
+       print("Cek data array plans", plans[0].startsDate)
+       print("Cek data array plans", plans[0].endsDate)
+       print("Cek data array plans", plans[0].timeReminder)
+       print("Cek data array plans", plans[0].switchReminder)
+       print("Cek data array plans", plans[0].studyDuration)
+       print("Cek data array plans", plans[0].breakDuration)
         let preStoreTasks = try! NSKeyedArchiver.archivedData(withRootObject: plans, requiringSecureCoding: false)
         
         
@@ -239,8 +263,9 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
             let height:CGFloat = endsDatePicker.isHidden ? 0.0 : 290.0
                return height
         } else if indexPath.section ==  1 && indexPath.row == 6 {
-            let height:CGFloat = timeReminderPicker.isHidden ? 0.0 : 55.0
-               return height
+//            let height:CGFloat = timeReminderPicker.isHidden ? 0.0 : 55.0
+//               return height
+            return switchReminder.isOn ? 55.0 : 0.0
         } else if indexPath.section == 2 && indexPath.row == 1 {
             let height:CGFloat = studyDurationPicker.isHidden ? 0.0 : 162.0
                return height
@@ -279,8 +304,6 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
             animateDatePickerView(iP: indexPath)
             
         }
-        
-        
     }
 
 }
