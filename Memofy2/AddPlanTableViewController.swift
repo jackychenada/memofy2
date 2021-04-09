@@ -51,16 +51,20 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         
         //USER DEFAULT GETTER
         //Mencari user default dengan key plans
+        //defaults.removeObject(forKey: "Plans")
         let tempArchiveItems = defaults.data(forKey: "Plans")
 
         //cek tempArchiveItemsnya ada default dengan key plans atau tidak
         print("tempArchiveItems ", tempArchiveItems as Any)
+        
+        print("ALL USER DEFAULT", UserDefaults.standard.dictionaryRepresentation())
 
         if (tempArchiveItems != nil) {
 
             //Kalo tidak kosong, bisa kebuka default dengan key plans dan datanya
             plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
             print("Check Plans : ", plans)
+            print("Mo cek array index", plans[0].breakDuration)
         }
         
     }
@@ -94,20 +98,49 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     }
     
     @IBAction func cancelButton(_ sender: UIBarButtonItem) {
-        let isPresentingInAddMode = presentingViewController is UINavigationController
-        if isPresentingInAddMode {
-            dismiss(animated: true, completion: nil)
-        } else {
-            navigationController?.popViewController(animated: true)
-        }
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func addData(_ sender: Any) {
         print("before", plans)
         
+        let test : [Int] = [1,2]
         //Ini Buat Tambah Data
-        self.addPlan(name: studyPlanTextField.text!, status: studyNotesTextView.text!)
+//        self.addPlan(
+//            index: plans.count,
+//            studyPlan: studyPlanTextField.text ?? "test",
+//            studyNotes: studyNotesTextView.text,
+//            frequency: test,
+//            startsDate: startsDatePicker.date,
+//            endsDate: endsDatePicker.date,
+//            timeReminder: timeReminderPicker.date,
+//            switchReminder: switchReminder.isOn,
+//            studyDuration: Int(studyDurationPicker.countDownDuration),
+//            breakDuration: Int(breakDurationPicker.countDownDuration))
         
+        plans.append(
+            Plan(
+                index: plans.count,
+                studyPlan: studyPlanTextField.text ?? "test",
+                studyNotes: studyNotesTextView.text,
+                frequency: test,
+                startsDate: startsDatePicker.date,
+                endsDate: endsDatePicker.date,
+                timeReminder: timeReminderPicker.date,
+                switchReminder: switchReminder.isOn,
+                studyDuration: Int(studyDurationPicker.countDownDuration),
+                breakDuration: Int(breakDurationPicker.countDownDuration)))
+        
+//        print("Cek data array plans", plans[0].index)
+//        print("Cek data array plans", plans[0].studyPlan)
+//        print("Cek data array plans", plans[0].studyNotes)
+//        print("Cek data array plans", plans[0].frequency)
+//        print("Cek data array plans", plans[0].startsDate)
+//        print("Cek data array plans", plans[0].endsDate)
+//        print("Cek data array plans", plans[0].timeReminder)
+//        print("Cek data array plans", plans[0].switchReminder)
+//        print("Cek data array plans", plans[0].studyDuration)
+//        print("Cek data array plans", plans[0].breakDuration)
         //Setter use default
         
         //
@@ -125,8 +158,6 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         //Cek keseluruhan
         print("ALL USER DEFAULT", UserDefaults.standard.dictionaryRepresentation())
         
-        print(studyPlanTextField.text);
-        print(studyNotesTextView.text);
         print("addData plans : ", plans)
     }
     
@@ -144,10 +175,10 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         }
     }
     
-    func addPlan(name: String, status: String){
-        //let newPlan = Plan(name: name, status: status)
-        //plans.append(newPlan)
-    }
+//    func addPlan(index: Int, studyPlan: String, studyNotes:String, frequency: [Int], startsDate: Date, endsDate: Date, timeReminder: Date, switchReminder: Bool, studyDuration: Int, breakDuration: Int){
+//        let newPlan = Plan(index: index, studyPlan: studyPlan, studyNotes:studyNotes, frequency: frequency, startsDate: startsDate, endsDate: endsDate, timeReminder: timeReminder, switchReminder: switchReminder, studyDuration: studyDuration, breakDuration: breakDuration)
+//        plans.append(newPlan)
+//    }
     
     func hiddenViewDatePicker(fieldName : String){
         startsDatePicker.isHidden = fieldName == "startsDate" ? !startsDatePicker.isHidden : true

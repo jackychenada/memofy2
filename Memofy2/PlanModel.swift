@@ -38,21 +38,25 @@ class Plan: NSObject, NSCoding
     required convenience init?(coder: NSCoder) {
         
         //Pastikan data tidak kosong
-        guard let index = coder.decodeObject(forKey: "index") as? Int,
-              let studyPlan = coder.decodeObject(forKey: "studyPlan") as? String,
-              let studyNotes = coder.decodeObject(forKey: "studyNotes") as? String
+//        guard let index = coder.decodeObject(forKey: "index") as? Int,
+              guard let studyPlan = coder.decodeObject(forKey: "studyPlan") as? String,
+                    let studyNotes = coder.decodeObject(forKey: "studyNotes") as? String,
+                  let frequency = coder.decodeObject(forKey: "frequency") as? [Int],
+                  let startsDate = coder.decodeObject(forKey: "startsDate") as? Date,
+                  let endsDate = coder.decodeObject(forKey: "endsDate") as? Date,
+                  let timeReminder = coder.decodeObject(forKey: "timeReminder") as? Date
             else { return nil }
 
             //convert data jadi strings
             self.init(
-                index: index,
+                index: coder.decodeInteger(forKey: "index"),
                 studyPlan: studyPlan,
                 studyNotes: studyNotes,
-                frequency: (coder.decodeObject(forKey: "frequency") as? [Int])!,
-                startsDate: (coder.decodeObject(forKey: "startsDate") as? Date)!,
-                endsDate: (coder.decodeObject(forKey: "endsDate") as? Date)!,
-                timeReminder: (coder.decodeObject(forKey: "timeReminder") as? Date)!,
-                switchReminder: (coder.decodeBool(forKey: "switchReminder") as? Bool)!,
+                frequency: frequency,
+                startsDate: startsDate,
+                endsDate: endsDate,
+                timeReminder: timeReminder,
+                switchReminder: coder.decodeBool(forKey: "switchReminder"),
                 studyDuration: coder.decodeInteger(forKey: "studyDuration"),
                 breakDuration: coder.decodeInteger(forKey: "breakDuration")
                 //published: coder.decodeInteger(forKey: "published") //untuk Int
@@ -70,7 +74,21 @@ class Plan: NSObject, NSCoding
     var studyDuration: Int
     var breakDuration: Int
     
-    init(index: Int, studyPlan: String, studyNotes:String, frequency: [Int], startsDate: Date, endsDate: Date, timeReminder: Date, switchReminder: Bool, studyDuration: Int, breakDuration: Int)
+//    init(index: Int, studyPlan: String, studyNotes: String, frequency: [Int], startsDate: Date, endsDate: Date, timeReminder: Date, switchReminder: Bool, studyDuration: Int, breakDuration: Int)
+//    {
+//        self.index = index
+//        self.studyPlan = studyPlan
+//        self.studyNotes = studyNotes
+//        self.frequency = frequency
+//        self.startsDate = startsDate
+//        self.endsDate = endsDate
+//        self.timeReminder = timeReminder
+//        self.switchReminder = switchReminder
+//        self.studyDuration = studyDuration
+//        self.breakDuration = breakDuration
+//    }
+    
+    init(index: Int, studyPlan: String, studyNotes: String, frequency: [Int], startsDate: Date, endsDate: Date, timeReminder: Date, switchReminder: Bool, studyDuration: Int, breakDuration: Int)
     {
         self.index = index
         self.studyPlan = studyPlan
@@ -82,6 +100,7 @@ class Plan: NSObject, NSCoding
         self.switchReminder = switchReminder
         self.studyDuration = studyDuration
         self.breakDuration = breakDuration
+        
     }
 
 }
