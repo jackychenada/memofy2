@@ -10,7 +10,8 @@ import UIKit
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
     
-    let sections = ["To Do", "Completed"]
+    var sections: [String] = []
+    let backgroundColor = #colorLiteral(red: 0.9529411765, green: 0.9490196078, blue: 0.9725490196, alpha: 1)
     let defaults = UserDefaults.standard
     let dateFormatter = DateFormatter()
     
@@ -22,7 +23,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        view.backgroundColor = backgroundColor
         let nib = UINib(nibName: "MemoTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "MemoTableViewCell")
         tableView.delegate = self
@@ -37,6 +38,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         print("ollaaaa tassja")
         setupView()
     }
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//       if (segue.identifier == "navEditPlan") {
+//        //let editPlanController = segue.editpl
+//           // in this line you need to set the name of the class of your `UITableViewController`
+//        //let viewController = segue. as UITableViewController
+//          
+//       }
+//    }
     
     func clearArr() {
         todoPlans = []
@@ -66,6 +76,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     completedPlans.append(plan)
                 }
             }
+            if(todoPlans.count > 0) {
+                sections.append("To Do")
+            }
+            if(completedPlans.count > 0) {
+                sections.append("Completed")
+            }
             print("TODO PLANS:", todoPlans)
             print("completed PLANS:", completedPlans)
             tableView.reloadData()
@@ -87,7 +103,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         else{
             
         }
-        
+        self.performSegue(withIdentifier: "navEditPlan", sender: self)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -101,23 +117,34 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return memos.count
-        if section == 0 {
-            return todoPlans.count
+        let sectionsCount = sections.count
+        if(sectionsCount == 2) {
+            if section == 0 {
+                return todoPlans.count
+            }
+            else {
+                return completedPlans.count
+            }
         }
-        else {
-            return completedPlans.count
+        else if(sectionsCount == 1){
+            return todoPlans.count > 0 ? todoPlans.count : completedPlans.count
         }
+        else{
+            return 0
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
         return sections[section]
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 30))
-        headerView.backgroundColor =  #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        headerView.backgroundColor =  backgroundColor
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 30))
         label.text = sections[section]
         headerView.addSubview(label)
@@ -132,16 +159,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemoTableViewCell", for: indexPath) as! MemoTableViewCell
                 var tempData:Plan
-                if(indexPath.section == 0){
-                    tempData = todoPlans[indexPath.row]
-                }else{
-                    tempData = completedPlans[indexPath.row]
+                let sectionsCount = sections.count
+                if(sectionsCount == 2) {
+                    if indexPath.section == 0 {
+                        tempData = todoPlans[indexPath.row]
+                    }
+                    else {
+                        tempData = completedPlans[indexPath.row]
+                    }
                 }
-                let data = tempData
-                cell.nameLabel.text = data.studyPlan
-                cell.nameLabel.textColor =  #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
-                print("index", data.index)
-                cell.dateLabel.text = formatDateToString(date: data.startsDate)
+                else if(sectionsCount == 1){
+                    tempData = todoPlans.count > 0 ? todoPlans[indexPath.row] : completedPlans[indexPath.row]
+                }else{
+                    tempData = todoPlans.count > 0 ? todoPlans[indexPath.row] : completedPlans[indexPath.row]
+                }
+        //                if(indexPath.section == 0){
+//                    tempData = todoPlans[indexPath.row]
+//                }else{
+//                    tempData = completedPlans[indexPath.row]
+//                }
+                cell.nameLabel.text = tempData.studyPlan
+                cell.nameLabel.textColor =  #colorLiteral(red: 0, green: 0.3607843137, blue: 0.7254901961, alpha: 1)
+                print("index", tempData.index)
+                cell.dateLabel.text = formatDateToString(date: tempData.startsDate)
+                
                 return cell
     }
     

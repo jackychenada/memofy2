@@ -39,7 +39,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Edit"/>
                                 <connections>
-                                    <segue destination="0O9-hq-ycb" kind="presentation" id="VIz-3W-PYG"/>
+                                    <segue destination="0O9-hq-ycb" kind="presentation" identifier="navEditPlan" id="VIz-3W-PYG"/>
                                 </connections>
                             </button>
                         </subviews>
