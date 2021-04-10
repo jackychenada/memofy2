@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
     
+    var planIndex = 100
     var sections: [String] = []
     let backgroundColor = #colorLiteral(red: 0.9529411765, green: 0.9490196078, blue: 0.9725490196, alpha: 1)
     let defaults = UserDefaults.standard
@@ -35,18 +36,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        print("ollaaaa tassja")
+        print("ollaaaa tassjas")
         setupView()
     }
-    
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//       if (segue.identifier == "navEditPlan") {
-//        //let editPlanController = segue.editpl
-//           // in this line you need to set the name of the class of your `UITableViewController`
-//        //let viewController = segue. as UITableViewController
-//          
-//       }
-//    }
+    //navEditPlan
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let nav = segue.destination as? UINavigationController,
+                let vc = nav.topViewController as? EditPlanViewController {
+                vc.receivedPlanIndex = planIndex
+        }
+          
+    }
     
     func clearArr() {
         todoPlans = []
@@ -103,6 +103,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         else{
             
         }
+        planIndex = 1000
         self.performSegue(withIdentifier: "navEditPlan", sender: self)
     }
     
