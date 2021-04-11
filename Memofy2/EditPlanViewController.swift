@@ -11,6 +11,8 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
     
     var dateFormatterr = DateFormatter()
     
+    var receivePlanIndex:Int = -1
+    
     var plans : [Plan] = []
     var days : [Int] = []
     
@@ -19,6 +21,9 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
     let statusDummy = "Completed"
     
     @IBOutlet weak var saveBarButton: UIBarButtonItem!
+    
+    @IBOutlet weak var studyPlanTF: UITextField!
+    @IBOutlet weak var studyNotesTextView: UITextView!
     
     @IBOutlet weak var repeatTableCell: UIView!
     @IBOutlet weak var repeatEditLabel: UILabel!
@@ -50,6 +55,9 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        studyPlanTF.text = String(planDummy)
+        studyNotesTextView.text = String(noteDummy)
         
         //Ngambil data dari repeat
         timeReminderTimeLabel.text = choosenRepeat
@@ -92,6 +100,8 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
         } else {
             timeReminderTimeLabel.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         }
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
     
     @IBAction func dateStartsDPicker(_ sender: Any) {

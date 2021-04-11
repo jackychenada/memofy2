@@ -172,7 +172,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="350" height="66"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VnK-9h-24g">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="VnK-9h-24g">
                                                     <rect key="frame" x="281" y="18" width="49" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                     <connections>
@@ -386,6 +386,8 @@
                         <outlet property="studyDurationLabel" destination="vZw-sJ-wGk" id="1S6-Fk-CJA"/>
                         <outlet property="studyDurationTableCell" destination="yOF-CT-k6u" id="bYY-4V-08F"/>
                         <outlet property="studyDurationTimePicker" destination="5OW-dX-fhI" id="Tsr-sW-FAd"/>
+                        <outlet property="studyNotesTextView" destination="KeL-th-fsq" id="z0S-6T-gy9"/>
+                        <outlet property="studyPlanTF" destination="fxM-r4-OsQ" id="iFZ-5m-akp"/>
                         <outlet property="timeReminderSwitch" destination="VnK-9h-24g" id="2oB-q6-C2u"/>
                         <outlet property="timeReminderTableCell" destination="kLk-aj-H88" id="t4F-7i-R47"/>
                         <outlet property="timeReminderTimeLabel" destination="knE-Ti-8xX" id="QIe-1I-0VX"/>
