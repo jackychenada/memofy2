@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
+    @IBOutlet weak var mainLabel: UILabel!
     
     var planIndex = 100
     var sections: [String] = []
@@ -24,14 +25,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = backgroundColor
+        view.backgroundColor = .white
         let nib = UINib(nibName: "MemoTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "MemoTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.estimatedRowHeight = 30
+        tableView.estimatedRowHeight = 10
         tableView.rowHeight = UITableView.automaticDimension
+        
+        setupInterface()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,14 +46,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let nav = segue.destination as? UINavigationController,
                 let vc = nav.topViewController as? EditPlanViewController {
-                vc.receivedPlanIndex = planIndex
+                vc.receivePlanIndex = planIndex
         }
-          
+    }
+    
+    func setupInterface(){
+        let footerView =  UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        footerView.backgroundColor = backgroundColor
+        tableView.tableFooterView = footerView
+        
+        
+        //mainLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
     }
     
     func clearArr() {
         todoPlans = []
         completedPlans = []
+        sections = []
     }
     
     func setupView(){
@@ -77,7 +89,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
             }
             if(todoPlans.count > 0) {
-                sections.append("To Do")
+                sections.append("TO DO")
             }
             if(completedPlans.count > 0) {
                 sections.append("Completed")
@@ -90,20 +102,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if(sections.count == 2) {
-            //to do
-            if(indexPath[0] == 0) {
-                print("todo plans index", todoPlans[indexPath[1]].index)
-            }
-            //completed
-            else if(indexPath[1] == 1) {
-                print("completed plans index", completedPlans[indexPath[1]].index)
-            }
+        let currentSection = sections[indexPath[0]]
+        if(currentSection == "TO DO"){
+            planIndex = todoPlans[indexPath[1]].index
         }
-        else{
-            
+        else if(currentSection == "Completed"){
+            planIndex = completedPlans[indexPath[1]].index
         }
-        planIndex = 1000
+//        if(sections.count == 2) {
+//            //to do
+//            if(indexPath[0] == 0) {
+//                print("todo plans index", todoPlans[indexPath[1]].index)
+//            }
+//            //completed
+//            else if(indexPath[1] == 1) {
+//                print("completed plans index", completedPlans[indexPath[1]].index)
+//            }
+//        }
+//        else{
+//
+//        }
+        //planIndex = 1000
         self.performSegue(withIdentifier: "navEditPlan", sender: self)
     }
     
@@ -113,7 +132,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30.0
+        return 50.0
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
@@ -146,7 +165,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 30))
         headerView.backgroundColor =  backgroundColor
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 30))
+        let label = UILabel(frame: CGRect(x: 12, y: 0, width: tableView.bounds.size.width, height: 50))
+        label.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.6)
         label.text = sections[section]
         headerView.addSubview(label)
         return headerView

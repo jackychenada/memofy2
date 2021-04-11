@@ -17,29 +17,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STUDY PLAN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8Y-A7-Zzn">
-                                <rect key="frame" x="5" y="49" width="102.33333333333333" height="20.333333333333329"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="5" y="49" width="193.66666666666666" height="40.666666666666657"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="33"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VNM-Xs-Hb7">
-                                <rect key="frame" x="0.0" y="72.333333333333314" width="390" height="737.66666666666674"/>
+                                <rect key="frame" x="0.0" y="92.666666666666686" width="390" height="717.33333333333326"/>
                                 <sections/>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iuz-fb-Ye5">
-                                <rect key="frame" x="321" y="34" width="61" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iuz-fb-Ye5">
+                                <rect key="frame" x="337" y="27" width="31" height="72"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Add Plan"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                <state key="normal" title="+"/>
                                 <connections>
                                     <segue destination="JDf-iw-ADb" kind="presentation" id="Dvm-CQ-rif"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gC7-eh-nJp">
-                                <rect key="frame" x="245" y="34" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Edit"/>
-                                <connections>
-                                    <segue destination="0O9-hq-ycb" kind="presentation" identifier="navEditPlan" id="VIz-3W-PYG"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -55,6 +48,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="mainLabel" destination="c8Y-A7-Zzn" id="HHS-W3-4QU"/>
                         <outlet property="tableView" destination="VNM-Xs-Hb7" id="fVi-Rn-2Tz"/>
                     </connections>
                 </viewController>
