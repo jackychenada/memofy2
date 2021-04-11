@@ -64,7 +64,7 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         
         //USER DEFAULT GETTER
         //Mencari user default dengan key plans
-        //defaults.removeObject(forKey: "Plans")
+//        defaults.removeObject(forKey: "Plans")
         let tempArchiveItems = defaults.data(forKey: "Plans")
 
         //cek tempArchiveItemsnya ada default dengan key plans atau tidak

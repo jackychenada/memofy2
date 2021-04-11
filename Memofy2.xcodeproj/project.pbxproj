@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		032D2D69261A035800FC7DD6 /* EditPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032D2D68261A035800FC7DD6 /* EditPlanViewController.swift */; };
+		03B590CB2620AECB005E3AD8 /* RepeatEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B590CA2620AECB005E3AD8 /* RepeatEditTableViewController.swift */; };
 		03E28F41261E13110025013B /* EditPlanTable.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03E28F40261E13110025013B /* EditPlanTable.storyboard */; };
 		852B592E260C34B500C0D986 /* MemoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852B592C260C34B500C0D986 /* MemoTableViewCell.swift */; };
 		852B592F260C34B500C0D986 /* MemoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 852B592D260C34B500C0D986 /* MemoTableViewCell.xib */; };
@@ -47,6 +48,7 @@
 
 /* Begin PBXFileReference section */
 		032D2D68261A035800FC7DD6 /* EditPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPlanViewController.swift; sourceTree = "<group>"; };
+		03B590CA2620AECB005E3AD8 /* RepeatEditTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatEditTableViewController.swift; sourceTree = "<group>"; };
 		03E28F40261E13110025013B /* EditPlanTable.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = EditPlanTable.storyboard; sourceTree = "<group>"; };
 		852B592C260C34B500C0D986 /* MemoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoTableViewCell.swift; sourceTree = "<group>"; };
 		852B592D260C34B500C0D986 /* MemoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemoTableViewCell.xib; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				857F3201260A25AB001271B7 /* ViewController.swift */,
 				857F3203260A25AB001271B7 /* Main.storyboard */,
 				032D2D68261A035800FC7DD6 /* EditPlanViewController.swift */,
+				03B590CA2620AECB005E3AD8 /* RepeatEditTableViewController.swift */,
 				857F3206260A25AB001271B7 /* Assets.xcassets */,
 				857F3208260A25AB001271B7 /* LaunchScreen.storyboard */,
 				857F320B260A25AB001271B7 /* Info.plist */,
@@ -298,6 +301,7 @@
 				857F3202260A25AB001271B7 /* ViewController.swift in Sources */,
 				F9BC97D8261B7034001AD387 /* AddPlanTableViewController.swift in Sources */,
 				857F31FE260A25AB001271B7 /* AppDelegate.swift in Sources */,
+				03B590CB2620AECB005E3AD8 /* RepeatEditTableViewController.swift in Sources */,
 				85834FAB261C9D9300401C6A /* StudyTimeController.swift in Sources */,
 				85B17B3F2618446000E16F8E /* TaskCompletedTableViewCell.swift in Sources */,
 				857F3200260A25AB001271B7 /* SceneDelegate.swift in Sources */,
