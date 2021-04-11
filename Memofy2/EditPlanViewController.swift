@@ -79,12 +79,18 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
         timeReminderTimeLabel.text = dateFormatterr.string(from: timeReminderTimePicker.date)
         
         if (statusDummy == "Completed") {
+            startStudyButton.isEnabled = true
             startStudyButton.backgroundColor = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
             startStudyButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
         } else if (statusDummy == "To Do") {
+            startStudyButton.isEnabled = false
             startStudyButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
             startStudyButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
         }
+    }
+    
+    @IBAction func saveButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func deletePlanButton(_ sender: Any) {

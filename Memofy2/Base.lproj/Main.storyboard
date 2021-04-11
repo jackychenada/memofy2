@@ -81,7 +81,7 @@
         <!--Study Time Controller-->
         <scene sceneID="NFi-nB-DBE">
             <objects>
-                <viewController id="F21-68-cAg" customClass="StudyTimeController" customModule="Memofy2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="studyTimeViewController" id="F21-68-cAg" customClass="StudyTimeController" customModule="Memofy2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cxN-Xp-vg1">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

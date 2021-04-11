@@ -12,7 +12,7 @@
             <objects>
                 <tableViewController id="2AQ-fU-bzj" customClass="EditPlanViewController" customModule="Memofy2" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="2p2-IB-c0z">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="843.99999999999989"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.96594157250000001" green="0.95862051859999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <sections>
@@ -321,7 +321,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="saveStudyPlanButton:" destination="2AQ-fU-bzj" eventType="touchUpInside" id="cdP-J1-GW4"/>
+                                                        <segue destination="wFw-Ki-ESu" kind="show" id="Odi-cV-Qbw"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -365,7 +365,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="NMX-Vz-4wN">
                             <connections>
-                                <action selector="saveData:" destination="2AQ-fU-bzj" id="tM7-tv-9tx"/>
+                                <action selector="saveButton:" destination="2AQ-fU-bzj" id="w26-RV-ahZ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -382,7 +382,7 @@
                         <outlet property="repeatEditLabel" destination="sZ6-9Y-y3p" id="6ZE-ZP-aC6"/>
                         <outlet property="repeatTableCell" destination="KCk-fu-9Xo" id="gdX-xN-L9V"/>
                         <outlet property="saveBarButton" destination="NMX-Vz-4wN" id="F0Z-ye-D11"/>
-                        <outlet property="startStudyButton" destination="lu6-al-0gb" id="zKa-no-xw9"/>
+                        <outlet property="startStudyButton" destination="lu6-al-0gb" id="3wv-6n-5vd"/>
                         <outlet property="studyDurationLabel" destination="vZw-sJ-wGk" id="1S6-Fk-CJA"/>
                         <outlet property="studyDurationTableCell" destination="yOF-CT-k6u" id="bYY-4V-08F"/>
                         <outlet property="studyDurationTimePicker" destination="5OW-dX-fhI" id="Tsr-sW-FAd"/>
@@ -558,6 +558,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bVt-ES-pEN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="776.92307692307691" y="75.355450236966817"/>
+        </scene>
+        <!--studyTimeViewController-->
+        <scene sceneID="j3J-k2-04f">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="studyTimeViewController" id="wFw-Ki-ESu" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="8Hg-wM-ctW"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="myO-pD-NfF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2353" y="498"/>
         </scene>
     </scenes>
     <resources>
