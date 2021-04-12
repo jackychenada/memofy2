@@ -16,21 +16,16 @@ class RepeatTableViewController: UITableViewController {
     weak var delegate: RepeatDataDelegate? = nil
     
     var sendRepeatData : [Int] = []
-    
     var days = Set<Int>()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         days = Set(sendRepeatData)
         print("Array yang keterima", sendRepeatData)
-        
     }
     
     
     @IBOutlet var myTableView: UITableView!
-    
-    //var lastSelection: NSIndexPath!
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
