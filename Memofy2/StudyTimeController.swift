@@ -15,10 +15,12 @@ class StudyTimeController: UIViewController {
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     
+    let defaults = UserDefaults.standard
+    var plans:[Plan] = []
     var timerTimer:Timer = Timer()
     var timerBreak: Timer = Timer()
-    var countTimer:Int = 3602
-    var countBreak: Int = 10
+    var countTimer:Int = 0
+    var countBreak: Int = 0
     
     var isCountTimer:Bool = false
     var isCountBreak:Bool = false
@@ -31,13 +33,17 @@ class StudyTimeController: UIViewController {
         playButton.setTitle("START", for: .normal)
         stopButton.setTitle("Done Study", for: .normal)
         
-        stopButton.isHidden = true
-        timerLabel.text = setTimerTextLabel(dataSeconds: countTimer)
-        
-        breakLabel.isHidden = true
-        
         print(receivePlanIndex)
-        
+        getUserDefault()
+        if(plans.count > 0){
+            let plan = plans[receivePlanIndex]
+            countTimer = plan.studyDuration
+            countBreak = plan.breakDuration
+        }
+    
+        timerLabel.text = setTimerTextLabel(dataSeconds: countTimer)
+        stopButton.isHidden = true
+        breakLabel.isHidden = true
     }
     
     @IBAction func stopButtonTap(_ sender: Any){
@@ -52,6 +58,15 @@ class StudyTimeController: UIViewController {
         }))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func getUserDefault(){
+        let tempArchiveItems = defaults.data(forKey: "Plans")
+        print("tempArchiveItems ", tempArchiveItems as Any)
+        if(tempArchiveItems != nil){
+            plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
+        }
+    }
+    
     func startTimer(){
         self.isTimer = true
         self.timerLabel.isHidden = false
@@ -71,6 +86,7 @@ class StudyTimeController: UIViewController {
         self.isCountTimer = false
         self.playButton.setTitle("START", for: .normal)
         self.timerLabel.text = self.setTimerTextLabel(dataSeconds: self.countTimer)
+        self.performSegue(withIdentifier: "unwindToViewController1", sender: self)
     }
 
     

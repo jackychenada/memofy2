@@ -11,7 +11,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var mainLabel: UILabel!
     
-    var planIndex = 100
+    var planIndex = -1
     var sections: [String] = []
     let backgroundColor = #colorLiteral(red: 0.9529411765, green: 0.9490196078, blue: 0.9725490196, alpha: 1)
     let defaults = UserDefaults.standard
@@ -51,12 +51,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func setupInterface(){
+        self.navigationController?.isNavigationBarHidden = true
         let footerView =  UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         footerView.backgroundColor = backgroundColor
         tableView.tableFooterView = footerView
         
         
         //mainLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+    }
+    
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+
     }
     
     func clearArr() {
@@ -122,7 +127,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        else{
 //
 //        }
-        //planIndex = 1000
         self.performSegue(withIdentifier: "navEditPlan", sender: self)
     }
     

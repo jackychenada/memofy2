@@ -17,13 +17,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STUDY PLAN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8Y-A7-Zzn">
-                                <rect key="frame" x="5" y="49" width="193.66666666666666" height="40.666666666666657"/>
+                                <rect key="frame" x="5" y="49" width="193.66666666666666" height="39.666666666666657"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="33"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VNM-Xs-Hb7">
-                                <rect key="frame" x="0.0" y="92.666666666666686" width="390" height="717.33333333333326"/>
+                                <rect key="frame" x="0.0" y="91.666666666666686" width="390" height="718.33333333333326"/>
                                 <sections/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iuz-fb-Ye5">
@@ -47,6 +47,7 @@
                             <constraint firstItem="VNM-Xs-Hb7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="yPR-Fe-odr"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="ALq-ET-5Lj"/>
                     <connections>
                         <outlet property="mainLabel" destination="c8Y-A7-Zzn" id="HHS-W3-4QU"/>
                         <outlet property="tableView" destination="VNM-Xs-Hb7" id="fVi-Rn-2Tz"/>
@@ -121,9 +122,11 @@
                         <outlet property="playButton" destination="ovR-ai-ZGv" id="Pzu-de-LWd"/>
                         <outlet property="stopButton" destination="A6y-r7-DiO" id="bBW-1K-ZDV"/>
                         <outlet property="timerLabel" destination="5c7-Yp-SRn" id="bPx-mj-vtQ"/>
+                        <segue destination="kZu-Nc-F6s" kind="unwind" identifier="unwindToViewController1" unwindAction="prepareForUnwindWithSegue:" id="unh-Mv-1EL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sdp-Ox-pK9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="kZu-Nc-F6s" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="0.0" y="776.30331753554503"/>
         </scene>
