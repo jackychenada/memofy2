@@ -9,11 +9,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemoTableViewCell" id="KGk-i7-Jjw" customClass="MemoTableViewCell" customModule="Memofy2" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="710" height="120"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemoTableViewCell" rowHeight="66" id="KGk-i7-Jjw" customClass="MemoTableViewCell" customModule="Memofy2" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="710" height="66"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="710" height="120"/>
+                <rect key="frame" x="0.0" y="0.0" width="710" height="66"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVa-Wu-rDa">
@@ -34,14 +34,23 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arrow-2" translatesAutoresizingMaskIntoConstraints="NO" id="aUq-M8-UX4">
+                        <rect key="frame" x="679" y="25" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="15" id="LpE-0s-lbB"/>
+                            <constraint firstAttribute="height" constant="15" id="leH-4b-4ZG"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="dVa-Wu-rDa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="1VP-hE-c0C"/>
                     <constraint firstItem="T3a-xJ-3Fy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="FYY-NA-7u2"/>
                     <constraint firstItem="dVa-Wu-rDa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="OiL-lk-ZEZ"/>
                     <constraint firstAttribute="trailing" secondItem="T3a-xJ-3Fy" secondAttribute="trailing" constant="10" id="RlE-RG-cYa"/>
+                    <constraint firstItem="aUq-M8-UX4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="25" id="V1J-Ih-g4N"/>
                     <constraint firstAttribute="trailing" secondItem="dVa-Wu-rDa" secondAttribute="trailing" constant="10" id="ceS-w5-Pxx"/>
                     <constraint firstAttribute="bottom" secondItem="T3a-xJ-3Fy" secondAttribute="bottom" constant="12" id="gMh-ll-klM"/>
+                    <constraint firstAttribute="trailing" secondItem="aUq-M8-UX4" secondAttribute="trailing" constant="16" id="hCP-Xe-EKh"/>
                     <constraint firstAttribute="trailing" secondItem="dVa-Wu-rDa" secondAttribute="trailing" constant="10" id="pjn-jl-TeU"/>
                     <constraint firstItem="T3a-xJ-3Fy" firstAttribute="top" secondItem="dVa-Wu-rDa" secondAttribute="bottom" constant="2" id="uxB-Ix-oTk"/>
                 </constraints>
@@ -51,7 +60,10 @@
                 <outlet property="dateLabel" destination="T3a-xJ-3Fy" id="0tA-9Y-W8g"/>
                 <outlet property="nameLabel" destination="dVa-Wu-rDa" id="FMA-vU-3BL"/>
             </connections>
-            <point key="canvasLocation" x="116.92307692307692" y="113.74407582938387"/>
+            <point key="canvasLocation" x="116.92307692307692" y="94.549763033175353"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="Arrow-2" width="36" height="60"/>
+    </resources>
 </document>
