@@ -53,21 +53,8 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         studyDurationPicker.countDownDuration = 3600
         breakDurationPicker.countDownDuration = 600
         
-        //USER DEFAULT GETTER
-        //Mencari user default dengan key plans
-//        defaults.removeObject(forKey: "Plans")
-        let tempArchiveItems = defaults.data(forKey: "Plans")
-        
-        //cek tempArchiveItemsnya ada default dengan key plans atau tidak
-        print("tempArchiveItems ", tempArchiveItems as Any)
-        
-        //print("ALL USER DEFAULT", UserDefaults.standard.dictionaryRepresentation())
-        if (tempArchiveItems != nil) {
-            //Kalo tidak kosong, bisa kebuka default dengan key plans dan datanya
-            plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
-            print("Check Plans : ", plans)
-            //print("Mo cek array index", plans[0].status)
-        }
+        //defaults.removeObject(forKey: "Plans")
+        getUserDefault()
         
     }
     
@@ -98,13 +85,6 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     
     @IBAction func cancelButton(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-            let mainViewController = self.presentingViewController as? ViewController
-            super.dismiss(animated: flag) {
-                mainViewController?.viewWillAppear(true)
-        }
     }
     
     @IBAction func addData(_ sender: Any) {
@@ -150,6 +130,15 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
+    func getUserDefault(){
+        let tempArchiveItems = defaults.data(forKey: "Plans")
+        print("tempArchiveItems ", tempArchiveItems as Any)
+        if(tempArchiveItems != nil){
+            plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
+        }
+    }
+    
+    
     func formatDateToString(date: Date, formatDate: String) -> String {
         dateFormatter.dateFormat = formatDate
         return dateFormatter.string(from: date)
@@ -181,14 +170,6 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         })
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showRepeat" {
-            let secondViewController = segue.destination as! RepeatTableViewController
-            secondViewController.delegate = self
-            secondViewController.sendRepeatData = days
-        }
-    }
-    
     func receivedRepeatData(day: [Int]) {
         days = day
         if(day.isEmpty){
@@ -199,6 +180,21 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
             return repeatLabel.text = dayNames[day[0]]
         }else{
             repeatLabel.text = "Multiple"
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showRepeat" {
+            let secondViewController = segue.destination as! RepeatTableViewController
+            secondViewController.delegate = self
+            secondViewController.sendRepeatData = days
+        }
+    }
+    
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+            let mainViewController = self.presentingViewController as? ViewController
+            super.dismiss(animated: flag) {
+                mainViewController?.viewWillAppear(true)
         }
     }
     
