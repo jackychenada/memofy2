@@ -27,8 +27,8 @@
                                 <sections/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iuz-fb-Ye5">
-                                <rect key="frame" x="343" y="27" width="31" height="72"/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="50"/>
+                                <rect key="frame" x="344" y="27" width="30" height="72"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="50"/>
                                 <state key="normal" title="+"/>
                                 <connections>
                                     <segue destination="JDf-iw-ADb" kind="presentation" id="Dvm-CQ-rif"/>
