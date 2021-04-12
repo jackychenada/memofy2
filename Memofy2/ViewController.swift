@@ -18,10 +18,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let dateFormatter = DateFormatter()
     
     var plans: [Plan] = [] //TEMP ARCHIVER
-    
     var todoPlans: [Plan] = []
     var completedPlans: [Plan] = []
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,16 +28,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.register(nib, forCellReuseIdentifier: "MemoTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
-        
-        tableView.estimatedRowHeight = 10
-        tableView.rowHeight = UITableView.automaticDimension
-        
         setupInterface()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        print("ollaaaa tassjas")
         setupView()
     }
     //navEditPlan
@@ -51,17 +44,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func setupInterface(){
-        self.navigationController?.isNavigationBarHidden = true
-        let footerView =  UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        let footerView =  UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height ))
         footerView.backgroundColor = backgroundColor
         tableView.tableFooterView = footerView
-        
-        
-        //mainLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
     }
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
-
+        //jangan dihapus ya, kepake untuk segue back ke main
     }
     
     func clearArr() {
@@ -71,8 +60,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func setupView(){
-        print("olla ollll")
-        //GETTER - USER DEFAULTS
+        print("masuk setupView")
         //UserDefaults.standard.removeObject(forKey: "Plans")
         clearArr()
         let tempArchiveItems = defaults.data(forKey: "Plans")
@@ -81,11 +69,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if(tempArchiveItems != nil){
             plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
             print("INI MEMOS", plans as Any)
-            //addMemo(name: "programmer", status: "in progress")
-            //addMemo(name: "design", status: "in progress")
             for plan in plans {
-                print("plans index 0", plans[0].status)
-                print("ini plan", plan)
                 if plan.status == "in progress" {
                     todoPlans.append(plan)
                 }
@@ -97,10 +81,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 sections.append("TO DO")
             }
             if(completedPlans.count > 0) {
-                sections.append("Completed")
+                sections.append("COMPLETED")
             }
-            print("TODO PLANS:", todoPlans)
-            print("completed PLANS:", completedPlans)
             tableView.reloadData()
             //print("ALL USER DEFAULT", UserDefaults.standard.dictionaryRepresentation())
         }
@@ -111,28 +93,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if(currentSection == "TO DO"){
             planIndex = todoPlans[indexPath[1]].index
         }
-        else if(currentSection == "Completed"){
+        else if(currentSection == "COMPLETED"){
             planIndex = completedPlans[indexPath[1]].index
         }
-//        if(sections.count == 2) {
-//            //to do
-//            if(indexPath[0] == 0) {
-//                print("todo plans index", todoPlans[indexPath[1]].index)
-//            }
-//            //completed
-//            else if(indexPath[1] == 1) {
-//                print("completed plans index", completedPlans[indexPath[1]].index)
-//            }
-//        }
-//        else{
-//
-//        }
         self.performSegue(withIdentifier: "navEditPlan", sender: self)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //self.tableView.estimatedRowHeight = 120
-        return UITableView.automaticDimension
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -143,26 +107,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionsCount = sections.count
-        if(sectionsCount == 2) {
-            if section == 0 {
-                return todoPlans.count
-            }
-            else {
-                return completedPlans.count
-            }
+        let currentSection = sections[section]
+        if(currentSection == "TO DO"){
+            return todoPlans.count
         }
-        else if(sectionsCount == 1){
-            return todoPlans.count > 0 ? todoPlans.count : completedPlans.count
+        else if(currentSection == "COMPLETED"){
+            return completedPlans.count
         }
         else{
             return 0
         }
-        
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
         return sections[section]
     }
     
@@ -184,30 +141,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemoTableViewCell", for: indexPath) as! MemoTableViewCell
                 var tempData:Plan
-                let sectionsCount = sections.count
-                if(sectionsCount == 2) {
-                    if indexPath.section == 0 {
-                        tempData = todoPlans[indexPath.row]
-                    }
-                    else {
-                        tempData = completedPlans[indexPath.row]
-                    }
+                
+                let currentSection = sections[indexPath.section]
+                if(currentSection == "TO DO"){
+                    tempData = todoPlans[indexPath.row]
                 }
-                else if(sectionsCount == 1){
-                    tempData = todoPlans.count > 0 ? todoPlans[indexPath.row] : completedPlans[indexPath.row]
-                }else{
+                else if(currentSection == "COMPLETED"){
+                    tempData = completedPlans[indexPath.row]
+                }
+                else{
                     tempData = todoPlans.count > 0 ? todoPlans[indexPath.row] : completedPlans[indexPath.row]
                 }
-        //                if(indexPath.section == 0){
-//                    tempData = todoPlans[indexPath.row]
-//                }else{
-//                    tempData = completedPlans[indexPath.row]
-//                }
                 cell.nameLabel.text = tempData.studyPlan
                 cell.nameLabel.textColor =  #colorLiteral(red: 0, green: 0.3607843137, blue: 0.7254901961, alpha: 1)
                 print("index", tempData.index)
                 cell.dateLabel.text = formatDateToString(date: tempData.startsDate)
-                
                 return cell
     }
     
