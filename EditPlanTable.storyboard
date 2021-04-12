@@ -12,7 +12,7 @@
             <objects>
                 <tableViewController id="2AQ-fU-bzj" customClass="EditPlanViewController" customModule="Memofy2" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="2p2-IB-c0z">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="843.99999999999989"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.96594157250000001" green="0.95862051859999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <sections>
@@ -321,7 +321,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="wFw-Ki-ESu" kind="show" id="Odi-cV-Qbw"/>
+                                                        <segue destination="wFw-Ki-ESu" kind="show" identifier="studyTimerSegue" id="Odi-cV-Qbw"/>
                                                     </connections>
                                                 </button>
                                             </subviews>

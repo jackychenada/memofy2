@@ -24,6 +24,8 @@ class StudyTimeController: UIViewController {
     var isCountBreak:Bool = false
     var isTimer: Bool = true
     
+    var receivePlanIndex:Int = -1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         playButton.setTitle("START", for: .normal)
@@ -33,6 +35,8 @@ class StudyTimeController: UIViewController {
         timerLabel.text = setTimerTextLabel(dataSeconds: countTimer)
         
         breakLabel.isHidden = true
+        
+        print(receivePlanIndex)
         
     }
     

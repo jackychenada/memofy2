@@ -16,9 +16,10 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
     var plans : [Plan] = []
     var days : [Int] = []
     
-    let planDummy = "Programming"
-    let noteDummy = "Swift Playground"
+//    let planDummy = "Programming"
+//    let noteDummy = "Swift Playground"
     let statusDummy = "Completed"
+    let defaults = UserDefaults.standard
     
     @IBOutlet weak var saveBarButton: UIBarButtonItem!
     
@@ -56,8 +57,8 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        studyPlanTF.text = String(planDummy)
-        studyNotesTextView.text = String(noteDummy)
+//        studyPlanTF.text = String(planDummy)
+//        studyNotesTextView.text = String(noteDummy)
         
         //Ngambil data dari repeat
         timeReminderTimeLabel.text = choosenRepeat
@@ -88,6 +89,25 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
             startStudyButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
         }
         
+        let tempArchiveItems = defaults.data(forKey: "Plans")
+            if (tempArchiveItems != nil ) {
+                plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
+                print(receivePlanIndex)
+                print(plans[receivePlanIndex].studyPlan)
+                let plan = plans[receivePlanIndex]
+                
+                studyPlanTF.text = plan.studyPlan
+                studyNotesTextView.text = plan.studyNotes
+                repeatLabel(day: plan.frequency)
+                dateStartsLabel.text = dateFormatterr.string(from: plan.startsDate)
+                dateEndsLabel.text = dateFormatterr.string(from: plan.endsDate)
+                timeReminderTimeLabel.text = dateFormatterr.string(from: plan.timeReminder)
+//                //ini buat switch, ga perlu diconvert
+                timeReminderSwitch.isOn = plan.switchReminder
+                studyDurationLabel.text = String(plan.studyDuration)
+                breakDurationLabel.text = String(plan.breakDuration)
+            }
+        
     }
     
     @IBAction func saveButton(_ sender: Any) {
@@ -109,6 +129,7 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
         }
         tableView.beginUpdates()
         tableView.endUpdates()
+        
     }
     
     @IBAction func dateStartsDPicker(_ sender: Any) {
@@ -170,45 +191,56 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
             let destination = segue.destination as! RepeatEditTableViewController
             destination.delegate = self
             destination.sendRepeatEditData = days
-
+            return
         }
+        if segue.identifier == "studyTimerSegue" {
+            let destinationStudyTimer = segue.destination as! StudyTimeController
+            destinationStudyTimer.receivePlanIndex = self.receivePlanIndex
+        }
+    }
+
+    func repeatLabel(day: [Int]) {
+        days = day
+        
+        if day.count == 1 {
+            var labelRepeat = ""
+            switch day[0] {
+            case 0:
+                labelRepeat = "Every Monday"
+            case 1:
+                labelRepeat = "Every Tuesday"
+            case 2:
+                labelRepeat = "Every Wednesday"
+            case 3:
+                labelRepeat = "Every Thursday"
+            case 4:
+                labelRepeat = "Every Friday"
+            case 5:
+                labelRepeat = "Every Saturday"
+            case 6:
+                labelRepeat = "Every Sunday"
+            default:
+                break
+            }
+            repeatEditLabel.text = labelRepeat
+            } else {
+            repeatEditLabel.text = "Multiple"
+            }
+        
     }
     
     func receivedRepeatEditData(day: [Int]) {
         days = day
-        
-        if !day.isEmpty {
-            print("Jumlah", day.count)
-            if day.count == 1 {
-                var labelRepeat = ""
-                switch day[0] {
-                case 0:
-                    labelRepeat = "Every Monday"
-                case 1:
-                    labelRepeat = "Every Tuesday"
-                case 2:
-                    labelRepeat = "Every Wednesday"
-                case 3:
-                    labelRepeat = "Every Thursday"
-                case 4:
-                    labelRepeat = "Every Friday"
-                case 5:
-                    labelRepeat = "Every Saturday"
-                case 6:
-                    labelRepeat = "Every Sunday"
-                default:
-                    break
-                }
-                repeatEditLabel.text = labelRepeat
-            } else {
-                repeatEditLabel.text = "Multiple"
-            }
-            } else {
-                print("Kosong", day)
-                self.repeatEditLabel.text = "Never"
-            }
+        if day.isEmpty{
+            print("Kosong", day)
+            self.repeatEditLabel.text = "Never"
+            return
         }
-
+            print("Jumlah", day.count)
+        
+//         repeatLabel(day: [Int])
+            
+        }
     
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     if indexPath.section == 1 && indexPath.row == 2 {
