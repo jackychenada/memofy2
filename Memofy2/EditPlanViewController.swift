@@ -107,7 +107,7 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
                 
                 studyPlanTF.text = plan.studyPlan
                 studyNotesTextView.text = plan.studyNotes
-                repeatLabel(day: plan.frequency)
+                receivedRepeatEditData(day: plan.frequency)
                 dateStartsLabel.text = formatDateToString(date: plan.startsDate, formatDate: formatDateString)
                 dateEndsLabel.text = formatDateToString(date: plan.endsDate, formatDate: formatDateString)
                 timeReminderTimeLabel.text = formatDateToString(date: plan.timeReminder, formatDate: formatTimeString)
@@ -119,7 +119,7 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
             }
         
         let plan = plans
-        if (plan[receivePlanIndex].status == "in progress" && plan[receivePlanIndex].status == "incoming") {
+        if (plan[receivePlanIndex].status == "in progress" || plan[receivePlanIndex].status == "incoming") {
             startStudyButton.isEnabled = true
             startStudyButton.backgroundColor = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
             startStudyButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
