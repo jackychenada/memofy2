@@ -46,6 +46,8 @@ class StudyTimeController: UIViewController {
         breakLabel.isHidden = true
     }
     
+    
+    
     @IBAction func stopButtonTap(_ sender: Any){
         let alert = UIAlertController(title: "Complete Study?", message: "if you click done, your study will be completed", preferredStyle: UIAlertController.Style.alert)
         
@@ -116,6 +118,7 @@ class StudyTimeController: UIViewController {
     func pauseBreak(){
         self.breakLabel.isHidden = true
         self.timerBreak.invalidate()
+//        playButton.setImage(UIImage(named:"Play Button.png"), for: .normal)
     }
     
     func stopBreak() {
@@ -129,6 +132,7 @@ class StudyTimeController: UIViewController {
         stopButton.isHidden = false
         if(isCountTimer){
             isCountTimer = false
+//            playButton.setImage(UIImage(named:"Play Button.png"), for: .normal)
             pauseTimer()
             startBreak()
         }
@@ -138,6 +142,7 @@ class StudyTimeController: UIViewController {
             }
             
             isCountTimer = true
+            playButton.setImage(UIImage(named:"Pause Button.png"), for: .normal)
             pauseBreak()
             startTimer()
         }
