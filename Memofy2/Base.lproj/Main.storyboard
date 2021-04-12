@@ -50,6 +50,7 @@
                     <connections>
                         <outlet property="mainLabel" destination="c8Y-A7-Zzn" id="HHS-W3-4QU"/>
                         <outlet property="tableView" destination="VNM-Xs-Hb7" id="fVi-Rn-2Tz"/>
+                        <segue destination="0O9-hq-ycb" kind="presentation" identifier="navEditPlan" id="BcC-pD-X8H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

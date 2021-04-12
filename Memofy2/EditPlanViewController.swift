@@ -87,6 +87,7 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
             startStudyButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
             startStudyButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
         }
+        
     }
     
     @IBAction func saveButton(_ sender: Any) {
