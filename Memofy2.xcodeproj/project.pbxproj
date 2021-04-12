@@ -23,6 +23,7 @@
 		85834FAB261C9D9300401C6A /* StudyTimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85834FAA261C9D9300401C6A /* StudyTimeController.swift */; };
 		85B17B3F2618446000E16F8E /* TaskCompletedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B17B3D2618446000E16F8E /* TaskCompletedTableViewCell.swift */; };
 		85B17B402618446000E16F8E /* TaskCompletedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85B17B3E2618446000E16F8E /* TaskCompletedTableViewCell.xib */; };
+		85FDD01226249B4F004ED2DE /* NotificationReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FDD01126249B4F004ED2DE /* NotificationReminder.swift */; };
 		F921ABFB261C2F8A00E83213 /* PlanModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F921ABFA261C2F8900E83213 /* PlanModel.swift */; };
 		F9BC97D8261B7034001AD387 /* AddPlanTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BC97D7261B7034001AD387 /* AddPlanTableViewController.swift */; };
 		F9BC97DE261B7077001AD387 /* AddPlanTableView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9BC97DC261B7077001AD387 /* AddPlanTableView.storyboard */; };
@@ -69,6 +70,7 @@
 		85834FAA261C9D9300401C6A /* StudyTimeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyTimeController.swift; sourceTree = "<group>"; };
 		85B17B3D2618446000E16F8E /* TaskCompletedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletedTableViewCell.swift; sourceTree = "<group>"; };
 		85B17B3E2618446000E16F8E /* TaskCompletedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskCompletedTableViewCell.xib; sourceTree = "<group>"; };
+		85FDD01126249B4F004ED2DE /* NotificationReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationReminder.swift; sourceTree = "<group>"; };
 		F921ABFA261C2F8900E83213 /* PlanModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanModel.swift; sourceTree = "<group>"; };
 		F9BC97D7261B7034001AD387 /* AddPlanTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlanTableViewController.swift; sourceTree = "<group>"; };
 		F9BC97DD261B7077001AD387 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Memofy2/Base.lproj/AddPlanTableView.storyboard; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				85B17B3D2618446000E16F8E /* TaskCompletedTableViewCell.swift */,
 				85B17B3E2618446000E16F8E /* TaskCompletedTableViewCell.xib */,
 				85834FAA261C9D9300401C6A /* StudyTimeController.swift */,
+				85FDD01126249B4F004ED2DE /* NotificationReminder.swift */,
 			);
 			path = Memofy2;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 			files = (
 				857F3202260A25AB001271B7 /* ViewController.swift in Sources */,
 				F9BC97D8261B7034001AD387 /* AddPlanTableViewController.swift in Sources */,
+				85FDD01226249B4F004ED2DE /* NotificationReminder.swift in Sources */,
 				857F31FE260A25AB001271B7 /* AppDelegate.swift in Sources */,
 				03B590CB2620AECB005E3AD8 /* RepeatEditTableViewController.swift in Sources */,
 				85834FAB261C9D9300401C6A /* StudyTimeController.swift in Sources */,
