@@ -67,6 +67,11 @@ class StudyTimeController: UIViewController {
         }
     }
     
+    func setUserDefault(){
+        let preStorePlans = try! NSKeyedArchiver.archivedData(withRootObject: plans, requiringSecureCoding: false)
+        defaults.set(preStorePlans, forKey: "Plans")
+    }
+    
     func startTimer(){
         self.isTimer = true
         self.timerLabel.isHidden = false
@@ -86,6 +91,14 @@ class StudyTimeController: UIViewController {
         self.isCountTimer = false
         self.playButton.setTitle("START", for: .normal)
         self.timerLabel.text = self.setTimerTextLabel(dataSeconds: self.countTimer)
+        
+        let plan = plans[self.receivePlanIndex]
+        plan.status = "completed"
+        setUserDefault()
+        
+        let mainViewController = self.presentingViewController as? ViewController
+        mainViewController?.viewWillAppear(true)
+        
         self.performSegue(withIdentifier: "unwindToViewController1", sender: self)
     }
 
