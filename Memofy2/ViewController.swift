@@ -43,14 +43,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+        //jangan dihapus ya, kepake untuk segue back ke main
+    }
+    
     func setupInterface(){
         let footerView =  UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height ))
         footerView.backgroundColor = backgroundColor
         tableView.tableFooterView = footerView
-    }
-    
-    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
-        //jangan dihapus ya, kepake untuk segue back ke main
     }
     
     func clearArr() {
@@ -86,6 +86,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             tableView.reloadData()
             //print("ALL USER DEFAULT", UserDefaults.standard.dictionaryRepresentation())
         }
+    }
+    
+    func formatDateToString(date: Date) -> String {
+        dateFormatter.dateFormat = "MMM dd - hh:mm a"
+        return dateFormatter.string(from: date)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -133,11 +138,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return headerView
     }
     
-    func formatDateToString(date: Date) -> String {
-        dateFormatter.dateFormat = "MMM dd - hh:mm a"
-        return dateFormatter.string(from: date)
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemoTableViewCell", for: indexPath) as! MemoTableViewCell
                 var tempData:Plan
@@ -158,6 +158,5 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 cell.dateLabel.text = formatDateToString(date: tempData.startsDate)
                 return cell
     }
-    
     
 }
