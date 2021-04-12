@@ -18,8 +18,11 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
     
 //    let planDummy = "Programming"
 //    let noteDummy = "Swift Playground"
-    let statusDummy = "Completed"
+//    let statusDummy = "Completed"
+    
     let defaults = UserDefaults.standard
+    let formatDateString = "MMMM dd, yyyy"
+    let formatTimeString = "HH:mm"
     
     @IBOutlet weak var saveBarButton: UIBarButtonItem!
     
@@ -57,37 +60,78 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        print("ABC")
+        
 //        studyPlanTF.text = String(planDummy)
 //        studyNotesTextView.text = String(noteDummy)
         
         //Ngambil data dari repeat
         timeReminderTimeLabel.text = choosenRepeat
         
-        //Set default date di add
+//        Set default date di add
         dateStartsDatePicker.date = NSDate() as Date
         dateEndsDatePicker.date = NSDate() as Date
         timeReminderTimePicker.date = NSDate() as Date
-        
+
         hiddenViewDatePicker(fieldName: "init")
-        
+
         dateFormatterr.dateStyle = DateFormatter.Style.long
+
+        dateStartsLabel.text = formatDateToString(date: dateStartsDatePicker.date, formatDate: formatDateString)
+
+        dateEndsLabel.text = formatDateToString(date: dateEndsDatePicker.date, formatDate: formatDateString)
+
+        timeReminderTimeLabel.text = formatDateToString(date: timeReminderTimePicker.date, formatDate: formatTimeString)
+//        timeReminderTimeLabel.text = dateFormatterr.string(from: timeReminderTimePicker.date)
         
-        dateStartsLabel.text = dateFormatterr.string(from: dateStartsDatePicker.date)
         
-        dateEndsLabel.text = dateFormatterr.string(from: dateEndsDatePicker.date)
+        let tempArchiveItems = defaults.data(forKey: "Plans")
+            if (tempArchiveItems != nil ) {
+                plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
+                print("[view did load] Ini receive plan Index", receivePlanIndex)
+                print("[view did load] ini studyPlan", plans[receivePlanIndex].studyPlan)
+                let plan = plans[receivePlanIndex]
+                
+//                var plan = plans[0]
+//
+//                for plann in plans {
+//                    print("Dari Home, gw dapet index object ke", receivePlanIndex)
+//                    print("Ini plann index object ke ", plann.index)
+//                    if plann.index == receivePlanIndex {
+//                        // plan = index array, plann
+//                        plan = plann
+//                        print("Yang kepilih plann index yang ke ", plann.index)
+//                        break
+//                    }
+//                }
+                
+                studyPlanTF.text = plan.studyPlan
+                studyNotesTextView.text = plan.studyNotes
+                repeatLabel(day: plan.frequency)
+                dateStartsLabel.text = formatDateToString(date: plan.startsDate, formatDate: formatDateString)
+                dateEndsLabel.text = formatDateToString(date: plan.endsDate, formatDate: formatDateString)
+                timeReminderTimeLabel.text = formatDateToString(date: plan.timeReminder, formatDate: formatTimeString)
+//                //ini buat switch, ga perlu diconvert
+                timeReminderSwitch.isOn = plan.switchReminder
+                lableDuration(label: studyDurationLabel, duration: plan.studyDuration)
+                lableDuration(label: breakDurationLabel, duration: plan.breakDuration)
+//                breakDurationLabel.text = String(plan.breakDuration)
+            }
         
-        dateFormatterr.dateFormat = "HH:mm"
-        timeReminderTimeLabel.text = dateFormatterr.string(from: timeReminderTimePicker.date)
-        
-        if (statusDummy == "Completed") {
+        let plan = plans
+        if (plan[receivePlanIndex].status == "in progress" && plan[receivePlanIndex].status == "incoming") {
             startStudyButton.isEnabled = true
             startStudyButton.backgroundColor = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
             startStudyButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
-        } else if (statusDummy == "To Do") {
+        } else if (plan[receivePlanIndex].status == "completed") {
             startStudyButton.isEnabled = false
             startStudyButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
             startStudyButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
         }
+    }
+    
+    @IBAction func saveButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
         
         let tempArchiveItems = defaults.data(forKey: "Plans")
             if (tempArchiveItems != nil ) {
@@ -95,26 +139,58 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
                 print(receivePlanIndex)
                 print(plans[receivePlanIndex].studyPlan)
                 let plan = plans[receivePlanIndex]
-                
-                studyPlanTF.text = plan.studyPlan
-                studyNotesTextView.text = plan.studyNotes
-                repeatLabel(day: plan.frequency)
-                dateStartsLabel.text = dateFormatterr.string(from: plan.startsDate)
-                dateEndsLabel.text = dateFormatterr.string(from: plan.endsDate)
-                timeReminderTimeLabel.text = dateFormatterr.string(from: plan.timeReminder)
-//                //ini buat switch, ga perlu diconvert
-                timeReminderSwitch.isOn = plan.switchReminder
-                studyDurationLabel.text = String(plan.studyDuration)
-                breakDurationLabel.text = String(plan.breakDuration)
-            }
         
+//                var plan = plans[0]
+//
+//                for plann in plans {
+//                    print("Dari Home, gw dapet index object ke", receivePlanIndex)
+//                    print("Ini plann index object ke ", plann.index)
+//                    if plann.index == receivePlanIndex {
+//                        // plan = index array, plann
+//                        plan = plann
+//                        print("Yang kepilih plann index yang ke ", plann.index)
+//                        break
+//                    }
+//                }
+        
+
+        plan.studyPlan = studyPlanTF.text!
+        plan.studyNotes = studyNotesTextView.text!
+        plan.frequency = days
+        plan.startsDate = dateStartsDatePicker.date
+        plan.endsDate = dateEndsDatePicker.date
+        plan.timeReminder = timeReminderTimePicker.date
+        plan.switchReminder = timeReminderSwitch.isOn
+        plan.studyDuration = Int(studyDurationTimePicker.countDownDuration)
+        plan.breakDuration = Int(breakDurationTimePicker.countDownDuration)
     }
-    
-    @IBAction func saveButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func deletePlanButton(_ sender: Any) {
+       
+//
+        let alert = UIAlertController(title: "Delete Plan", message: "This will delete current plan from the list", preferredStyle: UIAlertController.Style.alert)
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: { (_) in
+            print("Cancel")
+        }))
+        alert.addAction(UIAlertAction(title: "Delete", style: UIAlertAction.Style.destructive, handler: { (_) in
+            
+            let plan = self.plans[self.receivePlanIndex]
+            plan.status = "removed"
+            self.setUserDefault()
+            
+//            self.plans.remove(at: self.receivePlanIndex)
+            self.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+            let mainViewController = self.presentingViewController as? ViewController
+            super.dismiss(animated: flag) {
+                mainViewController?.viewWillAppear(true)
+        }
     }
     
     @IBAction func cancelButtonPressed(_ sender: Any) {
@@ -154,6 +230,17 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
     
     @IBAction func breakDurationTPicker(_ sender: Any) {
         lableDuration(label: breakDurationLabel, duration: Int(breakDurationTimePicker.countDownDuration))
+    }
+    
+    func setUserDefault(){
+        let preStorePlans = try! NSKeyedArchiver.archivedData(withRootObject: plans, requiringSecureCoding: false)
+        defaults.set(preStorePlans, forKey: "Plans")
+    }
+    
+    //di return dalam bentuk string, selain
+    func formatDateToString(date: Date, formatDate: String) -> String {
+        dateFormatterr.dateFormat = formatDate
+        return dateFormatterr.string(from: date)
     }
     
     func secondsToHourMinutesToSeconds (seconds: Int) -> (Int, Int, Int) {
@@ -201,7 +288,7 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
 
     func repeatLabel(day: [Int]) {
         days = day
-        
+//        print(day[0])
         if day.count == 1 {
             var labelRepeat = ""
             switch day[0] {
@@ -236,9 +323,9 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
             self.repeatEditLabel.text = "Never"
             return
         }
-            print("Jumlah", day.count)
+        repeatLabel(day: day)
+        print("Jumlah", day.count)
         
-//         repeatLabel(day: [Int])
             
         }
     

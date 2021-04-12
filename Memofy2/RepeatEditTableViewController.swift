@@ -28,6 +28,7 @@ class RepeatEditTableViewController: UITableViewController {
         super.viewDidLoad()
         days = Set(sendRepeatEditData)
         print("Ini adalah Array", sendRepeatEditData)
+        print("Ini days ke ", days)
         
     }
     
@@ -63,15 +64,20 @@ class RepeatEditTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let identifier =  cell.reuseIdentifier {
-            switch identifier {
-            case "Monday": cell.accessoryType = days.contains(0) ? .checkmark : .none
-            case "Tuesday": cell.accessoryType = days.contains(1) ? .checkmark : .none
-            case "Wednesday": cell.accessoryType = days.contains(2) ? .checkmark : .none
-            case "Thursday": cell.accessoryType = days.contains(3) ? .checkmark : .none
-            case "Friday": cell.accessoryType = days.contains(4) ? .checkmark : .none
-            case "Saturday": cell.accessoryType = days.contains(5) ? .checkmark : .none
-            case "Sunday": cell.accessoryType = days.contains(6) ? .checkmark : .none
+//        print("Gw di sini")
+        if let identifier =  cell.reuseIdentifier
+        {
+//        print("I am in")
+//        print(identifier)
+        switch identifier {
+            case "monday":
+                cell.accessoryType = days.contains(0) ? .checkmark : .none
+            case "tuesday": cell.accessoryType = days.contains(1) ? .checkmark : .none
+            case "wednesday": cell.accessoryType = days.contains(2) ? .checkmark : .none
+            case "thursday": cell.accessoryType = days.contains(3) ? .checkmark : .none
+            case "friday": cell.accessoryType = days.contains(4) ? .checkmark : .none
+            case "satuday": cell.accessoryType = days.contains(5) ? .checkmark : .none
+            case "sunday": cell.accessoryType = days.contains(6) ? .checkmark : .none
             default: break
             }
         }
