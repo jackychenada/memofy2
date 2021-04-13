@@ -19,6 +19,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var plans: [Plan] = [] //TEMP ARCHIVER
     var todoPlans: [Plan] = []
+    var incomingPlans: [Plan] = []
     var completedPlans: [Plan] = []
     
     override func viewDidLoad() {
@@ -29,6 +30,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.delegate = self
         tableView.dataSource = self
         setupInterface()
+        
+        print("firstWeekday", NSCalendar.current.firstWeekday)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +59,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func clearArr() {
         todoPlans = []
+        incomingPlans = []
         completedPlans = []
         sections = []
     }
@@ -76,9 +81,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 else if plan.status == "completed" {
                     completedPlans.append(plan)
                 }
+                else if plan.status == "incoming" {
+                    incomingPlans.append(plan)
+                }
             }
             if(todoPlans.count > 0) {
                 sections.append("TO DO")
+            }
+            if(incomingPlans.count > 0) {
+                sections.append("INCOMING")
             }
             if(completedPlans.count > 0) {
                 sections.append("COMPLETED")
@@ -98,6 +109,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if(currentSection == "TO DO"){
             planIndex = todoPlans[indexPath[1]].index
         }
+        else if(currentSection == "INCOMING"){
+            planIndex = incomingPlans[indexPath[1]].index
+        }
         else if(currentSection == "COMPLETED"){
             planIndex = completedPlans[indexPath[1]].index
         }
@@ -115,6 +129,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let currentSection = sections[section]
         if(currentSection == "TO DO"){
             return todoPlans.count
+        }
+        else if(currentSection == "INCOMING"){
+            return incomingPlans.count
         }
         else if(currentSection == "COMPLETED"){
             return completedPlans.count
@@ -148,6 +165,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                 else if(currentSection == "COMPLETED"){
                     tempData = completedPlans[indexPath.row]
+                }
+                else if(currentSection == "INCOMING"){
+                    tempData = incomingPlans[indexPath.row]
                 }
                 else{
                     tempData = todoPlans.count > 0 ? todoPlans[indexPath.row] : completedPlans[indexPath.row]

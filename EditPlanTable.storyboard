@@ -381,7 +381,6 @@
                         <outlet property="dateStartsTableCell" destination="9WJ-Pf-7Jr" id="RCU-jK-lq9"/>
                         <outlet property="repeatEditLabel" destination="sZ6-9Y-y3p" id="6ZE-ZP-aC6"/>
                         <outlet property="repeatTableCell" destination="KCk-fu-9Xo" id="gdX-xN-L9V"/>
-                        <outlet property="saveBarButton" destination="NMX-Vz-4wN" id="F0Z-ye-D11"/>
                         <outlet property="startStudyButton" destination="lu6-al-0gb" id="3wv-6n-5vd"/>
                         <outlet property="studyDurationLabel" destination="vZw-sJ-wGk" id="1S6-Fk-CJA"/>
                         <outlet property="studyDurationTableCell" destination="yOF-CT-k6u" id="bYY-4V-08F"/>

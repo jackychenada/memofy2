@@ -89,11 +89,21 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     }
     
     @IBAction func addData(_ sender: Any) {
+
+        let dateNow = Date()
+        var status = "in progress"
+        print("start Date", startsDatePicker.date)
+        print("dateNow", dateNow)
+        if(startsDatePicker.date > dateNow) {
+            status = "incoming"
+        }
+
         let id = formatDateToString(date: Date(), formatDate: "yyyyMMdd'T'HHmmssSSSS")
+
         plans.append(
             Plan(
                 index: plans.count,
-                status: "in progress",
+                status: status,
                 studyPlan: studyPlanTextField.text ?? "test",
                 studyNotes: studyNotesTextView.text,
                 frequency: days,
