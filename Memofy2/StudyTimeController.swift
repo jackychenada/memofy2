@@ -49,7 +49,7 @@ class StudyTimeController: UIViewController {
     
     
     @IBAction func stopButtonTap(_ sender: Any){
-        let alert = UIAlertController(title: "Complete Study?", message: "if you click done, your study will be completed", preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "Complete Study?", message: "If you click done, your study will be completed", preferredStyle: UIAlertController.Style.alert)
         
         alert.addAction(UIAlertAction(title: "Done", style: UIAlertAction.Style.default, handler: { (_) in
             self.stopTimer()
