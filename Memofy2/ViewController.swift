@@ -30,6 +30,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.delegate = self
         tableView.dataSource = self
         setupInterface()
+        
+        print("firstWeekday", NSCalendar.current.firstWeekday)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
