@@ -94,18 +94,12 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
         }
     }
     
-    @IBAction func saveButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-        
-        let tempArchiveItems = defaults.data(forKey: "Plans")
-            if (tempArchiveItems != nil ) {
-                plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
-                print(receivePlanIndex)
-                print(plans[receivePlanIndex].studyPlan)
-                let plan = plans[receivePlanIndex]
 
+    @IBAction func saveButton(_ sender: Any) {
+        let plan = plans[receivePlanIndex]
+        
         plan.studyPlan = studyPlanTF.text!
-        plan.studyNotes = studyNotesTextView.text!
+        plan.studyNotes = studyNotesTextView.text
         plan.frequency = days
         plan.startsDate = dateStartsDatePicker.date
         plan.endsDate = dateEndsDatePicker.date
@@ -113,7 +107,11 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
         plan.switchReminder = timeReminderSwitch.isOn
         plan.studyDuration = Int(studyDurationTimePicker.countDownDuration)
         plan.breakDuration = Int(breakDurationTimePicker.countDownDuration)
-    }
+        
+        setUserDefault()
+        
+        self.dismiss(animated: true, completion: nil)
+        
     }
     
     @IBAction func deletePlanButton(_ sender: Any) {
