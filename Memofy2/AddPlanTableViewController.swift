@@ -100,7 +100,8 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
                 timeReminder: timeReminderPicker.date,
                 switchReminder: switchReminder.isOn,
                 studyDuration: Int(studyDurationPicker.countDownDuration),
-                breakDuration: Int(breakDurationPicker.countDownDuration)))
+                breakDuration: Int(breakDurationPicker.countDownDuration),
+                lastFinishStudy: startsDatePicker.date - 3*24*60*60))
 
 //        print("Cek data array plans", plans[0].index)
 //        print("cek data array plans", plans[0].status)
@@ -113,6 +114,8 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
 //       print("Cek data array plans", plans[0].switchReminder)
 //       print("Cek data array plans", plans[0].studyDuration)
 //       print("Cek data array plans", plans[0].breakDuration)
+        print("cek data array plans", startsDatePicker.date-3*24*60*60)
+
         let preStorePlans = try! NSKeyedArchiver.archivedData(withRootObject: plans, requiringSecureCoding: false)
         print("INI DATA JADI BYTE", preStorePlans)
         
