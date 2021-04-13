@@ -66,7 +66,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func setupView(){
         print("masuk setupView")
-        //UserDefaults.standard.removeObject(forKey: "Plans")
+//        UserDefaults.standard.removeObject(forKey: "Plans")
         clearArr()
         let tempArchiveItems = defaults.data(forKey: "Plans")
         print("tempArchiveItems ", tempArchiveItems as Any)

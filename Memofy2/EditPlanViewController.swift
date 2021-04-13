@@ -49,6 +49,10 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        var a = "test"
+        a = "belajar"
+        print(a)
+        
         //Ngambil data dari repeat
         timeReminderTimeLabel.text = choosenRepeat
         
@@ -80,6 +84,8 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
                 timeReminderSwitch.isOn = plan.switchReminder
                 lableDuration(label: studyDurationLabel, duration: plan.studyDuration)
                 lableDuration(label: breakDurationLabel, duration: plan.breakDuration)
+                
+                
             }
         
         let plan = plans
@@ -96,7 +102,19 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
     
 
     @IBAction func saveButton(_ sender: Any) {
+                
         let plan = plans[receivePlanIndex]
+        let dateNow = Date()
+        var status = "in progress"
+        print("start Date", dateStartsDatePicker.date)
+        print("dateNow", dateNow)
+        if(dateStartsDatePicker.date > dateNow) {
+            status = "incoming"
+        }
+        if (!plan.everStudy) {
+            plan.lastFinishStudy = dateStartsDatePicker.date - 3*24*60*60
+            plan.everStudy = false
+        }
         
         plan.studyPlan = studyPlanTF.text!
         plan.studyNotes = studyNotesTextView.text
@@ -107,7 +125,7 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
         plan.switchReminder = timeReminderSwitch.isOn
         plan.studyDuration = Int(studyDurationTimePicker.countDownDuration)
         plan.breakDuration = Int(breakDurationTimePicker.countDownDuration)
-        
+
         setUserDefault()
         
         self.dismiss(animated: true, completion: nil)

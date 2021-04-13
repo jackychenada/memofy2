@@ -9,7 +9,7 @@ import UIKit
 
 
 class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
-     
+    
     var plans : [Plan] = []
     var days : [Int] = []
     
