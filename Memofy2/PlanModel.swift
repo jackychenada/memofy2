@@ -35,7 +35,8 @@ class Plan: NSObject, NSCoding
                     let frequency = coder.decodeObject(forKey: "frequency") as? [Int],
                     let startsDate = coder.decodeObject(forKey: "startsDate") as? Date,
                     let endsDate = coder.decodeObject(forKey: "endsDate") as? Date,
-                    let timeReminder = coder.decodeObject(forKey: "timeReminder") as? Date
+                    let timeReminder = coder.decodeObject(forKey: "timeReminder") as? Date,
+                    let lastFinishStudy = coder.decodeObject(forKey: "lastFinishStudy") as? Date
             else { return nil }
 
             //convert data jadi strings
@@ -51,7 +52,7 @@ class Plan: NSObject, NSCoding
                 switchReminder: coder.decodeBool(forKey: "switchReminder"),
                 studyDuration: coder.decodeInteger(forKey: "studyDuration"),
                 breakDuration: coder.decodeInteger(forKey: "breakDuration"),
-                lastFinishStudy: (coder.decodeObject(forKey: "lastFinishStudy") as? Date)!
+                lastFinishStudy: lastFinishStudy
             )
     }
     
@@ -89,6 +90,7 @@ class Plan: NSObject, NSCoding
 }
 
 class NotificationReminder {
+    var notifications: [Notification] = []
     
 }
 
