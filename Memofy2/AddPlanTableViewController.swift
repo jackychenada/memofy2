@@ -93,7 +93,7 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         print("start Date", startsDatePicker.date)
         print("dateNow", dateNow)
         if(startsDatePicker.date > dateNow) {
-            status = "in coming"
+            status = "incoming"
         }
 
         plans.append(

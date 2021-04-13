@@ -78,7 +78,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 else if plan.status == "completed" {
                     completedPlans.append(plan)
                 }
-                else if plan.status == "in coming" {
+                else if plan.status == "incoming" {
                     incomingPlans.append(plan)
                 }
             }
