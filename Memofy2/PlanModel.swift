@@ -23,30 +23,20 @@ class Plan: NSObject, NSCoding
         coder.encode(switchReminder, forKey: "switchReminder")
         coder.encode(studyDuration, forKey: "studyDuration")
         coder.encode(breakDuration, forKey: "breakDuration")
+        coder.encode(lastFinishStudy, forKey: "lastFinishStudy")
     }
-    
-    //index Int
-    //studyPlan String
-    //studyNotes String
-    //days Int
-    //startsDate Date
-    //endsDate Date
-    //timeReminder Date
-    //studyDuration Int
-    //breakDuration Int
-    
     
     required convenience init?(coder: NSCoder) {
         
         //Pastikan data tidak kosong
-//        guard let index = coder.decodeObject(forKey: "index") as? Int,
         guard let status = coder.decodeObject(forKey: "status") as? String,
                     let studyPlan = coder.decodeObject(forKey: "studyPlan") as? String,
                     let studyNotes = coder.decodeObject(forKey: "studyNotes") as? String,
                     let frequency = coder.decodeObject(forKey: "frequency") as? [Int],
                     let startsDate = coder.decodeObject(forKey: "startsDate") as? Date,
                     let endsDate = coder.decodeObject(forKey: "endsDate") as? Date,
-                    let timeReminder = coder.decodeObject(forKey: "timeReminder") as? Date
+                    let timeReminder = coder.decodeObject(forKey: "timeReminder") as? Date,
+                    let lastFinishStudy = coder.decodeObject(forKey: "lastFinishStudy") as? Date
             else { return nil }
 
             //convert data jadi strings
@@ -61,8 +51,8 @@ class Plan: NSObject, NSCoding
                 timeReminder: timeReminder,
                 switchReminder: coder.decodeBool(forKey: "switchReminder"),
                 studyDuration: coder.decodeInteger(forKey: "studyDuration"),
-                breakDuration: coder.decodeInteger(forKey: "breakDuration")
-                //published: coder.decodeInteger(forKey: "published") //untuk Int
+                breakDuration: coder.decodeInteger(forKey: "breakDuration"),
+                lastFinishStudy: lastFinishStudy
             )
     }
     
@@ -77,22 +67,10 @@ class Plan: NSObject, NSCoding
     var switchReminder : Bool
     var studyDuration: Int
     var breakDuration: Int
+    var lastFinishStudy: Date
     
-//    init(index: Int, studyPlan: String, studyNotes: String, frequency: [Int], startsDate: Date, endsDate: Date, timeReminder: Date, switchReminder: Bool, studyDuration: Int, breakDuration: Int)
-//    {
-//        self.index = index
-//        self.studyPlan = studyPlan
-//        self.studyNotes = studyNotes
-//        self.frequency = frequency
-//        self.startsDate = startsDate
-//        self.endsDate = endsDate
-//        self.timeReminder = timeReminder
-//        self.switchReminder = switchReminder
-//        self.studyDuration = studyDuration
-//        self.breakDuration = breakDuration
-//    }
     
-    init(index: Int, status: String, studyPlan: String, studyNotes: String, frequency: [Int], startsDate: Date, endsDate: Date, timeReminder: Date, switchReminder: Bool, studyDuration: Int, breakDuration: Int)
+    init(index: Int, status: String, studyPlan: String, studyNotes: String, frequency: [Int], startsDate: Date, endsDate: Date, timeReminder: Date, switchReminder: Bool, studyDuration: Int, breakDuration: Int, lastFinishStudy: Date)
     {
         self.index = index
         self.status = status
@@ -105,7 +83,15 @@ class Plan: NSObject, NSCoding
         self.switchReminder = switchReminder
         self.studyDuration = studyDuration
         self.breakDuration = breakDuration
+        self.lastFinishStudy = lastFinishStudy
         
     }
 
 }
+
+class NotificationReminder {
+    
+}
+
+
+
