@@ -15,6 +15,7 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     
     let dateFormatter = DateFormatter()
     let defaults = UserDefaults.standard
+    //let localNotification = NotificationReminder()
     
     let formatDateString = "MMMM dd, yyyy"
     let formatTimeString = "HH:mm"
@@ -55,7 +56,7 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         
         //defaults.removeObject(forKey: "Plans")
         getUserDefault()
-        
+
     }
     
     @IBAction func startsDP(_ sender: Any) {
@@ -88,6 +89,7 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     }
     
     @IBAction func addData(_ sender: Any) {
+        let id = formatDateToString(date: Date(), formatDate: "yyyyMMdd'T'HHmmssSSSS")
         plans.append(
             Plan(
                 index: plans.count,
@@ -101,7 +103,10 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
                 switchReminder: switchReminder.isOn,
                 studyDuration: Int(studyDurationPicker.countDownDuration),
                 breakDuration: Int(breakDurationPicker.countDownDuration),
-                lastFinishStudy: startsDatePicker.date - 3*24*60*60))
+                lastFinishStudy: startsDatePicker.date - 3*24*60*60,
+                everStudy: false,
+                identifier: "\(id)")
+            )
 
 //        print("Cek data array plans", plans[0].index)
 //        print("cek data array plans", plans[0].status)
@@ -133,6 +138,17 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
+//    func notif() {
+//        localNotification.notifications.append(
+//            Notification(
+//                id: formatDateToString(date: Date(), formatDate: "yyyyMMdd'T'HHmmssSSSS") ,
+//                title:"beh-test",
+//                datetime:DateComponents(calendar: Calendar.current, year: 2021, month: 4, day: 13, hour: 18, minute: 31))
+//            )
+//        localNotification.schedule()
+//        localNotification.listScheduledNotifications()
+//    }
+//
     func getUserDefault(){
         let tempArchiveItems = defaults.data(forKey: "Plans")
         print("tempArchiveItems ", tempArchiveItems as Any)

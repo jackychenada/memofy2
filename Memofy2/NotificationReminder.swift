@@ -6,3 +6,102 @@
 //
 
 import Foundation
+
+import UserNotifications
+
+struct Notification {
+    var id: String
+    var title: String
+    var datetime: DateComponents
+}
+
+class NotificationReminder {
+    var notifications: [Notification] = []
+    //let userNotificationCenter = UNUserNotificationCenter.current()
+    
+    func listScheduledNotifications()
+    {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { notifications in
+
+            for notification in notifications {
+                print(notification)
+            }
+        }
+    }
+    
+    private func requestAuthorization()
+    {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+
+            if granted == true && error == nil {
+                self.scheduleNotifications()
+            }
+        }
+//        let authOptions = UNAuthorizationOptions.init(arrayLiteral: .alert, .badge, .sound)
+//
+//        self.userNotificationCenter.requestAuthorization(options: authOptions) { (success, error) in
+//            if let error = error {
+//                print("Error: ", error)
+//            }
+//        }
+    }
+    
+    func schedule()
+    {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            switch settings.authorizationStatus {
+            case .notDetermined, .denied:
+                self.requestAuthorization()
+                print("access", settings.authorizationStatus)
+            case .authorized, .provisional:
+                self.scheduleNotifications()
+            default:
+                break // Do nothing
+            }
+        }
+    }
+    
+    private func scheduleNotifications()
+    {
+        for notification in notifications
+        {
+            let content      = UNMutableNotificationContent()
+            content.title    = notification.title
+            content.body     = "test"
+            content.sound    = .default
+
+//            let trigger = UNCalendarNotificationTrigger(dateMatching: notification.datetime, repeats: false)
+
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+            
+            let request = UNNotificationRequest(identifier: notification.id, content: content, trigger: trigger)
+
+            UNUserNotificationCenter.current().add(request) { error in
+
+                guard error == nil else { return }
+
+                print("Notification scheduled! --- ID = \(notification.id)")
+            }
+        }
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void)
+    {
+        let id = response.notification.request.identifier
+        print("Received notification with ID = \(id)")
+
+        completionHandler()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void)
+    {
+        let id = notification.request.identifier
+        print("Received notification with ID = \(id)")
+
+        completionHandler([.sound, .badge])
+    }
+}
+
+
