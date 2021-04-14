@@ -262,6 +262,9 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
         }
         }
     
+    func removeAllDeliveredNotifications(){
+    }
+    
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     let isCellDateStarts = indexPath.section == 1 && indexPath.row == 2
     let isCelDateEnds = indexPath.section == 1 && indexPath.row == 4
