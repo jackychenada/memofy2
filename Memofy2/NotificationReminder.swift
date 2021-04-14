@@ -29,6 +29,11 @@ class NotificationReminder {
         }
     }
     
+    func removeAllNotification(){
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            print("Deleted All Notif")
+    }
+    
     private func requestAuthorization()
     {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
@@ -37,13 +42,6 @@ class NotificationReminder {
                 self.scheduleNotifications()
             }
         }
-//        let authOptions = UNAuthorizationOptions.init(arrayLiteral: .alert, .badge, .sound)
-//
-//        self.userNotificationCenter.requestAuthorization(options: authOptions) { (success, error) in
-//            if let error = error {
-//                print("Error: ", error)
-//            }
-//        }
     }
     
     func schedule()

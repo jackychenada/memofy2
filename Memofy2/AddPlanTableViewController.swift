@@ -15,7 +15,7 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     
     let dateFormatter = DateFormatter()
     let defaults = UserDefaults.standard
-    //let localNotification = NotificationReminder()
+//    let localNotification = NotificationReminder()
     
     let formatDateString = "MMMM dd, yyyy"
     let formatTimeString = "HH:mm"
@@ -158,7 +158,7 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
 //        localNotification.schedule()
 //        localNotification.listScheduledNotifications()
 //    }
-//
+
     func getUserDefault(){
         let tempArchiveItems = defaults.data(forKey: "Plans")
         print("tempArchiveItems ", tempArchiveItems as Any)
