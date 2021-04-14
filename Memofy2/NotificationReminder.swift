@@ -13,25 +13,41 @@ struct Notification {
     var id: String
     var title: String
     var datetime: DateComponents
+    var body: String
 }
 
 class NotificationReminder {
     var notifications: [Notification] = []
-    //let userNotificationCenter = UNUserNotificationCenter.current()
     
     func listScheduledNotifications()
     {
         UNUserNotificationCenter.current().getPendingNotificationRequests { notifications in
 
             for notification in notifications {
-                print(notification)
+                print("Pending Notif : ", notification)
+            }
+        }
+    }
+
+    func listDeliveredNotifications()
+    {
+        UNUserNotificationCenter.current().getDeliveredNotifications {
+            notifications in
+            
+            for notification in notifications {
+                print("Delivered Notif : ", notification)
             }
         }
     }
     
+    func removeWithIdentifiers(identifier: [String]){
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifier)
+        print("Delete pending notif dengan identifier ", identifier)
+    }
+    
     func removeAllNotification(){
-            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-            print("Deleted All Notif")
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        print("Deleted All Notif")
     }
     
     private func requestAuthorization()
@@ -65,13 +81,13 @@ class NotificationReminder {
         {
             let content      = UNMutableNotificationContent()
             content.title    = notification.title
-            content.body     = "test"
+            content.body     = notification.body
             content.sound    = .default
 
-//            let trigger = UNCalendarNotificationTrigger(dateMatching: notification.datetime, repeats: false)
-
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-            
+            let trigger = UNCalendarNotificationTrigger(dateMatching: notification.datetime, repeats: false)
+//
+//            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+//
             let request = UNNotificationRequest(identifier: notification.id, content: content, trigger: trigger)
 
             UNUserNotificationCenter.current().add(request) { error in
@@ -98,8 +114,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let id = notification.request.identifier
         print("Received notification with ID = \(id)")
 
-        completionHandler([.sound, .badge])
+        completionHandler([.sound, .alert])
     }
 }
-
-

@@ -15,7 +15,11 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     
     let dateFormatter = DateFormatter()
     let defaults = UserDefaults.standard
+
 //    let localNotification = NotificationReminder()
+
+    let localNotification = NotificationReminder()
+    let calendar = Calendar.current
     
     let formatDateString = "MMMM dd, yyyy"
     let formatTimeString = "HH:mm"
@@ -57,6 +61,8 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         //defaults.removeObject(forKey: "Plans")
         getUserDefault()
 
+        //localNotification.removeAllNotification()
+        localNotification.listScheduledNotifications()
     }
     
     @IBAction func startsDP(_ sender: Any) {
@@ -99,6 +105,11 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         }
 
         let id = formatDateToString(date: Date(), formatDate: "yyyyMMdd'T'HHmmssSSSS")
+        if !days.isEmpty {
+            sendNotificationMultiple(id: id)
+        } else {
+            sendNotificationSingle(id: id)
+        }
 
         plans.append(
             Plan(
@@ -129,21 +140,21 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
 //       print("Cek data array plans", plans[0].switchReminder)
 //       print("Cek data array plans", plans[0].studyDuration)
 //       print("Cek data array plans", plans[0].breakDuration)
-        print("cek data array plans", startsDatePicker.date-3*24*60*60)
+        //print("cek data array plans", startsDatePicker.date-3*24*60*60)
 
         let preStorePlans = try! NSKeyedArchiver.archivedData(withRootObject: plans, requiringSecureCoding: false)
-        print("INI DATA JADI BYTE", preStorePlans)
+        //print("INI DATA JADI BYTE", preStorePlans)
         
         //MASUKKIN KE USER DEFAULT
         defaults.set(preStorePlans, forKey: "Plans")
 
         //Untuk nge cek persatuan
-        print("Satu-satu", defaults.object(forKey: "Plans") as Any )
+        //print("Satu-satu", defaults.object(forKey: "Plans") as Any )
         
         //Cek keseluruhan
         //print("ALL USER DEFAULT", UserDefaults.standard.dictionaryRepresentation())
         
-        print("addData plans : ", plans)
+        //print("addData plans : ", plans)
         
         self.dismiss(animated: true, completion: nil)
     }
@@ -159,9 +170,57 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
 //        localNotification.listScheduledNotifications()
 //    }
 
+        func sendNotificationMultiple(id: String) {
+        let rangeDate = calendar.dateComponents([.day], from: startsDatePicker.date, to: endsDatePicker.date)
+        
+        var tempDate = startsDatePicker.date
+        var weekday = -1
+        print("range", rangeDate.day!)
+        var indexIndetifier = 0
+        let timeNotification = calendar.dateComponents([.hour, .minute], from: timeReminderPicker.date)
+        
+        for _ in 0...rangeDate.day! {
+            weekday = calendar.component(.weekday, from: tempDate)
+            let dateNotification = calendar.dateComponents([.year, .month, .day], from: tempDate)
+
+            let getIndex = (days.firstIndex(of: weekday) != nil ? days.firstIndex(of: weekday) : -1)!
+
+            if(getIndex > -1) {
+                localNotification.notifications.append(
+                    Notification(
+                        id: "\(id)-\(indexIndetifier)",
+                        title: studyPlanTextField.text ?? "none",
+                        datetime:DateComponents(calendar: Calendar.current, year: dateNotification.year!, month: dateNotification.month!, day: dateNotification.day!, hour: timeNotification.hour!, minute: timeNotification.minute!),
+                        body: "Hey, your study time is available now!")
+                    )
+                indexIndetifier += 1
+                print("is here dudde", indexIndetifier)
+                }
+            tempDate += (1*24*60*60)
+        }
+
+        localNotification.schedule()
+        localNotification.listScheduledNotifications()
+    }
+    
+    func sendNotificationSingle(id: String) {
+        let dateNotification = calendar.dateComponents([.year, .month, .day], from: startsDatePicker.date)
+        
+        let timeNotification = calendar.dateComponents([.hour, .minute], from: timeReminderPicker.date)
+        localNotification.notifications.append(
+            Notification(
+                id: "\(id)",
+                title: studyPlanTextField.text ?? "none",
+                datetime:DateComponents(calendar: Calendar.current, year: dateNotification.year, month: dateNotification.month, day: dateNotification.day, hour: timeNotification.hour, minute: timeNotification.minute),
+                body: "Hey, your study time is available now!")
+            )
+        localNotification.schedule()
+        localNotification.listScheduledNotifications()
+    }
+
     func getUserDefault(){
         let tempArchiveItems = defaults.data(forKey: "Plans")
-        print("tempArchiveItems ", tempArchiveItems as Any)
+        //print("tempArchiveItems ", tempArchiveItems as Any)
         if(tempArchiveItems != nil){
             plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
         }
@@ -204,9 +263,9 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         if(day.isEmpty){
             return repeatLabel.text = "Never"
         }
-        let dayNames = ["Every Monday", "Every Tuesday", "Every Wednesday", "Every Thursday", "Every Friday", "Every Saturday", "Every Sunday"]
+        let dayNames = ["Every Sunday", "Every Monday", "Every Tuesday", "Every Wednesday", "Every Thursday", "Every Friday", "Every Saturday"]
         if(day.count == 1) {
-            return repeatLabel.text = dayNames[day[0]]
+            return repeatLabel.text = dayNames[day[0]-1]
         }else{
             repeatLabel.text = "Multiple"
         }
