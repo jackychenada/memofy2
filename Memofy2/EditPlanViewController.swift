@@ -59,22 +59,26 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
         timeReminderTimeLabel.text = choosenRepeat
         
         //Set default date di add
-        dateStartsDatePicker.date = NSDate() as Date
-        dateEndsDatePicker.date = NSDate() as Date
-        timeReminderTimePicker.date = NSDate() as Date
+//        dateStartsDatePicker.date = NSDate() as Date
+//        dateEndsDatePicker.date = NSDate() as Date
+//        timeReminderTimePicker.date = NSDate() as Date
 
         hiddenViewDatePicker(fieldName: "init", indexPath: [-1])
 
-        dateFormatterr.dateStyle = DateFormatter.Style.long
-        dateStartsLabel.text = formatDateToString(date: dateStartsDatePicker.date, formatDate: formatDateString)
-        dateEndsLabel.text = formatDateToString(date: dateEndsDatePicker.date, formatDate: formatDateString)
-        timeReminderTimeLabel.text = formatDateToString(date: timeReminderTimePicker.date, formatDate: formatTimeString)
+//        dateFormatterr.dateStyle = DateFormatter.Style.long
+//        dateStartsLabel.text = formatDateToString(date: dateStartsDatePicker.date, formatDate: formatDateString)
+//        dateEndsLabel.text = formatDateToString(date: dateEndsDatePicker.date, formatDate: formatDateString)
+//        timeReminderTimeLabel.text = formatDateToString(date: timeReminderTimePicker.date, formatDate: formatTimeString)
         
         
         let tempArchiveItems = defaults.data(forKey: "Plans")
             if (tempArchiveItems != nil ) {
                 plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
                 let plan = plans[receivePlanIndex]
+                
+                dateStartsDatePicker.date = plan.startsDate
+                dateEndsDatePicker.date = plan.endsDate
+                timeReminderTimePicker.date = plan.timeReminder
                 
                 studyPlanTF.text = plan.studyPlan
                 studyNotesTextView.text = plan.studyNotes
