@@ -40,16 +40,16 @@ class RepeatEditTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if repeatEditTableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
             self.repeatEditTableView.cellForRow(at: indexPath)?.accessoryType = .none
-        days.remove(indexPath.row)
+        days.remove(indexPath.row+1)
         }
         else {
             self.repeatEditTableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-            days.insert(indexPath.row)
+            days.insert(indexPath.row+1)
         }
         self.repeatEditTableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.accessoryType = days.contains(indexPath.row) ? .checkmark : .none
+        cell.accessoryType = days.contains(indexPath.row+1) ? .checkmark : .none
     }
 }

@@ -161,17 +161,6 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         
         self.dismiss(animated: true, completion: nil)
     }
-    
-//    func notif() {
-//        localNotification.notifications.append(
-//            Notification(
-//                id: formatDateToString(date: Date(), formatDate: "yyyyMMdd'T'HHmmssSSSS") ,
-//                title:"beh-test",
-//                datetime:DateComponents(calendar: Calendar.current, year: 2021, month: 4, day: 13, hour: 18, minute: 31))
-//            )
-//        localNotification.schedule()
-//        localNotification.listScheduledNotifications()
-//    }
 
         func sendNotificationMultiple(id: String) {
         let rangeDate = calendar.dateComponents([.day], from: startsDatePicker.date, to: endsDatePicker.date)

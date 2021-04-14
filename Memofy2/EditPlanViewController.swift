@@ -154,7 +154,8 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
              plan.everStudy = false
          }
          
-        localNotification.removeAllNotification()
+        localNotification.removeWithIdentifiers(identifier: [plan.identifier])
+        
         let idN = formatDateToString(date: Date(), formatDate: "yyyyMMdd'T'HHmmssSSSS")
         if !days.isEmpty{
             sendNotificationMultiple(id: idN)
@@ -259,9 +260,9 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
             self.repeatEditLabel.text = "Never"
             return
         }
-        let dayNames = ["Every Monday", "Every Tuesday", "Every Wednesday", "Every Thursday", "Every Friday", "Every Saturday", "Every Sunday"]
+        let dayNames = ["Every Sunday", "Every Monday", "Every Tuesday", "Every Wednesday", "Every Thursday", "Every Friday", "Every Saturday"]
         if (day.count == 1) {
-            return repeatEditLabel.text = dayNames[day[0]]
+            return repeatEditLabel.text = dayNames[day[0]-1]
         }
         else {
             repeatEditLabel.text = "Multiple"
@@ -289,7 +290,8 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
                         Notification(
                             id: "\(id)-\(indexIndetifier)",
                             title: studyPlanTF.text ?? "none",
-                            datetime:DateComponents(calendar: Calendar.current, year: dateNotification.year, month: dateNotification.month, day: dateNotification.day, hour: timeNotification.hour, minute: timeNotification.minute))
+                            datetime:DateComponents(calendar: Calendar.current, year: dateNotification.year, month: dateNotification.month, day: dateNotification.day, hour: timeNotification.hour, minute: timeNotification.minute),
+                            body: "Hey, your study time is available now!")
                         )
                     indexIndetifier += 1
                 }
@@ -309,23 +311,11 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
                 Notification(
                     id: "\(id)",
                     title: studyPlanTF.text ?? "none",
-                    datetime:DateComponents(calendar: Calendar.current, year: dateNotification.year, month: dateNotification.month, day: dateNotification.day, hour: timeNotification.hour, minute: timeNotification.minute))
+                    datetime:DateComponents(calendar: Calendar.current, year: dateNotification.year, month: dateNotification.month, day: dateNotification.day, hour: timeNotification.hour, minute: timeNotification.minute), body: "Hey, your study time is available now!")
                 )
             localNotification.schedule()
             localNotification.listScheduledNotifications()
         }
-    
-//    func notifEdit(){
-//        localNotification.notifications.append(
-//            Notification(
-//                id: formatDateToString(date: Date(), formatDate: "yyyyMMdd'T'HHmmssSSSS"),
-//                title: "Reminder U-Plan!",
-//                datetime: DateComponents(calendar: Calendar.current, year: 2021, month: 4, day: 13, hour: 18, minute: 31)
-//                )
-//            )
-//        localNotification.schedule()
-//        localNotification.listScheduledNotifications()
-//    }
     
     override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         let mainViewController = self.presentingViewController as? ViewController
