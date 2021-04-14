@@ -28,6 +28,22 @@ class NotificationReminder {
         }
     }
     
+    func listDeliveredNotifications()
+    {
+        UNUserNotificationCenter.current().getDeliveredNotifications {
+            notifications in
+            
+            for notification in notifications {
+                print("Delivered Notif : ", notification)
+            }
+        }
+    }
+    
+    func removeWithIdentifiers(identifier: [String]){
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifier)
+        print("Delete pending notif dengan identifier ", identifier)
+    }
+    
     func removeAllNotification(){
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         print("Deleted All Notif")

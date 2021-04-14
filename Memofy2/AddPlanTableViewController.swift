@@ -164,29 +164,24 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         print("range", rangeDate.day!)
         var indexIndetifier = 0
         let timeNotification = calendar.dateComponents([.hour, .minute], from: timeReminderPicker.date)
-        for _ in 0..<rangeDate.day! {
-            //print("i", i)
-            weekday = Calendar.current.component(.weekday, from: tempDate)
-            //print("weekday", weekday)
-            
-            print("tempDate", tempDate)
+        
+        for _ in 0...rangeDate.day! {
+            weekday = calendar.component(.weekday, from: tempDate)
             let dateNotification = calendar.dateComponents([.year, .month, .day], from: tempDate)
-            
+
             let getIndex = (days.firstIndex(of: weekday) != nil ? days.firstIndex(of: weekday) : -1)!
+
             if(getIndex > -1) {
-                //schedule here
                 localNotification.notifications.append(
                     Notification(
                         id: "\(id)-\(indexIndetifier)",
                         title: studyPlanTextField.text ?? "none",
-                        datetime:DateComponents(calendar: Calendar.current, year: dateNotification.year, month: dateNotification.month, day: dateNotification.day, hour: timeNotification.hour, minute: timeNotification.minute))
+                        datetime:DateComponents(calendar: Calendar.current, year: dateNotification.year!, month: dateNotification.month!, day: dateNotification.day!, hour: timeNotification.hour!, minute: timeNotification.minute!))
                     )
                 indexIndetifier += 1
-                print("is here dudde")
-            }
+                print("is here dudde", indexIndetifier)
+                }
             tempDate += (1*24*60*60)
-
-            print("weekday", weekday)
         }
 
         localNotification.schedule()
@@ -252,9 +247,9 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         if(day.isEmpty){
             return repeatLabel.text = "Never"
         }
-        let dayNames = ["Every Monday", "Every Tuesday", "Every Wednesday", "Every Thursday", "Every Friday", "Every Saturday", "Every Sunday"]
+        let dayNames = ["Every Sunday", "Every Monday", "Every Tuesday", "Every Wednesday", "Every Thursday", "Every Friday", "Every Saturday"]
         if(day.count == 1) {
-            return repeatLabel.text = dayNames[day[0]]
+            return repeatLabel.text = dayNames[day[0]-1]
         }else{
             repeatLabel.text = "Multiple"
         }

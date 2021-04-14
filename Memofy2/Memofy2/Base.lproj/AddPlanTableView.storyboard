@@ -12,7 +12,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="AddPlanTableViewController" id="hKz-4v-b9a" customClass="AddPlanTableViewController" customModule="Memofy2" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="pI5-ig-Qjg">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844.00000000000011"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <sections>
                             <tableViewSection id="LOt-iE-mzL">
@@ -355,8 +355,25 @@
                         <sections>
                             <tableViewSection id="yZF-vp-fiW">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="monday" textLabel="TCs-NY-hgs" style="IBUITableViewCellStyleDefault" id="gUD-sE-2qD">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="sunday" textLabel="rEB-Dd-Ttx" style="IBUITableViewCellStyleDefault" id="JLW-6t-dSy">
                                         <rect key="frame" x="0.0" y="18" width="390" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JLW-6t-dSy" id="iFP-kv-K09">
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Every Sunday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rEB-Dd-Ttx">
+                                                    <rect key="frame" x="20" y="0.0" width="350" height="43.666667938232422"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="monday" textLabel="TCs-NY-hgs" style="IBUITableViewCellStyleDefault" id="gUD-sE-2qD">
+                                        <rect key="frame" x="0.0" y="61.666667938232422" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gUD-sE-2qD" id="8Do-WC-7E5">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
@@ -373,7 +390,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tuesday" textLabel="nfs-M6-dfI" style="IBUITableViewCellStyleDefault" id="ILt-iI-aHd">
-                                        <rect key="frame" x="0.0" y="61.666667938232422" width="390" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="105.33333587646484" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ILt-iI-aHd" id="eAt-dM-aau">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
@@ -390,7 +407,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="wednesday" textLabel="YuR-s6-FRn" style="IBUITableViewCellStyleDefault" id="Eyp-3A-pOQ">
-                                        <rect key="frame" x="0.0" y="105.33333587646484" width="390" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="149.00000381469727" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Eyp-3A-pOQ" id="XxV-Qn-Fbs">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
@@ -407,7 +424,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="thursday" textLabel="Tmb-ff-5Pu" style="IBUITableViewCellStyleDefault" id="XZ7-5E-lQN">
-                                        <rect key="frame" x="0.0" y="149.00000381469727" width="390" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="192.66667175292969" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XZ7-5E-lQN" id="Jwl-bj-zJd">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
@@ -424,7 +441,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="friday" textLabel="XOJ-5A-Qcs" style="IBUITableViewCellStyleDefault" id="e77-WH-Mmw">
-                                        <rect key="frame" x="0.0" y="192.66667175292969" width="390" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="236.33333969116211" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e77-WH-Mmw" id="4Lz-xQ-lje">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
@@ -441,30 +458,13 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="saturday" textLabel="sYx-0X-Td6" style="IBUITableViewCellStyleDefault" id="LyU-IA-Dj9">
-                                        <rect key="frame" x="0.0" y="236.33333969116211" width="390" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="280.00000762939453" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LyU-IA-Dj9" id="AEe-Rr-7bg">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Every Saturday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sYx-0X-Td6">
-                                                    <rect key="frame" x="20" y="0.0" width="350" height="43.666667938232422"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="sunday" textLabel="rEB-Dd-Ttx" style="IBUITableViewCellStyleDefault" id="JLW-6t-dSy">
-                                        <rect key="frame" x="0.0" y="280.00000762939453" width="390" height="43.666667938232422"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JLW-6t-dSy" id="iFP-kv-K09">
-                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Every Sunday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rEB-Dd-Ttx">
                                                     <rect key="frame" x="20" y="0.0" width="350" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
