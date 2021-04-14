@@ -119,6 +119,7 @@ class StudyTimeController: UIViewController {
         
         let plan = plans[self.receivePlanIndex]
         plan.status = "completed"
+        plan.lastFinishStudy = Date()
         setUserDefault()
         notif()
         let mainViewController = self.presentingViewController as? ViewController

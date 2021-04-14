@@ -29,15 +29,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.register(nib, forCellReuseIdentifier: "MemoTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
-        setupInterface()
-        
-        print("firstWeekday", NSCalendar.current.firstWeekday)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         setupView()
+        setupInterface()
     }
     //navEditPlan
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -47,12 +44,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
+    //TOLONG JANGAN DIHAPUS
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
         //jangan dihapus ya, kepake untuk segue back ke main
     }
     
     func setupInterface(){
-        let footerView =  UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height ))
+        let initHeight = 680
+        let tableHeight = (todoPlans.count + completedPlans.count + incomingPlans.count) * 68
+        let calcHeight = initHeight - tableHeight
+        let footerHeight = CGFloat(calcHeight > -1 ? calcHeight : 0)
+        let footerView =  UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: footerHeight ))
         footerView.backgroundColor = backgroundColor
         tableView.tableFooterView = footerView
     }
@@ -64,63 +66,86 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         sections = []
     }
     
+    func isSameDay(date1: Date, date2: Date) -> Bool {
+        let retBool = false
+        let date1String = formatDateToString(date: date1, formatDate: "yy-MM-dd")
+        let date2String = formatDateToString(date: date2, formatDate: "yy-MM-dd")
+        if(date1String == date2String){
+            return true
+        }
+        return retBool
+    }
+    
     func setupView(){
-        print("masuk setupView")
-//        var startDate = Date()
-//        var tempDate = startDate
-//        var arr = [1,2,3]
-//        var indexOf = arr.firstIndex(of: 2)
-//        var weekday = -1
-//        print("index of", indexOf)
-//        for i in 0..<30 {
-//            print("i", i)
-//            weekday = Calendar.current.component(.weekday, from: tempDate)
-//            print("weekday", weekday)
-//            let getIndex = (arr.firstIndex(of: weekday) != nil ? arr.firstIndex(of: weekday) : -1)!
-//            if(getIndex > -1) {
-//                //schedule here
-//                print("is here dudde")
-//            }
-//            tempDate += (1*24*60*60)
-//
-//            print("weekday", weekday)
-//        }
+        let currentDate = Date()
+        let currentDateString = formatDateToString(date: currentDate, formatDate: "yyMMdd")
+        let currentDateInt = Int(currentDateString) ?? 0
+        let currentDay = Calendar.current.component(.weekday, from: currentDate)
         
         //UserDefaults.standard.removeObject(forKey: "Plans")
         clearArr()
+        getUserDefault()
+        print("current date int", currentDateInt)
+        for plan in plans {
+            let startDateString = formatDateToString(date: plan.startsDate, formatDate: "yyMMdd")
+            let endDateString = formatDateToString(date: plan.endsDate, formatDate: "yyMMdd")
+            let startDateInt = Int(startDateString) ?? 0
+            let endDateInt = Int(endDateString) ?? 0
+        
+            if(startDateInt <= currentDateInt && endDateInt >= currentDateInt) {
+
+                let currentIsSameDayWithLastStudy = isSameDay(date1: currentDate, date2: plan.lastFinishStudy)
+                
+                if(plan.status == "completed" && plan.frequency.count > 0 && !currentIsSameDayWithLastStudy){
+                    let frequencyIndex = plan.frequency.firstIndex(of: currentDay) ?? -1
+                    let haveRepeatToday = frequencyIndex > -1 ? true : false
+                    if(haveRepeatToday){
+                        plan.status = "in progress"
+                    }
+                }
+                if(plan.status == "incoming" && currentDateInt >= startDateInt) {
+                    plan.status = "in progress"
+                }
+            }
+
+            if plan.status == "in progress" {
+                todoPlans.append(plan)
+            }
+            else if plan.status == "completed" {
+                completedPlans.append(plan)
+            }
+            else if plan.status == "incoming" {
+                incomingPlans.append(plan)
+            }
+        }
+        if(todoPlans.count > 0) {
+            sections.append("TO DO")
+        }
+        if(incomingPlans.count > 0) {
+            sections.append("INCOMING")
+        }
+        if(completedPlans.count > 0) {
+            sections.append("COMPLETED")
+        }
+        tableView.reloadData()
+        setUserDefault()
+    }
+    
+    func getUserDefault(){
         let tempArchiveItems = defaults.data(forKey: "Plans")
         print("tempArchiveItems ", tempArchiveItems as Any)
-        
         if(tempArchiveItems != nil){
             plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
-            print("INI MEMOS", plans as Any)
-            for plan in plans {
-                if plan.status == "in progress" {
-                    todoPlans.append(plan)
-                }
-                else if plan.status == "completed" {
-                    completedPlans.append(plan)
-                }
-                else if plan.status == "incoming" {
-                    incomingPlans.append(plan)
-                }
-            }
-            if(todoPlans.count > 0) {
-                sections.append("TO DO")
-            }
-            if(incomingPlans.count > 0) {
-                sections.append("INCOMING")
-            }
-            if(completedPlans.count > 0) {
-                sections.append("COMPLETED")
-            }
-            tableView.reloadData()
-            //print("ALL USER DEFAULT", UserDefaults.standard.dictionaryRepresentation())
         }
     }
     
-    func formatDateToString(date: Date) -> String {
-        dateFormatter.dateFormat = "MMM dd - hh:mm a"
+    func setUserDefault(){
+        let preStorePlans = try! NSKeyedArchiver.archivedData(withRootObject: plans, requiringSecureCoding: false)
+        defaults.set(preStorePlans, forKey: "Plans")
+    }
+    
+    func formatDateToString(date: Date, formatDate: String) -> String {
+        dateFormatter.dateFormat = formatDate
         return dateFormatter.string(from: date)
     }
     
@@ -194,8 +219,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                 cell.nameLabel.text = tempData.studyPlan
                 cell.nameLabel.textColor =  #colorLiteral(red: 0, green: 0.3607843137, blue: 0.7254901961, alpha: 1)
-                print("index", tempData.index)
-                cell.dateLabel.text = formatDateToString(date: tempData.startsDate)
+                cell.dateLabel.text = formatDateToString(date: tempData.startsDate, formatDate: "MMM dd - hh:mm a")
                 return cell
     }
     
