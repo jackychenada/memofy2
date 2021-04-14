@@ -15,29 +15,44 @@ class StudyTimeController: UIViewController {
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     
+    let defaults = UserDefaults.standard
+    let dateFormatter = DateFormatter()
+    
     var timerTimer:Timer = Timer()
     var timerBreak: Timer = Timer()
-    var countTimer:Int = 3602
-    var countBreak: Int = 10
+    let localNotification = NotificationReminder()
+    var plans:[Plan] = []
+    var countTimer:Int = 0
+    var countBreak: Int = 0
     
     var isCountTimer:Bool = false
     var isCountBreak:Bool = false
     var isTimer: Bool = true
+    
+    var receivePlanIndex:Int = -1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         playButton.setTitle("START", for: .normal)
         stopButton.setTitle("Done Study", for: .normal)
         
-        stopButton.isHidden = true
+        print(receivePlanIndex)
+        getUserDefault()
+        if(plans.count > 0){
+            let plan = plans[receivePlanIndex]
+            countTimer = plan.studyDuration
+            countBreak = plan.breakDuration
+        }
+    
         timerLabel.text = setTimerTextLabel(dataSeconds: countTimer)
-        
+        stopButton.isHidden = true
         breakLabel.isHidden = true
-        
     }
     
+    
+    
     @IBAction func stopButtonTap(_ sender: Any){
-        let alert = UIAlertController(title: "Complete Study?", message: "if you click done, your study will be completed", preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "Complete Study?", message: "If you click done, your study will be completed", preferredStyle: UIAlertController.Style.alert)
         
         alert.addAction(UIAlertAction(title: "Done", style: UIAlertAction.Style.default, handler: { (_) in
             self.stopTimer()
@@ -48,6 +63,40 @@ class StudyTimeController: UIViewController {
         }))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func getUserDefault(){
+        let tempArchiveItems = defaults.data(forKey: "Plans")
+        print("tempArchiveItems ", tempArchiveItems as Any)
+        if(tempArchiveItems != nil){
+            plans = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tempArchiveItems!) as! [Plan]
+        }
+    }
+    
+    func setUserDefault(){
+        let preStorePlans = try! NSKeyedArchiver.archivedData(withRootObject: plans, requiringSecureCoding: false)
+        defaults.set(preStorePlans, forKey: "Plans")
+    }
+    
+        func notif() {
+            var currentDate = Date()
+            currentDate += 1
+            let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: currentDate)
+            localNotification.notifications.append(
+                Notification(
+                    id: "study-" + formatDateToString(date: Date(), formatDate: "yyyyMMdd'T'HHmmssSSSS"),
+                    title: "Congratulations",
+                    datetime: components,
+                    body: "yeah you are great!")
+                )
+        
+            localNotification.schedule(timeInterval: 1)
+        }
+    
+    func formatDateToString(date: Date, formatDate: String) -> String {
+        dateFormatter.dateFormat = formatDate
+        return dateFormatter.string(from: date)
+    }
+    
     func startTimer(){
         self.isTimer = true
         self.timerLabel.isHidden = false
@@ -67,6 +116,16 @@ class StudyTimeController: UIViewController {
         self.isCountTimer = false
         self.playButton.setTitle("START", for: .normal)
         self.timerLabel.text = self.setTimerTextLabel(dataSeconds: self.countTimer)
+        
+        let plan = plans[self.receivePlanIndex]
+        plan.status = "completed"
+        plan.lastFinishStudy = Date()
+        setUserDefault()
+        notif()
+        let mainViewController = self.presentingViewController as? ViewController
+        mainViewController?.viewWillAppear(true)
+        
+        self.performSegue(withIdentifier: "unwindToViewController1", sender: self)
     }
 
     
@@ -83,6 +142,7 @@ class StudyTimeController: UIViewController {
     func pauseBreak(){
         self.breakLabel.isHidden = true
         self.timerBreak.invalidate()
+//        playButton.setImage(UIImage(named:"Play Button.png"), for: .normal)
     }
     
     func stopBreak() {
@@ -96,6 +156,7 @@ class StudyTimeController: UIViewController {
         stopButton.isHidden = false
         if(isCountTimer){
             isCountTimer = false
+//            playButton.setImage(UIImage(named:"Play Button.png"), for: .normal)
             pauseTimer()
             startBreak()
         }
@@ -105,6 +166,7 @@ class StudyTimeController: UIViewController {
             }
             
             isCountTimer = true
+            playButton.setImage(UIImage(named:"Pause Button.png"), for: .normal)
             pauseBreak()
             startTimer()
         }

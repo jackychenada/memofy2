@@ -25,8 +25,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="350" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Study Plan" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fxM-r4-OsQ">
-                                                    <rect key="frame" x="12" y="5" width="350" height="34"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Study Plan" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fxM-r4-OsQ">
+                                                    <rect key="frame" x="12" y="5" width="327" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -172,7 +172,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="350" height="66"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VnK-9h-24g">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="VnK-9h-24g">
                                                     <rect key="frame" x="281" y="18" width="49" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                     <connections>
@@ -321,7 +321,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="saveStudyPlanButton:" destination="2AQ-fU-bzj" eventType="touchUpInside" id="cdP-J1-GW4"/>
+                                                        <segue destination="wFw-Ki-ESu" kind="show" identifier="studyTimerSegue" id="Odi-cV-Qbw"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -363,7 +363,11 @@
                                 <action selector="cancelButtonPressed:" destination="2AQ-fU-bzj" id="slc-iP-WHz"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="NMX-Vz-4wN"/>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="NMX-Vz-4wN">
+                            <connections>
+                                <action selector="saveButton:" destination="2AQ-fU-bzj" id="w26-RV-ahZ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="breakDurationLabel" destination="dnm-36-9rp" id="ZcD-rN-kse"/>
@@ -375,12 +379,14 @@
                         <outlet property="dateStartsDatePicker" destination="KKN-g3-iof" id="4nF-zC-T1X"/>
                         <outlet property="dateStartsLabel" destination="lDM-gX-HaW" id="qGI-Fi-epp"/>
                         <outlet property="dateStartsTableCell" destination="9WJ-Pf-7Jr" id="RCU-jK-lq9"/>
+                        <outlet property="repeatEditLabel" destination="sZ6-9Y-y3p" id="6ZE-ZP-aC6"/>
                         <outlet property="repeatTableCell" destination="KCk-fu-9Xo" id="gdX-xN-L9V"/>
-                        <outlet property="saveBarButton" destination="NMX-Vz-4wN" id="F0Z-ye-D11"/>
-                        <outlet property="startStudyButton" destination="lu6-al-0gb" id="zKa-no-xw9"/>
+                        <outlet property="startStudyButton" destination="lu6-al-0gb" id="3wv-6n-5vd"/>
                         <outlet property="studyDurationLabel" destination="vZw-sJ-wGk" id="1S6-Fk-CJA"/>
                         <outlet property="studyDurationTableCell" destination="yOF-CT-k6u" id="bYY-4V-08F"/>
                         <outlet property="studyDurationTimePicker" destination="5OW-dX-fhI" id="Tsr-sW-FAd"/>
+                        <outlet property="studyNotesTextView" destination="KeL-th-fsq" id="z0S-6T-gy9"/>
+                        <outlet property="studyPlanTF" destination="fxM-r4-OsQ" id="iFZ-5m-akp"/>
                         <outlet property="timeReminderSwitch" destination="VnK-9h-24g" id="2oB-q6-C2u"/>
                         <outlet property="timeReminderTableCell" destination="kLk-aj-H88" id="t4F-7i-R47"/>
                         <outlet property="timeReminderTimeLabel" destination="knE-Ti-8xX" id="QIe-1I-0VX"/>
@@ -391,10 +397,10 @@
             </objects>
             <point key="canvasLocation" x="1704.6153846153845" y="74.644549763033169"/>
         </scene>
-        <!--Repeat Details-->
+        <!--Repeat Edit Table View Controller-->
         <scene sceneID="tC4-hn-68N">
             <objects>
-                <tableViewController id="5Ea-pa-Q1e" customClass="repeatDetails" customModule="Memofy2" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="5Ea-pa-Q1e" customClass="RepeatEditTableViewController" customModule="Memofy2" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="iba-1f-bLK">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -402,7 +408,7 @@
                         <sections>
                             <tableViewSection id="NF7-kX-px0">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="iEa-X9-k31" style="IBUITableViewCellStyleDefault" id="D7Y-9V-xiP">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="monday" textLabel="iEa-X9-k31" style="IBUITableViewCellStyleDefault" id="D7Y-9V-xiP">
                                         <rect key="frame" x="0.0" y="18" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="D7Y-9V-xiP" id="cSd-rr-s6H">
@@ -419,7 +425,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="sjY-V5-zfd" style="IBUITableViewCellStyleDefault" id="teO-91-KHL">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tuesday" textLabel="sjY-V5-zfd" style="IBUITableViewCellStyleDefault" id="teO-91-KHL">
                                         <rect key="frame" x="0.0" y="61.666667938232422" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="teO-91-KHL" id="UAn-uA-uel">
@@ -436,7 +442,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="Fgk-1s-MLD" style="IBUITableViewCellStyleDefault" id="wgM-mQ-Lc0">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="wednesday" textLabel="Fgk-1s-MLD" style="IBUITableViewCellStyleDefault" id="wgM-mQ-Lc0">
                                         <rect key="frame" x="0.0" y="105.33333587646484" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wgM-mQ-Lc0" id="8Cf-0o-1fu">
@@ -453,7 +459,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="adj-nP-WKf" style="IBUITableViewCellStyleDefault" id="eL6-RL-rHt">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="thursday" textLabel="adj-nP-WKf" style="IBUITableViewCellStyleDefault" id="eL6-RL-rHt">
                                         <rect key="frame" x="0.0" y="149.00000381469727" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eL6-RL-rHt" id="wND-5U-VL5">
@@ -470,7 +476,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="QDf-ls-6Be" style="IBUITableViewCellStyleDefault" id="ftb-jH-Fad">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="friday" textLabel="QDf-ls-6Be" style="IBUITableViewCellStyleDefault" id="ftb-jH-Fad">
                                         <rect key="frame" x="0.0" y="192.66667175292969" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ftb-jH-Fad" id="lvD-Re-Hep">
@@ -487,7 +493,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="qSR-LU-qEm" style="IBUITableViewCellStyleDefault" id="KHn-AI-LnS">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="saturday" textLabel="qSR-LU-qEm" style="IBUITableViewCellStyleDefault" id="KHn-AI-LnS">
                                         <rect key="frame" x="0.0" y="236.33333969116211" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KHn-AI-LnS" id="pIQ-jJ-Loa">
@@ -504,7 +510,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="xZs-IL-q50" style="IBUITableViewCellStyleDefault" id="M9t-gG-9vc">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="sunday" textLabel="xZs-IL-q50" style="IBUITableViewCellStyleDefault" id="M9t-gG-9vc">
                                         <rect key="frame" x="0.0" y="280.00000762939453" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="M9t-gG-9vc" id="dtQ-Q8-xYz">
@@ -524,14 +530,10 @@
                                 </cells>
                             </tableViewSection>
                         </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="5Ea-pa-Q1e" id="G2b-9w-Z5A"/>
-                            <outlet property="delegate" destination="5Ea-pa-Q1e" id="3NW-f7-lEB"/>
-                        </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="kxb-D2-aRD"/>
                     <connections>
-                        <outlet property="repeatDetailTable" destination="iba-1f-bLK" id="7me-pB-Wjl"/>
+                        <outlet property="repeatEditTableView" destination="iba-1f-bLK" id="jwV-Jh-nGh"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ww2-tq-TaC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -555,6 +557,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bVt-ES-pEN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="776.92307692307691" y="75.355450236966817"/>
+        </scene>
+        <!--studyTimeViewController-->
+        <scene sceneID="j3J-k2-04f">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="studyTimeViewController" id="wFw-Ki-ESu" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="8Hg-wM-ctW"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="myO-pD-NfF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2353" y="498"/>
         </scene>
     </scenes>
     <resources>
