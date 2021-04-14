@@ -21,6 +21,7 @@ class NotificationReminder {
     
     func listScheduledNotifications()
     {
+        print("kepanggil list pending schedule")
         UNUserNotificationCenter.current().getPendingNotificationRequests { notifications in
 
             for notification in notifications {
@@ -31,6 +32,7 @@ class NotificationReminder {
     
     func listDeliveredNotifications()
     {
+        print("kepanggil list delivered schedule")
         UNUserNotificationCenter.current().getDeliveredNotifications {
             notifications in
             
@@ -50,32 +52,33 @@ class NotificationReminder {
         print("Deleted All Notif")
     }
     
-    private func requestAuthorization()
+    private func requestAuthorization(timeInterval: Double?)
     {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
 
             if granted == true && error == nil {
-                self.scheduleNotifications()
+                self.scheduleNotifications(timeInterval: timeInterval)
             }
         }
     }
     
-    func schedule()
+    func schedule(timeInterval: Double? = 0.0)
     {
+        var newTimeInterval = timeInterval != nil ? timeInterval : 0.0
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             switch settings.authorizationStatus {
             case .notDetermined, .denied:
-                self.requestAuthorization()
+                self.requestAuthorization(timeInterval: newTimeInterval)
                 print("access", settings.authorizationStatus)
             case .authorized, .provisional:
-                self.scheduleNotifications()
+                self.scheduleNotifications(timeInterval: newTimeInterval)
             default:
                 break // Do nothing
             }
         }
     }
     
-    private func scheduleNotifications()
+    private func scheduleNotifications(timeInterval: Double?)
     {
         for notification in notifications
         {
@@ -83,12 +86,8 @@ class NotificationReminder {
             content.title    = notification.title
             content.body     = notification.body
             content.sound    = .default
-
-            let trigger = UNCalendarNotificationTrigger(dateMatching: notification.datetime, repeats: false)
-//
-//            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-//
-            let request = UNNotificationRequest(identifier: notification.id, content: content, trigger: trigger)
+            
+            let request = UNNotificationRequest(identifier: notification.id, content: content, trigger: timeInterval == 0.0 ? UNCalendarNotificationTrigger(dateMatching: notification.datetime, repeats: false) : UNTimeIntervalNotificationTrigger(timeInterval: timeInterval!, repeats: false))
 
             UNUserNotificationCenter.current().add(request) { error in
 

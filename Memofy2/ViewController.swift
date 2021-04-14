@@ -66,6 +66,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func setupView(){
         print("masuk setupView")
+//        var startDate = Date()
+//        var tempDate = startDate
+//        var arr = [1,2,3]
+//        var indexOf = arr.firstIndex(of: 2)
+//        var weekday = -1
+//        print("index of", indexOf)
+//        for i in 0..<30 {
+//            print("i", i)
+//            weekday = Calendar.current.component(.weekday, from: tempDate)
+//            print("weekday", weekday)
+//            let getIndex = (arr.firstIndex(of: weekday) != nil ? arr.firstIndex(of: weekday) : -1)!
+//            if(getIndex > -1) {
+//                //schedule here
+//                print("is here dudde")
+//            }
+//            tempDate += (1*24*60*60)
+//
+//            print("weekday", weekday)
+//        }
+        
         //UserDefaults.standard.removeObject(forKey: "Plans")
         clearArr()
         let tempArchiveItems = defaults.data(forKey: "Plans")

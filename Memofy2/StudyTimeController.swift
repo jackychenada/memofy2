@@ -16,9 +16,12 @@ class StudyTimeController: UIViewController {
     @IBOutlet weak var stopButton: UIButton!
     
     let defaults = UserDefaults.standard
-    var plans:[Plan] = []
+    let dateFormatter = DateFormatter()
+    
     var timerTimer:Timer = Timer()
     var timerBreak: Timer = Timer()
+    let localNotification = NotificationReminder()
+    var plans:[Plan] = []
     var countTimer:Int = 0
     var countBreak: Int = 0
     
@@ -74,6 +77,26 @@ class StudyTimeController: UIViewController {
         defaults.set(preStorePlans, forKey: "Plans")
     }
     
+        func notif() {
+            var currentDate = Date()
+            currentDate += 1
+            let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: currentDate)
+            localNotification.notifications.append(
+                Notification(
+                    id: "study-" + formatDateToString(date: Date(), formatDate: "yyyyMMdd'T'HHmmssSSSS"),
+                    title: "Congratulations",
+                    datetime: components,
+                    body: "yeah you are great!")
+                )
+        
+            localNotification.schedule(timeInterval: 1)
+        }
+    
+    func formatDateToString(date: Date, formatDate: String) -> String {
+        dateFormatter.dateFormat = formatDate
+        return dateFormatter.string(from: date)
+    }
+    
     func startTimer(){
         self.isTimer = true
         self.timerLabel.isHidden = false
@@ -97,7 +120,7 @@ class StudyTimeController: UIViewController {
         let plan = plans[self.receivePlanIndex]
         plan.status = "completed"
         setUserDefault()
-        
+        notif()
         let mainViewController = self.presentingViewController as? ViewController
         mainViewController?.viewWillAppear(true)
         
