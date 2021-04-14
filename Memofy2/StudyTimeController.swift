@@ -99,6 +99,7 @@ class StudyTimeController: UIViewController {
     
     func startTimer(){
         self.isTimer = true
+        playButton.setImage(UIImage(named:"Pause Button.png"), for: .normal)
         self.timerLabel.isHidden = false
         self.playButton.setTitle("PAUSE", for: .normal)
         self.timerTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
@@ -132,6 +133,7 @@ class StudyTimeController: UIViewController {
     func startBreak(){
         self.isTimer = false
         self.breakLabel.text = self.setTimerTextLabel(dataSeconds: self.countBreak)
+        playButton.setImage(UIImage(named:"Back Button.png"), for: .normal)
         self.breakLabel.isHidden = false
         if(countBreak > 0) {
             timerBreak = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(breakCounter), userInfo: nil, repeats: true)
@@ -166,7 +168,6 @@ class StudyTimeController: UIViewController {
             }
             
             isCountTimer = true
-            playButton.setImage(UIImage(named:"Pause Button.png"), for: .normal)
             pauseBreak()
             startTimer()
         }
