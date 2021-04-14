@@ -41,18 +41,18 @@ class RepeatTableViewController: UITableViewController {
         
         if self.myTableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
             self.myTableView.cellForRow(at: indexPath)?.accessoryType = .none
-            days.remove(indexPath.row)
+            days.remove(indexPath.row+1)
             print("yg di remove", days)
         } else {
             self.myTableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-            days.insert(indexPath.row)
+            days.insert(indexPath.row+1)
         }
 
         self.myTableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.accessoryType = days.contains(indexPath.row) ? .checkmark : .none
+        cell.accessoryType = days.contains(indexPath.row+1) ? .checkmark : .none
     
     }
     
