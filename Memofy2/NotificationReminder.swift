@@ -29,7 +29,7 @@ class NotificationReminder {
             }
         }
     }
-    
+
     func listDeliveredNotifications()
     {
         print("kepanggil list delivered schedule")
@@ -116,5 +116,3 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler([.sound, .alert])
     }
 }
-
-

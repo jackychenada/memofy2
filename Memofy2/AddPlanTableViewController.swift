@@ -9,12 +9,15 @@ import UIKit
 
 
 class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
-     
+    
     var plans : [Plan] = []
     var days : [Int] = []
     
     let dateFormatter = DateFormatter()
     let defaults = UserDefaults.standard
+
+//    let localNotification = NotificationReminder()
+
     let localNotification = NotificationReminder()
     let calendar = Calendar.current
     
@@ -158,8 +161,8 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         
         self.dismiss(animated: true, completion: nil)
     }
-    
-    func sendNotificationMultiple(id: String) {
+
+        func sendNotificationMultiple(id: String) {
         let rangeDate = calendar.dateComponents([.day], from: startsDatePicker.date, to: endsDatePicker.date)
         
         var tempDate = startsDatePicker.date

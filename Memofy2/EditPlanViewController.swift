@@ -19,6 +19,8 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
     let defaults = UserDefaults.standard
     let formatDateString = "MMMM dd, yyyy"
     let formatTimeString = "HH:mm"
+    let localNotification = NotificationReminder()
+    let calendar = Calendar.current
     
     // model
     @IBOutlet weak var repeatTableCell: UIView!
@@ -48,6 +50,10 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        var a = "test"
+        a = "belajar"
+        print(a)
         
         //Ngambil data dari repeat
         timeReminderTimeLabel.text = choosenRepeat
@@ -92,45 +98,12 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
             startStudyButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
             startStudyButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
         }
+        
+        localNotification.listScheduledNotifications()
     }
     
 
-    @IBAction func saveButton(_ sender: Any) {
-        let plan = plans[receivePlanIndex]
-        
-        plan.studyPlan = studyPlanTF.text!
-        plan.studyNotes = studyNotesTextView.text
-        plan.frequency = days
-        plan.startsDate = dateStartsDatePicker.date
-        plan.endsDate = dateEndsDatePicker.date
-        plan.timeReminder = timeReminderTimePicker.date
-        plan.switchReminder = timeReminderSwitch.isOn
-        plan.studyDuration = Int(studyDurationTimePicker.countDownDuration)
-        plan.breakDuration = Int(breakDurationTimePicker.countDownDuration)
-        
-        setUserDefault()
-        
-        self.dismiss(animated: true, completion: nil)
-        
-    }
-    
-    @IBAction func deletePlanButton(_ sender: Any) {
-
-        let alert = UIAlertController(title: "Delete Plan", message: "This will delete current plan from the list", preferredStyle: UIAlertController.Style.alert)
-
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: { (_) in
-            print("Cancel")
-        }))
-        alert.addAction(UIAlertAction(title: "Delete", style: UIAlertAction.Style.destructive, handler: { (_) in
-            let plan = self.plans[self.receivePlanIndex]
-            plan.status = "removed"
-            self.setUserDefault()
-            self.dismiss(animated: true, completion: nil)
-        }))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-   
+ 
     
     @IBAction func cancelButtonPressed(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -166,6 +139,63 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
         lableDuration(label: breakDurationLabel, duration: Int(breakDurationTimePicker.countDownDuration))
     }
     
+    @IBAction func saveButton(_ sender: Any) {
+                 
+         let plan = plans[receivePlanIndex]
+         let dateNow = Date()
+         var status = "in progress"
+         print("start Date", dateStartsDatePicker.date)
+         print("dateNow", dateNow)
+         if(dateStartsDatePicker.date > dateNow) {
+             status = "incoming"
+         }
+         if (!plan.everStudy) {
+             plan.lastFinishStudy = dateStartsDatePicker.date - 3*24*60*60
+             plan.everStudy = false
+         }
+         
+        localNotification.removeWithIdentifiers(identifier: [plan.identifier])
+        
+        let idN = formatDateToString(date: Date(), formatDate: "yyyyMMdd'T'HHmmssSSSS")
+        if !days.isEmpty{
+            sendNotificationMultiple(id: idN)
+        } else {
+            sendNotificationSingle(id: idN)
+        }
+        
+         plan.studyPlan = studyPlanTF.text!
+         plan.studyNotes = studyNotesTextView.text
+         plan.frequency = days
+         plan.startsDate = dateStartsDatePicker.date
+         plan.endsDate = dateEndsDatePicker.date
+         plan.timeReminder = timeReminderTimePicker.date
+         plan.switchReminder = timeReminderSwitch.isOn
+         plan.studyDuration = Int(studyDurationTimePicker.countDownDuration)
+         plan.breakDuration = Int(breakDurationTimePicker.countDownDuration)
+
+         setUserDefault()
+         
+         self.dismiss(animated: true, completion: nil)
+
+         
+     }
+     
+     @IBAction func deletePlanButton(_ sender: Any) {
+
+         let alert = UIAlertController(title: "Delete Plan", message: "This will delete current plan from the list", preferredStyle: UIAlertController.Style.alert)
+
+         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: { (_) in
+             print("Cancel")
+         }))
+         alert.addAction(UIAlertAction(title: "Delete", style: UIAlertAction.Style.destructive, handler: { (_) in
+             let plan = self.plans[self.receivePlanIndex]
+             plan.status = "removed"
+             self.setUserDefault()
+             self.dismiss(animated: true, completion: nil)
+         }))
+         self.present(alert, animated: true, completion: nil)
+     }
+
     func setUserDefault(){
         let preStorePlans = try! NSKeyedArchiver.archivedData(withRootObject: plans, requiringSecureCoding: false)
         defaults.set(preStorePlans, forKey: "Plans")
@@ -209,12 +239,7 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
         })
     }
     
-    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-        let mainViewController = self.presentingViewController as? ViewController
-        super.dismiss(animated: flag) {
-            mainViewController?.viewWillAppear(true)
-        }
-    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showRepeat" {
@@ -235,14 +260,69 @@ class EditPlanViewController: UITableViewController, RepeatEditDataDelegate {
             self.repeatEditLabel.text = "Never"
             return
         }
-        let dayNames = ["Every Monday", "Every Tuesday", "Every Wednesday", "Every Thursday", "Every Friday", "Every Saturday", "Every Sunday"]
+        let dayNames = ["Every Sunday", "Every Monday", "Every Tuesday", "Every Wednesday", "Every Thursday", "Every Friday", "Every Saturday"]
         if (day.count == 1) {
-            return repeatEditLabel.text = dayNames[day[0]]
+            return repeatEditLabel.text = dayNames[day[0]-1]
         }
         else {
             repeatEditLabel.text = "Multiple"
         }
         }
+    
+    func sendNotificationMultiple(id: String) {
+            let rangeDate = calendar.dateComponents([.day], from: dateStartsDatePicker.date, to: dateEndsDatePicker.date)
+            
+            var tempDate = dateStartsDatePicker.date
+            var weekday = -1
+            print("range yang dibuat adalah", rangeDate.day!)
+            var indexIndetifier = 0
+            let timeNotification = calendar.dateComponents([.hour, .minute], from: timeReminderTimePicker.date)
+            for _ in 0..<rangeDate.day! {
+                weekday = Calendar.current.component(.weekday, from: tempDate)
+                
+                print("tempDatenya adalah", tempDate)
+                let dateNotification = calendar.dateComponents([.year, .month, .day], from: tempDate)
+                
+                let getIndex = (days.firstIndex(of: weekday) != nil ? days.firstIndex(of: weekday) : -1)!
+                if(getIndex > -1) {
+                    //schedule here
+                    localNotification.notifications.append(
+                        Notification(
+                            id: "\(id)-\(indexIndetifier)",
+                            title: studyPlanTF.text ?? "none",
+                            datetime:DateComponents(calendar: Calendar.current, year: dateNotification.year, month: dateNotification.month, day: dateNotification.day, hour: timeNotification.hour, minute: timeNotification.minute),
+                            body: "Hey, your study time is available now!")
+                        )
+                    indexIndetifier += 1
+                }
+                tempDate += (1*24*60*60)
+                print("weekday", weekday)
+            }
+
+            localNotification.schedule()
+            localNotification.listScheduledNotifications()
+        }
+    
+    func sendNotificationSingle(id: String) {
+            let dateNotification = calendar.dateComponents([.year, .month, .day], from: dateStartsDatePicker.date)
+            
+            let timeNotification = calendar.dateComponents([.hour, .minute], from: timeReminderTimePicker.date)
+            localNotification.notifications.append(
+                Notification(
+                    id: "\(id)",
+                    title: studyPlanTF.text ?? "none",
+                    datetime:DateComponents(calendar: Calendar.current, year: dateNotification.year, month: dateNotification.month, day: dateNotification.day, hour: timeNotification.hour, minute: timeNotification.minute), body: "Hey, your study time is available now!")
+                )
+            localNotification.schedule()
+            localNotification.listScheduledNotifications()
+        }
+    
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        let mainViewController = self.presentingViewController as? ViewController
+        super.dismiss(animated: flag) {
+            mainViewController?.viewWillAppear(true)
+        }
+    }
     
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     let isCellDateStarts = indexPath.section == 1 && indexPath.row == 2

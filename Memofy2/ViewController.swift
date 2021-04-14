@@ -83,6 +83,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let currentDay = Calendar.current.component(.weekday, from: currentDate)
         
         //UserDefaults.standard.removeObject(forKey: "Plans")
+
         clearArr()
         getUserDefault()
         print("current date int", currentDateInt)
