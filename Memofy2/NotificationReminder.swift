@@ -64,7 +64,7 @@ class NotificationReminder {
     
     func schedule(timeInterval: Double? = 0.0)
     {
-        var newTimeInterval = timeInterval != nil ? timeInterval : 0.0
+        let newTimeInterval = timeInterval != nil ? timeInterval : 0.0
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             switch settings.authorizationStatus {
             case .notDetermined, .denied:
@@ -113,6 +113,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let id = notification.request.identifier
         print("Received notification with ID = \(id)")
 
-        completionHandler([.sound, .alert])
+        completionHandler([.sound, .banner])
     }
 }

@@ -199,7 +199,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="fill" datePickerMode="time" minuteInterval="1" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="P6h-1t-Ulb">
-                                                    <rect key="frame" x="251" y="6" width="79" height="55"/>
+                                                    <rect key="frame" x="251" y="6" width="78" height="55"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES"/>
                                                     <locale key="locale" localeIdentifier="id_ID"/>
                                                     <connections>

@@ -51,6 +51,7 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
         endsDatePicker.date = NSDate() as Date
         timeReminderPicker.date = NSDate() as Date
         
+        
         startsDateLabel.text = formatDateToString(date: startsDatePicker.date, formatDate: formatDateString)
         endsDateLabel.text = formatDateToString(date: endsDatePicker.date, formatDate: formatDateString)
         
@@ -70,6 +71,10 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     
     @IBAction func startsDP(_ sender: Any) {
         startsDateLabel.text = formatDateToString(date: startsDatePicker.date, formatDate: formatDateString)
+        endsDatePicker.date = startsDatePicker.date
+        endsDateLabel.text = formatDateToString(date: endsDatePicker.date, formatDate: formatDateString)
+        endsDatePicker.minimumDate = startsDatePicker.date
+        
     }
     
     @IBAction func endsDP(_ sender: Any) {
