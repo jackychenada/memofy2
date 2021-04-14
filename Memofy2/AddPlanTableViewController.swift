@@ -43,6 +43,9 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        localNotification.listScheduledNotifications()
+        localNotification.listDeliveredNotifications()
+        
         //SET DEFAULT DATE DI ADD
         startsDatePicker.date = NSDate() as Date
         endsDatePicker.date = NSDate() as Date
