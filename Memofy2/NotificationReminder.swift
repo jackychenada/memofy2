@@ -13,6 +13,7 @@ struct Notification {
     var id: String
     var title: String
     var datetime: DateComponents
+    var body: String
 }
 
 class NotificationReminder {
@@ -80,7 +81,7 @@ class NotificationReminder {
         {
             let content      = UNMutableNotificationContent()
             content.title    = notification.title
-            content.body     = "Hey, your study time is available now!"
+            content.body     = notification.body
             content.sound    = .default
 
             let trigger = UNCalendarNotificationTrigger(dateMatching: notification.datetime, repeats: false)

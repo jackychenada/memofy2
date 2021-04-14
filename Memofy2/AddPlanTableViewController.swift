@@ -176,7 +176,8 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
                     Notification(
                         id: "\(id)-\(indexIndetifier)",
                         title: studyPlanTextField.text ?? "none",
-                        datetime:DateComponents(calendar: Calendar.current, year: dateNotification.year!, month: dateNotification.month!, day: dateNotification.day!, hour: timeNotification.hour!, minute: timeNotification.minute!))
+                        datetime:DateComponents(calendar: Calendar.current, year: dateNotification.year!, month: dateNotification.month!, day: dateNotification.day!, hour: timeNotification.hour!, minute: timeNotification.minute!)),
+                        body: "Hey, your study time is available now!"
                     )
                 indexIndetifier += 1
                 print("is here dudde", indexIndetifier)
@@ -196,7 +197,8 @@ class AddPlanTableViewController: UITableViewController, RepeatDataDelegate {
             Notification(
                 id: "\(id)",
                 title: studyPlanTextField.text ?? "none",
-                datetime:DateComponents(calendar: Calendar.current, year: dateNotification.year, month: dateNotification.month, day: dateNotification.day, hour: timeNotification.hour, minute: timeNotification.minute))
+                datetime:DateComponents(calendar: Calendar.current, year: dateNotification.year, month: dateNotification.month, day: dateNotification.day, hour: timeNotification.hour, minute: timeNotification.minute),
+                body: "Hey, your study time is available now!")
             )
         localNotification.schedule()
         localNotification.listScheduledNotifications()
